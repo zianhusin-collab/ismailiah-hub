@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ismailiah Hub – Masjid Ismailiah Mukim Kampung Kubang Terap</title>
+  <style>
+    :root {
+      --green: #1a7a4a;
+      --green-dark: #0f5533;
+      --green-light: #e8f5ee;
+      --gold: #c9a84c;
+      --gold-light: #fdf6e3;
+      --bg: #f4f6f9;
+      --white: #ffffff;
+      --text: #1f2328;
+      --muted: #57606a;
+      --border: #d0d7de;
+      --red: #c0392b;
+      --blue: #2980b9;
+      --orange: #e67e22;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+      color: white;
+      padding: 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 32px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .masjid-logo {
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+      border: 2px solid var(--gold);
+    }
+    .header-title h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .header-title h1 span { color: var(--gold); }
+    .header-title p {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+    .header-visi {
+      padding: 10px 32px;
+      background: rgba(0,0,0,0.12);
+      font-size: 12px;
+      display: flex;
+      gap: 32px;
+    }
+    .header-visi .item strong { color: var(--gold); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; display: block; }
+
+    /* ── NAV TABS ── */
+    .nav-tabs {
+      display: flex;
+      background: var(--green-dark);
+      padding: 0 24px;
+      gap: 4px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      padding: 12px 18px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .tab-btn:hover { color: white; background: rgba(255,255,255,0.08); }
+    .tab-btn.active {
+      color: white;
+      border-bottom-color: var(--gold);
+      background: rgba(255,255,255,0.1);
+    }
+    .tab-icon { font-size: 16px; }
+
+    /* ── MAIN LAYOUT ── */
+    .main { max-width: 1300px; margin: 0 auto; padding: 24px 24px 48px; }
+
+    /* ── PANELS ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .card-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green-light);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .card-header h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--green-dark);
+    }
+    .card-header .badge {
+      margin-left: auto;
+      background: var(--green);
+      color: white;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .card-body { padding: 20px; }
+
+    /* ── GRID ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+    /* ── STAT CARDS ── */
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      text-align: center;
+      border-top: 4px solid var(--green);
+      box-shadow: var(--shadow);
+    }
+    .stat-card.gold { border-top-color: var(--gold); }
+    .stat-card.blue { border-top-color: var(--blue); }
+    .stat-card.red { border-top-color: var(--red); }
+    .stat-card.orange { border-top-color: var(--orange); }
+    .stat-card .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1.1;
+    }
+    .stat-card.gold .stat-num { color: #9b7a2e; }
+    .stat-card.blue .stat-num { color: var(--blue); }
+    .stat-card.red .stat-num { color: var(--red); }
+    .stat-card.orange .stat-num { color: var(--orange); }
+    .stat-card .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .stat-card .stat-icon { font-size: 22px; margin-bottom: 6px; }
+
+    /* ── TABLES ── */
+    .tbl-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      background: var(--green);
+      color: white;
+      padding: 9px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    th:first-child { border-radius: 4px 0 0 0; }
+    th:last-child { border-radius: 0 4px 0 0; }
+    td { padding: 9px 12px; border-bottom: 1px solid #eef0f3; vertical-align: top; }
+    tr:hover td { background: #f8fafb; }
+    tr:last-child td { border-bottom: none; }
+    .tbl-sub th { background: #4a9e6e; font-size: 11px; }
+
+    /* ── BADGES ── */
+    .badge-green { background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-gold { background: var(--gold-light); color: #856404; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-blue { background: #cce5ff; color: #004085; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-red { background: #f8d7da; color: #721c24; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-grey { background: #e9ecef; color: #495057; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-orange { background: #fff3cd; color: #856404; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+
+    /* ── PROGRESS BAR ── */
+    .prog-wrap { background: #e9ecef; border-radius: 20px; height: 10px; overflow: hidden; }
+    .prog-bar { height: 100%; border-radius: 20px; background: var(--green); transition: width 0.3s; }
+    .prog-bar.gold { background: var(--gold); }
+    .prog-bar.blue { background: var(--blue); }
+    .prog-bar.red { background: var(--red); }
+
+    /* ── FORM ELEMENTS ── */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: white;
+      color: var(--text);
+    }
+    .form-group textarea { min-height: 80px; resize: vertical; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(26,122,74,0.12);
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--green); color: white; }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-gold { background: var(--gold); color: white; }
+    .btn-gold:hover { background: #a8872e; }
+    .btn-outline { background: white; color: var(--green); border: 1px solid var(--green); }
+    .btn-outline:hover { background: var(--green-light); }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: var(--green-light);
+      border-radius: 2px;
+    }
+
+    /* ── TERAS HEADER ── */
+    .teras-header {
+      background: linear-gradient(90deg, var(--green-dark), var(--green));
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .teras-num {
+      background: var(--gold);
+      color: white;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* ── CALENDAR ── */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 6px;
+    }
+    .cal-month {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .cal-month-header {
+      background: var(--green);
+      color: white;
+      text-align: center;
+      padding: 5px 4px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .cal-event {
+      padding: 3px 5px;
+      font-size: 10px;
+      border-left: 3px solid var(--gold);
+      background: var(--gold-light);
+      margin: 3px;
+      border-radius: 2px;
+      line-height: 1.3;
+    }
+    .cal-event.blue { border-left-color: var(--blue); background: #e8f4fd; }
+    .cal-event.red { border-left-color: var(--red); background: #fdf2f2; }
+    .cal-event.green { border-left-color: var(--green); background: var(--green-light); }
+
+    /* ── FINANCE ── */
+    .finance-box {
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .finance-box.income { background: #d4edda; border: 1px solid #c3e6cb; }
+    .finance-box.expense { background: #f8d7da; border: 1px solid #f5c6cb; }
+    .finance-box.balance { background: #cce5ff; border: 1px solid #b8daff; }
+    .finance-box .amount { font-size: 22px; font-weight: 700; }
+    .finance-box.income .amount { color: #155724; }
+    .finance-box.expense .amount { color: #721c24; }
+    .finance-box.balance .amount { color: #004085; }
+    .finance-box .flabel { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* ── ASSET CARD ── */
+    .asset-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .asset-item:last-child { border-bottom: none; }
+    .asset-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .asset-info .name { font-weight: 600; font-size: 13px; }
+    .asset-info .meta { font-size: 11px; color: var(--muted); }
+    .asset-status { margin-left: auto; }
+
+    /* ── KERTAS KERJA STATUS ── */
+    .kk-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+      background: white;
+      gap: 12px;
+    }
+    .kk-row:hover { border-color: var(--green); }
+    .kk-num { font-size: 11px; color: var(--muted); min-width: 30px; }
+    .kk-title { flex: 1; font-weight: 500; font-size: 13px; }
+    .kk-meta { font-size: 11px; color: var(--muted); }
+
+    /* ── VISI MISI BOX ── */
+    .vm-box {
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      color: white;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .vm-box .vm-label { font-size: 11px; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .vm-box .vm-text { font-size: 14px; margin-top: 5px; line-height: 1.5; }
+    .vm-box .vm-divider { border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 14px 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .cal-grid { grid-template-columns: repeat(4, 1fr); }
+      .header-visi { flex-direction: column; gap: 8px; }
+    }
+    @media (max-width: 600px) {
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .cal-grid { grid-template-columns: repeat(2, 1fr); }
+      .header-top { padding: 14px 16px; }
+      .main { padding: 14px 12px 40px; }
+      .tab-btn { padding: 10px 12px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="masjid-logo">🕌</div>
+    <div class="header-title">
+      <h1>ISMAILIAH <span>HUB</span></h1>
+      <p>Masjid Ismailiah Mukim Kubang Terap &nbsp;|&nbsp; Sistem Pengurusan Bersepadu &nbsp;|&nbsp; Pelan Strategik 2026–2027</p>
+    </div>
+  </div>
+  <div class="header-visi">
+    <div class="item">
+      <strong>🌟 Visi</strong>
+      Menjadi Pusat Ibadah Yang Unggul dengan Mengekalkan Syiar Islam dan Kesejahteraan Masyarakat
+    </div>
+    <div class="item">
+      <strong>🎯 Misi</strong>
+      Pengurusan Cekap Berkesan dalam Membangunkan Masyarakat Berdasarkan Akidah, Syariah dan Akhlak Islamiah
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ NAV TABS ══════════ -->
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="showPanel('dashboard')">
+    <span class="tab-icon">🏠</span> Dashboard
+  </button>
+  <button class="tab-btn" onclick="showPanel('kpi')">
+    <span class="tab-icon">📊</span> KPI Masjid
+  </button>
+  <button class="tab-btn" onclick="showPanel('kertaskerja')">
+    <span class="tab-icon">📋</span> Kertas Kerja & Laporan
+  </button>
+  <button class="tab-btn" onclick="showPanel('kewangan')">
+    <span class="tab-icon">💰</span> Kewangan
+  </button>
+  <button class="tab-btn" onclick="showPanel('aset')">
+    <span class="tab-icon">🏛️</span> Aset Masjid
+  </button>
+  <button class="tab-btn" onclick="showPanel('takwim')">
+    <span class="tab-icon">📅</span> Takwim & Perancangan
+  </button>
+  <button class="tab-btn" onclick="showPanel('penarafan')">
+    <span class="tab-icon">⭐</span> Penarafan Bintang
+  </button>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="main">
+
+  <!-- ════ PANEL: DASHBOARD ════ -->
+  <div id="panel-dashboard" class="panel active">
+
+    <div class="vm-box">
+      <div class="vm-label">🌟 Visi</div>
+      <div class="vm-text">Menjadi Pusat Ibadah Yang Unggul dengan Mengekalkan Syiar Islam dan Kesejahteraan Masyarakat</div>
+      <hr class="vm-divider">
+      <div class="vm-label">🎯 Misi</div>
+      <div class="vm-text">Melaksanakan Pengurusan Masjid yang Cekap dan Berkesan dalam Membangunkan Masyarakat Berdasarkan Akidah, Syariah dan Akhlak Islamiah Melalui Pelbagai Aktiviti Keilmuan, Dakwah, Kebajikan dan Pembangunan Insan</div>
+    </div>
+
+    <div class="section-title">📈 Ringkasan KPI Semasa</div>
+    <div class="grid-4" style="margin-bottom:24px;">
+      <div class="stat-card">
+        <div class="stat-icon">🏛️</div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Teras Strategik</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-num">30</div>
+        <div class="stat-label">Jumlah Indikator KPI</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-icon">📋</div>
+        <div class="stat-num">0</div>
+        <div class="stat-label">Kertas Kerja Aktif</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-icon">📅</div>
+        <div class="stat-num">2026</div>
+        <div class="stat-label">Tahun Semasa</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 4 Teras -->
+      <div class="card">
+        <div class="card-header"><span>🏗️</span><h2>4 Teras Strategik 2026–2027</h2></div>
+        <div class="card-body">
+          <div style="margin-bottom:14px;">
+            <div class="teras-header"><div class="teras-num">1</div>Pengurusan Masjid</div>
+            <p style="font-size:12px;color:var(--muted);margin-left:4px;">Kecekapan pentadbiran, kewangan, pembangunan AJK & inovasi pengurusan</p>
+          </div>
+          <div style="margin-bottom:14px;">
+            <div class="teras-header"><div class="teras-num">2</div>Pengimarahan</div>
+            <p style="font-size:12px;color:var(--muted);margin-left:4px;">Program ibadah, keilmuan, komuniti pelbagai peringkat usia & kebajikan</p>
+          </div>
+          <div style="margin-bottom:14px;">
+            <div class="teras-header"><div class="teras-num">3</div>Kemudahan Prasarana</div>
+            <p style="font-size:12px;color:var(--muted);margin-left:4px;">Naik taraf kemudahan, ciri mesra OKU & transformasi digital masjid</p>
+          </div>
+          <div>
+            <div class="teras-header"><div class="teras-num">4</div>Persekitaran</div>
+            <p style="font-size:12px;color:var(--muted);margin-left:4px;">Kebersihan, keceriaan, masjid inklusif mesra alam & budaya cinta masjid</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Progress -->
+      <div class="card">
+        <div class="card-header"><span>📊</span><h2>Pencapaian KPI Utama 2026</h2></div>
+        <div class="card-body">
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+              <span>Pengemaskinian Struktur Jawatankuasa</span><strong>100%</strong>
+            </div>
+            <div class="prog-wrap"><div class="prog-bar" style="width:100%"></div></div>
+          </div>
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+              <span>Laporan Kewangan kepada MAIK (4 kali)</span><strong>0 / 4</strong>
+            </div>
+            <div class="prog-wrap"><div class="prog-bar gold" style="width:0%"></div></div>
+          </div>
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+              <span>Program Keilmuan & Umum (7 program)</span><strong>0 / 7</strong>
+            </div>
+            <div class="prog-wrap"><div class="prog-bar blue" style="width:0%"></div></div>
+          </div>
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+              <span>Program Khidmat Komuniti (5 program)</span><strong>0 / 5</strong>
+            </div>
+            <div class="prog-wrap"><div class="prog-bar" style="width:0%"></div></div>
+          </div>
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+              <span>Transformasi Digital (Paparan LED / Sistem Online)</span><strong>50%</strong>
+            </div>
+            <div class="prog-wrap"><div class="prog-bar gold" style="width:50%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+              <span>Program Gotong-royong (2 program)</span><strong>0 / 2</strong>
+            </div>
+            <div class="prog-wrap"><div class="prog-bar" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modul Akses Pantas -->
+    <div class="section-title">⚡ Akses Pantas</div>
+    <div class="grid-4">
+      <div class="stat-card" style="cursor:pointer;border-top-color:var(--green);" onclick="showPanel('kpi')">
+        <div class="stat-icon">📊</div>
+        <div class="stat-num" style="font-size:16px;">KPI Masjid</div>
+        <div class="stat-label">Pantau pencapaian 4 Teras</div>
+      </div>
+      <div class="stat-card" style="cursor:pointer;" onclick="showPanel('kertaskerja')">
+        <div class="stat-icon">📋</div>
+        <div class="stat-num" style="font-size:16px;">Kertas Kerja</div>
+        <div class="stat-label">Daftar & semak laporan program</div>
+      </div>
+      <div class="stat-card gold" style="cursor:pointer;" onclick="showPanel('kewangan')">
+        <div class="stat-icon">💰</div>
+        <div class="stat-num" style="font-size:16px;">Kewangan</div>
+        <div class="stat-label">Kedudukan kewangan masjid</div>
+      </div>
+      <div class="stat-card blue" style="cursor:pointer;" onclick="showPanel('aset')">
+        <div class="stat-icon">🏛️</div>
+        <div class="stat-num" style="font-size:16px;">Aset</div>
+        <div class="stat-label">Inventori & pengurusan aset</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ PANEL: KPI ════ -->
+  <div id="panel-kpi" class="panel">
+    <div class="section-title">📊 KPI Masjid Ismailiah – Pelan Strategik 2026–2027</div>
+
+    <!-- TERAS 1 -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header">
+        <span>🏛️</span>
+        <h2>TERAS 1: Pengurusan Masjid</h2>
+        <span class="badge">5 Objektif</span>
+      </div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:22%">Objektif Strategik</th>
+                <th style="width:20%">Strategi</th>
+                <th style="width:25%">Indikator / KPI</th>
+                <th style="width:10%">Sasaran 2026</th>
+                <th style="width:10%">Sasaran 2027</th>
+                <th style="width:13%">PIC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Meningkatkan kecekapan dan ketelusan pengurusan masjid</td>
+                <td>Menyusun struktur organisasi yang jelas dan berfungsi</td>
+                <td>% pengemaskinian struktur jawatankuasa</td>
+                <td><span class="badge-green">100%</span></td>
+                <td><span class="badge-green">100%</span></td>
+                <td>AJK Tertinggi</td>
+              </tr>
+              <tr>
+                <td>Memantapkan pengurusan kewangan dan pentadbiran</td>
+                <td>Sistem pengurusan kewangan berakauntabiliti</td>
+                <td>Bilangan penyerahan laporan kewangan; Latihan kewangan AJK; % sistem ICT</td>
+                <td><span class="badge-gold">4 kali / 1 hari / 50%</span></td>
+                <td><span class="badge-gold">4 kali / 1 hari / 50%</span></td>
+                <td>AJK Tertinggi</td>
+              </tr>
+              <tr>
+                <td>Memperkasa peranan AJK masjid</td>
+                <td>Latihan dan pembangunan profesionalisme</td>
+                <td>Bilangan kursus dihadiri AJK; Bilangan lawatan penanda aras</td>
+                <td><span class="badge-blue">1 hari / 1 kali</span></td>
+                <td><span class="badge-blue">1 hari / 1 kali</span></td>
+                <td>AJK & Ketua Biro</td>
+              </tr>
+              <tr>
+                <td>Membudayakan inovasi dalam pengurusan masjid</td>
+                <td>Penghasilan inovasi pengurusan</td>
+                <td>Bilangan inovasi yang dihasilkan</td>
+                <td><span class="badge-orange">1 inovasi</span></td>
+                <td><span class="badge-orange">1 inovasi</span></td>
+                <td>AJK & Ketua Biro</td>
+              </tr>
+              <tr>
+                <td>Memastikan pengurusan aduan yang sistematik</td>
+                <td>Pengurusan aduan dapat diselesaikan</td>
+                <td>% pencapaian aduan diselesaikan</td>
+                <td><span class="badge-green">100%</span></td>
+                <td><span class="badge-green">100%</span></td>
+                <td>AJK & Ketua Biro</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TERAS 2 -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header">
+        <span>🕌</span>
+        <h2>TERAS 2: Pengimarahan</h2>
+        <span class="badge">4 Objektif</span>
+      </div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:22%">Objektif Strategik</th>
+                <th style="width:20%">Strategi</th>
+                <th style="width:25%">Indikator / KPI</th>
+                <th style="width:10%">Sasaran 2026</th>
+                <th style="width:10%">Sasaran 2027</th>
+                <th style="width:13%">PIC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Menghidupkan masjid dengan program ibadah dan keilmuan</td>
+                <td>Perancangan aktiviti sepanjang tahun</td>
+                <td>Bilangan aktiviti tahunan; Bilangan program keilmuan & umum</td>
+                <td><span class="badge-green">7 program / 5×/mgu</span></td>
+                <td><span class="badge-green">7 program / 5×/mgu</span></td>
+                <td>Ketua Biro Pelajaran, Dakwah & Multimedia</td>
+              </tr>
+              <tr>
+                <td>Menyantuni komuniti pelbagai peringkat usia</td>
+                <td>Pelibatan aktif semua golongan</td>
+                <td>Program keilmuan Wanita; Program Remaja; Program Kanak-kanak & Saudara Baru; Program Khidmat Komuniti</td>
+                <td><span class="badge-blue">2 / 1 / 3 / 5 prog</span></td>
+                <td><span class="badge-blue">2 / 1 / 3 / 5 prog</span></td>
+                <td>Ketua Biro Pembangunan Belia, Wanita & Keluarga Solehah</td>
+              </tr>
+              <tr>
+                <td>Memperkasa aktiviti kebajikan & kemasyarakatan</td>
+                <td>Kerjasama strategik dengan agensi luar</td>
+                <td>Bilangan kolaborasi (klinik, derma darah, kaunter agensi)</td>
+                <td><span class="badge-orange">3 agensi</span></td>
+                <td><span class="badge-orange">3 agensi</span></td>
+                <td>Ketua Biro Ekonomi, Kebajikan & Hal Ehwal Mukim</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TERAS 3 -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header">
+        <span>🔧</span>
+        <h2>TERAS 3: Kemudahan Prasarana</h2>
+        <span class="badge">3 Objektif</span>
+      </div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:22%">Objektif Strategik</th>
+                <th style="width:20%">Strategi</th>
+                <th style="width:25%">Indikator / KPI</th>
+                <th style="width:10%">Sasaran 2026</th>
+                <th style="width:10%">Sasaran 2027</th>
+                <th style="width:13%">PIC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Menyediakan kemudahan kondusif dan mesra jemaah</td>
+                <td>Naik taraf dan penyelenggaraan berkala</td>
+                <td>% pelaksanaan baik pulih audio, tandas & ruang solat; % naik taraf bilik mesyuarat & pejabat</td>
+                <td><span class="badge-green">100% / 100%</span></td>
+                <td><span class="badge-green">100% / 100%</span></td>
+                <td>Ketua Biro Pembangunan, Kebersihan & Keceriaan</td>
+              </tr>
+              <tr>
+                <td>Memenuhi keperluan pelbagai golongan</td>
+                <td>Ciri kemudahan mesra OKU, wanita dan kanak-kanak</td>
+                <td>% pelaksanaan laluan OKU & ruang musafir; % ruang permainan kanak-kanak & kawasan riadah</td>
+                <td><span class="badge-green">100% / 100%</span></td>
+                <td><span class="badge-green">100% / 100%</span></td>
+                <td>Ketua Biro Pembangunan, Kebersihan & Keceriaan</td>
+              </tr>
+              <tr>
+                <td>Memanfaatkan teknologi dalam urus tadbir</td>
+                <td>Transformasi digital masjid</td>
+                <td>% pelaksanaan paparan maklumat digital (LED); % sistem kehadiran & sumbangan online</td>
+                <td><span class="badge-gold">50% / 50%</span></td>
+                <td><span class="badge-blue">80% / 80%</span></td>
+                <td>Ketua Biro Pelajaran, Dakwah & Multimedia</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TERAS 4 -->
+    <div class="card">
+      <div class="card-header">
+        <span>🌿</span>
+        <h2>TERAS 4: Persekitaran</h2>
+        <span class="badge">3 Objektif</span>
+      </div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:22%">Objektif Strategik</th>
+                <th style="width:20%">Strategi</th>
+                <th style="width:25%">Indikator / KPI</th>
+                <th style="width:10%">Sasaran 2026</th>
+                <th style="width:10%">Sasaran 2027</th>
+                <th style="width:13%">PIC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Memastikan persekitaran bersih, selamat dan menarik</td>
+                <td>Amalan kebersihan dan keceriaan berterusan</td>
+                <td>Bilangan program gotong-royong; Bilangan program hijau</td>
+                <td><span class="badge-green">2 / 1 program</span></td>
+                <td><span class="badge-green">2 / 1 program</span></td>
+                <td>Ketua Biro Pembangunan, Kebersihan & Keceriaan</td>
+              </tr>
+              <tr>
+                <td>Menjadikan masjid sebagai ruang komuniti lestari</td>
+                <td>Konsep masjid inklusif dan mesra alam</td>
+                <td>% pelaksanaan solar panel; % pelaksanaan tong kitar semula & pengasingan sisa</td>
+                <td><span class="badge-gold">50% / 50%</span></td>
+                <td><span class="badge-blue">80% / 80%</span></td>
+                <td>Ketua Biro Pembangunan, Kebersihan & Keceriaan</td>
+              </tr>
+              <tr>
+                <td>Membina budaya cinta masjid dalam komuniti</td>
+                <td>Kempen & pendidikan awam</td>
+                <td>Bilangan program "Sayangi Masjid Kita" & Anugerah komuniti</td>
+                <td><span class="badge-orange">1 program</span></td>
+                <td><span class="badge-orange">1 program</span></td>
+                <td>Semua Ketua Biro</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ PANEL: KERTAS KERJA ════ -->
+  <div id="panel-kertaskerja" class="panel">
+    <div class="section-title">📋 Pengurusan Kertas Kerja & Laporan Program</div>
+
+    <div class="grid-2">
+      <!-- Form Daftar -->
+      <div class="card">
+        <div class="card-header"><span>➕</span><h2>Daftar Kertas Kerja / Program Baru</h2></div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nama Program / Aktiviti</label>
+              <input type="text" id="kk-nama" placeholder="cth. Majlis Khatam Al-Quran" />
+            </div>
+            <div class="form-group">
+              <label>Teras Strategik</label>
+              <select id="kk-teras">
+                <option value="">-- Pilih Teras --</option>
+                <option>Teras 1: Pengurusan Masjid</option>
+                <option>Teras 2: Pengimarahan</option>
+                <option>Teras 3: Kemudahan Prasarana</option>
+                <option>Teras 4: Persekitaran</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tarikh Program</label>
+              <input type="date" id="kk-tarikh" />
+            </div>
+            <div class="form-group">
+              <label>PIC / Penanggung Jawab</label>
+              <input type="text" id="kk-pic" placeholder="Nama Ketua Biro / AJK" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Anggaran Perbelanjaan (RM)</label>
+              <input type="number" id="kk-belanja" placeholder="0.00" />
+            </div>
+            <div class="form-group">
+              <label>Sasaran Peserta</label>
+              <input type="number" id="kk-peserta" placeholder="0" />
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Objektif Program</label>
+              <textarea id="kk-obj" placeholder="Nyatakan objektif program..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Status</label>
+              <select id="kk-status">
+                <option>Perancangan</option>
+                <option>Dalam Proses</option>
+                <option>Selesai</option>
+                <option>Ditangguh</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="daftarKK()">💾 Simpan Kertas Kerja</button>
+            <button class="btn btn-outline" onclick="clearKK()">🗑️ Kosongkan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Senarai Kertas Kerja -->
+      <div class="card">
+        <div class="card-header"><span>📂</span><h2>Senarai Kertas Kerja</h2><span class="badge" id="kk-count">0 rekod</span></div>
+        <div class="card-body">
+          <div id="kk-list">
+            <p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada kertas kerja didaftarkan.<br>Gunakan borang di sebelah untuk mendaftar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Template Laporan -->
+    <div class="card">
+      <div class="card-header"><span>📄</span><h2>Template Laporan Program</h2></div>
+      <div class="card-body">
+        <div class="grid-3">
+          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;hover:border-color:var(--green);">
+            <div style="font-size:24px;text-align:center;margin-bottom:8px;">📄</div>
+            <div style="font-weight:600;text-align:center;font-size:13px;">Laporan Akhir Program</div>
+            <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;">Pelaporan lengkap selepas program</div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;">
+            <div style="font-size:24px;text-align:center;margin-bottom:8px;">📊</div>
+            <div style="font-weight:600;text-align:center;font-size:13px;">Laporan KPI Bulanan</div>
+            <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;">Semakan pencapaian KPI bulanan</div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;">
+            <div style="font-size:24px;text-align:center;margin-bottom:8px;">💼</div>
+            <div style="font-weight:600;text-align:center;font-size:13px;">Laporan Tahunan</div>
+            <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;">Ringkasan pencapaian tahunan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ PANEL: KEWANGAN ════ -->
+  <div id="panel-kewangan" class="panel">
+    <div class="section-title">💰 Laporan Kedudukan Kewangan Masjid</div>
+
+    <!-- Ringkasan Kewangan -->
+    <div class="grid-3" style="margin-bottom:20px;">
+      <div class="finance-box income">
+        <div class="flabel">JUMLAH KUTIPAN / PENDAPATAN</div>
+        <div class="amount">RM 0.00</div>
+        <div class="flabel">Jan – Nov 2026</div>
+      </div>
+      <div class="finance-box expense">
+        <div class="flabel">JUMLAH PERBELANJAAN</div>
+        <div class="amount">RM 0.00</div>
+        <div class="flabel">Jan – Nov 2026</div>
+      </div>
+      <div class="finance-box balance">
+        <div class="flabel">BAKI SEMASA</div>
+        <div class="amount">RM 0.00</div>
+        <div class="flabel">Baki Terkini</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Daftar Transaksi -->
+      <div class="card">
+        <div class="card-header"><span>➕</span><h2>Daftar Transaksi Kewangan</h2></div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tarikh</label>
+              <input type="date" id="fin-tarikh" />
+            </div>
+            <div class="form-group">
+              <label>Jenis</label>
+              <select id="fin-jenis">
+                <option value="masuk">Masuk (Pendapatan)</option>
+                <option value="keluar">Keluar (Perbelanjaan)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Perkara</label>
+              <input type="text" id="fin-perkara" placeholder="cth. Kutipan Jumaat, Bayaran Utiliti" />
+            </div>
+            <div class="form-group">
+              <label>Amaun (RM)</label>
+              <input type="number" id="fin-amaun" placeholder="0.00" step="0.01" />
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Kategori</label>
+              <select id="fin-kategori">
+                <option>Kutipan Jumaat</option>
+                <option>Kutipan Tabung</option>
+                <option>Sumbangan / Derma</option>
+                <option>Sewaan Ruang</option>
+                <option>Utiliti (Elektrik/Air)</option>
+                <option>Penyelenggaraan</option>
+                <option>Program / Aktiviti</option>
+                <option>Perbelanjaan Am</option>
+                <option>Lain-lain</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Catatan</label>
+              <input type="text" id="fin-catatan" placeholder="Catatan tambahan (optional)" />
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="daftarFin()">💾 Simpan Transaksi</button>
+            <button class="btn btn-outline" onclick="clearFin()">🗑️ Kosongkan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rekod Transaksi -->
+      <div class="card">
+        <div class="card-header"><span>📒</span><h2>Rekod Transaksi</h2><span class="badge" id="fin-count">0 rekod</span></div>
+        <div class="card-body">
+          <div id="fin-list">
+            <p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada transaksi didaftarkan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kategori Pendapatan -->
+    <div class="card">
+      <div class="card-header"><span>📊</span><h2>Panduan Penyediaan Laporan Kewangan kepada MAIK</h2></div>
+      <div class="card-body">
+        <div class="grid-4">
+          <div style="text-align:center;padding:14px;border:1px solid var(--border);border-radius:8px;border-top:3px solid var(--green);">
+            <div style="font-size:22px;">📋</div>
+            <div style="font-weight:700;margin:6px 0 2px;">Suku 1</div>
+            <div style="font-size:11px;color:var(--muted);">Jan – Mac 2026</div>
+            <div style="margin-top:8px;"><span class="badge-grey">Belum Hantar</span></div>
+          </div>
+          <div style="text-align:center;padding:14px;border:1px solid var(--border);border-radius:8px;border-top:3px solid var(--gold);">
+            <div style="font-size:22px;">📋</div>
+            <div style="font-weight:700;margin:6px 0 2px;">Suku 2</div>
+            <div style="font-size:11px;color:var(--muted);">Apr – Jun 2026</div>
+            <div style="margin-top:8px;"><span class="badge-grey">Belum Hantar</span></div>
+          </div>
+          <div style="text-align:center;padding:14px;border:1px solid var(--border);border-radius:8px;border-top:3px solid var(--blue);">
+            <div style="font-size:22px;">📋</div>
+            <div style="font-weight:700;margin:6px 0 2px;">Suku 3</div>
+            <div style="font-size:11px;color:var(--muted);">Jul – Sep 2026</div>
+            <div style="margin-top:8px;"><span class="badge-grey">Belum Hantar</span></div>
+          </div>
+          <div style="text-align:center;padding:14px;border:1px solid var(--border);border-radius:8px;border-top:3px solid var(--red);">
+            <div style="font-size:22px;">📋</div>
+            <div style="font-weight:700;margin:6px 0 2px;">Suku 4</div>
+            <div style="font-size:11px;color:var(--muted);">Okt – Dis 2026</div>
+            <div style="margin-top:8px;"><span class="badge-grey">Belum Hantar</span></div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:var(--muted);background:var(--green-light);padding:10px 14px;border-radius:6px;">
+          📌 <strong>KPI Pelan Strategik:</strong> Laporan kewangan mesti diserahkan kepada MAIK sebanyak <strong>4 kali setahun</strong> (setiap suku tahun). Pastikan Bendahari mengemukakan laporan dalam tempoh yang ditetapkan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ PANEL: ASET ════ -->
+  <div id="panel-aset" class="panel">
+    <div class="section-title">🏛️ Pengurusan Aset Masjid</div>
+
+    <div class="grid-2">
+      <!-- Daftar Aset -->
+      <div class="card">
+        <div class="card-header"><span>➕</span><h2>Daftar Aset Baru</h2></div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nama Aset</label>
+              <input type="text" id="aset-nama" placeholder="cth. Sistem Pembesar Suara" />
+            </div>
+            <div class="form-group">
+              <label>Kategori</label>
+              <select id="aset-kategori">
+                <option>Audio Visual & Multimedia</option>
+                <option>Perabot & Peralatan Pejabat</option>
+                <option>Kemudahan Kebersihan</option>
+                <option>Kenderaan</option>
+                <option>Peralatan Dapur</option>
+                <option>Kelengkapan Masjid</option>
+                <option>ICT & Teknologi</option>
+                <option>Lain-lain</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>No. Siri / Tag</label>
+              <input type="text" id="aset-siri" placeholder="cth. MASJID/AV/001" />
+            </div>
+            <div class="form-group">
+              <label>Tarikh Perolehan</label>
+              <input type="date" id="aset-tarikh" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nilai Perolehan (RM)</label>
+              <input type="number" id="aset-nilai" placeholder="0.00" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label>Status Kondisi</label>
+              <select id="aset-status">
+                <option value="baik">Baik</option>
+                <option value="sederhana">Sederhana</option>
+                <option value="perlu-selenggara">Perlu Selenggara</option>
+                <option value="rosak">Rosak</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Lokasi Aset</label>
+              <input type="text" id="aset-lokasi" placeholder="cth. Dewan Utama, Pejabat, Surau" />
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="daftarAset()">💾 Simpan Aset</button>
+            <button class="btn btn-outline" onclick="clearAset()">🗑️ Kosongkan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventori Aset -->
+      <div class="card">
+        <div class="card-header"><span>📦</span><h2>Inventori Aset</h2><span class="badge" id="aset-count">0 rekod</span></div>
+        <div class="card-body">
+          <div id="aset-list">
+            <p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada aset didaftarkan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panduan Penyelenggaraan -->
+    <div class="card">
+      <div class="card-header"><span>🔧</span><h2>Jadual Penyelenggaraan Berkala</h2></div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Jenis Penyelenggaraan</th>
+                <th>Frekuensi</th>
+                <th>Skop Kerja</th>
+                <th>PIC</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sistem Audio / PA System</td>
+                <td>Bulanan</td>
+                <td>Pemeriksaan, pembersihan speaker, ujian tahap bunyi</td>
+                <td>Ketua Biro Multimedia</td>
+                <td><span class="badge-grey">Belum Ditetapkan</span></td>
+              </tr>
+              <tr>
+                <td>Tandas & Kemudahan Sanitasi</td>
+                <td>Harian / Mingguan</td>
+                <td>Pembersihan harian, pemeriksaan paip & fitting</td>
+                <td>Ketua Biro Kebersihan</td>
+                <td><span class="badge-grey">Belum Ditetapkan</span></td>
+              </tr>
+              <tr>
+                <td>Sistem Elektrik</td>
+                <td>Suku Tahunan</td>
+                <td>Pemeriksaan pendawaian, MCB, lampu & kipas</td>
+                <td>Ketua Biro Pembangunan</td>
+                <td><span class="badge-grey">Belum Ditetapkan</span></td>
+              </tr>
+              <tr>
+                <td>Ruang Solat & Karpet</td>
+                <td>Bulanan</td>
+                <td>Basuh karpet, baik pulih saf, pengudaraan</td>
+                <td>Ketua Biro Kebersihan</td>
+                <td><span class="badge-grey">Belum Ditetapkan</span></td>
+              </tr>
+              <tr>
+                <td>Paparan Digital / LED</td>
+                <td>Bulanan</td>
+                <td>Kemaskini kandungan, bersih skrin, ujian fungsi</td>
+                <td>Ketua Biro Multimedia</td>
+                <td><span class="badge-grey">Belum Ditetapkan</span></td>
+              </tr>
+              <tr>
+                <td>Kawasan Luar / Landskap</td>
+                <td>Bulanan</td>
+                <td>Potong rumput, siram tanaman, kemas persekitaran</td>
+                <td>Ketua Biro Keceriaan</td>
+                <td><span class="badge-grey">Belum Ditetapkan</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ PANEL: TAKWIM ════ -->
+  <div id="panel-takwim" class="panel">
+    <div class="section-title">📅 Takwim Aktiviti Masjid Ismailiah 2026–2027</div>
+
+    <!-- Kawalan Atas -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-body" style="padding:14px 20px;">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+          <div style="font-weight:600;font-size:13px;">Pilih Tahun:</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-primary" id="btn-tw-2026" onclick="tunjukTakwim('2026')">📅 2026</button>
+            <button class="btn btn-outline" id="btn-tw-2027" onclick="tunjukTakwim('2027')">📅 2027</button>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-gold btn-sm" onclick="bukaTambahAktiviti()">➕ Tambah Aktiviti</button>
+            <button class="btn btn-outline btn-sm" onclick="cetakTakwim()">🖨️ Cetak Takwim</button>
+          </div>
+        </div>
+        <!-- Legenda -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11px;">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--green);"></div> Teras 1 – Pengurusan</div>
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--blue);"></div> Teras 2 – Pengimarahan</div>
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--gold);"></div> Teras 3 – Prasarana</div>
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:#27ae60;"></div> Teras 4 – Persekitaran</div>
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--red);"></div> Cuti Umum / Hari Kebesaran</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Tambah Aktiviti -->
+    <div id="modal-takwim" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:white;border-radius:12px;padding:28px;width:90%;max-width:560px;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+        <h3 style="margin-bottom:16px;font-size:16px;color:var(--green-dark);">➕ Tambah / Daftar Aktiviti Baru</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tahun</label>
+            <select id="tw-tahun"><option>2026</option><option>2027</option></select>
+          </div>
+          <div class="form-group">
+            <label>Bulan</label>
+            <select id="tw-bulan">
+              <option value="1">Januari</option><option value="2">Februari</option><option value="3">Mac</option>
+              <option value="4">April</option><option value="5">Mei</option><option value="6">Jun</option>
+              <option value="7">Julai</option><option value="8">Ogos</option><option value="9">September</option>
+              <option value="10">Oktober</option><option value="11">November</option><option value="12">Disember</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tarikh</label>
+            <input type="number" id="tw-tarikh" min="1" max="31" placeholder="cth. 11" />
+          </div>
+          <div class="form-group">
+            <label>Hari</label>
+            <select id="tw-hari">
+              <option>AHAD</option><option>ISNIN</option><option>SELASA</option><option>RABU</option>
+              <option>KHAMIS</option><option>JUMAAT</option><option>SABTU</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row" style="grid-template-columns:1fr;">
+          <div class="form-group">
+            <label>Nama Aktiviti / Program</label>
+            <input type="text" id="tw-aktiviti" placeholder="cth. Majlis Maulidur Rasul 2026" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>PIC / Penyelaras</label>
+            <input type="text" id="tw-pic" placeholder="cth. Ketua Biro Dakwah" />
+          </div>
+          <div class="form-group">
+            <label>Teras Strategik</label>
+            <select id="tw-teras">
+              <option value="T1">Teras 1 – Pengurusan Masjid</option>
+              <option value="T2">Teras 2 – Pengimarahan</option>
+              <option value="T3">Teras 3 – Kemudahan Prasarana</option>
+              <option value="T4">Teras 4 – Persekitaran</option>
+              <option value="CUTI">Cuti Umum / Hari Kebesaran</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Lokasi</label>
+            <input type="text" id="tw-lokasi" placeholder="cth. Dewan Utama Masjid" />
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="tw-status">
+              <option value="dirancang">Dirancang</option>
+              <option value="dilaksana">Dilaksanakan</option>
+              <option value="tangguh">Ditangguh</option>
+              <option value="batal">Dibatalkan</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:8px;">
+          <button class="btn btn-primary" onclick="simpanAktiviti()">💾 Simpan</button>
+          <button class="btn btn-outline" onclick="tutupModal()">Batal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paparan Takwim 2026 -->
+    <div id="takwim-2026">
+      <div id="tw-stats-2026" style="margin-bottom:16px;"></div>
+      <div id="tw-bulan-container-2026"></div>
+    </div>
+
+    <!-- Paparan Takwim 2027 -->
+    <div id="takwim-2027" style="display:none;">
+      <div id="tw-stats-2027" style="margin-bottom:16px;"></div>
+      <div id="tw-bulan-container-2027"></div>
+    </div>
+
+  </div>
+
+  <!-- ════ PANEL: PENARAFAN BINTANG ════ -->
+  <div id="panel-penarafan" class="panel">
+    <div class="section-title">⭐ Penarafan Bintang Masjid Ismailiah</div>
+
+    <!-- Keputusan Bintang -->
+    <div id="star-result-box" style="background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;border-radius:12px;padding:24px;margin-bottom:24px;text-align:center;">
+      <div style="font-size:13px;opacity:0.85;margin-bottom:8px;">JANGKAAN PENARAFAN SEMASA</div>
+      <div id="star-display" style="font-size:48px;letter-spacing:4px;margin:8px 0;">☆☆☆☆☆</div>
+      <div id="star-label" style="font-size:20px;font-weight:700;color:var(--gold);">– Belum Dinilai –</div>
+      <div id="star-score-display" style="font-size:13px;opacity:0.85;margin-top:6px;">Markah: 0 / 100</div>
+      <div style="margin-top:14px;max-width:400px;margin-left:auto;margin-right:auto;">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;opacity:0.8;">
+          <span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.2);border-radius:20px;height:12px;overflow:hidden;">
+          <div id="star-prog" style="height:100%;border-radius:20px;background:var(--gold);width:0%;transition:width 0.5s;"></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:12px;opacity:0.9;">
+        <span>⭐ 1 Bintang: 0–19</span>
+        <span>⭐⭐ 2 Bintang: 20–39</span>
+        <span>⭐⭐⭐ 3 Bintang: 40–59</span>
+        <span>⭐⭐⭐⭐ 4 Bintang: 60–79</span>
+        <span>⭐⭐⭐⭐⭐ 5 Bintang: 80–100</span>
+      </div>
+    </div>
+
+    <!-- Ringkasan per Komponen -->
+    <div class="grid-4" style="margin-bottom:24px;">
+      <div class="stat-card" id="sc-pengurusan">
+        <div class="stat-icon">🏛️</div>
+        <div class="stat-num" id="sc-pengurusan-val">0%</div>
+        <div class="stat-label">Komponen Pengurusan<br><small style="font-size:10px;">32 Indikator</small></div>
+      </div>
+      <div class="stat-card gold" id="sc-pengimarahan">
+        <div class="stat-icon">🕌</div>
+        <div class="stat-num" id="sc-pengimarahan-val" style="font-size:20px;">0%</div>
+        <div class="stat-label">Komponen Pengimarahan<br><small style="font-size:10px;">32 Indikator</small></div>
+      </div>
+      <div class="stat-card blue" id="sc-prasarana">
+        <div class="stat-icon">🔧</div>
+        <div class="stat-num" id="sc-prasarana-val" style="font-size:20px;">0%</div>
+        <div class="stat-label">Kemudahan Prasarana<br><small style="font-size:10px;">11 Indikator</small></div>
+      </div>
+      <div class="stat-card orange" id="sc-persekitaran">
+        <div class="stat-icon">🌿</div>
+        <div class="stat-num" id="sc-persekitaran-val" style="font-size:20px;">0%</div>
+        <div class="stat-label">Komponen Persekitaran<br><small style="font-size:10px;">8 Indikator</small></div>
+      </div>
+    </div>
+
+    <!-- ── KOMPONEN PENGURUSAN ── -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><span>🏛️</span><h2>Komponen 1: Pengurusan</h2><span class="badge">7 Sub-komponen | 32 Indikator</span></div>
+      <div class="card-body">
+
+        <div class="teras-header"><div class="teras-num">1</div>Pengurusan Organisasi (Ind. 1–17)</div>
+        <div class="tbl-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Perancangan Strategik Masjid</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Belum Lengkap</option><option value="2">Ada – Lengkap</option><option value="3">Ada – Lengkap & Disebarkan</option></select></td><td id="st-pn1"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>2</td><td>Sasaran Perancangan Strategik Masjid</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada Sebahagian</option><option value="2">Ada Semua</option></select></td><td id="st-pn2"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>3</td><td>Tahap Sebaran Perancangan Strategik</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Kepada AJK sahaja</option><option value="2">Kepada AJK & Qariah</option></select></td><td id="st-pn3"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>4</td><td>Pelaksanaan Program Selaras Dengan Perancangan</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">0%</option><option value="1">1–49%</option><option value="2">50–79%</option><option value="3">80–100%</option></select></td><td id="st-pn4"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>5</td><td>Pengisian AJK</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Kurang 50%</option><option value="1">50–79%</option><option value="2">80–100%</option></select></td><td id="st-pn5"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>6</td><td>Keperluan Latar Belakang AJK (kelayakan)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada Sebahagian</option><option value="2">Memenuhi Keperluan</option></select></td><td id="st-pn6"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>7</td><td>Proses Pemilihan Jawatankuasa Masjid</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Sistematik</option><option value="2">Ada – Sistematik</option></select></td><td id="st-pn7"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>8</td><td>Penyediaan Pasukan Pelapis (Imam, Bilal & Siak)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Belum Terlatih</option><option value="2">Ada – Terlatih</option></select></td><td id="st-pn8"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>9</td><td>Kursus dihadiri AJK (Pengerusi, S/U & Bendahari)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">1 kursus setahun</option><option value="2">2+ kursus setahun</option></select></td><td id="st-pn9"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>10</td><td>Kursus dihadiri AJK (Imam, Bilal & Siak)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">1 kursus setahun</option><option value="2">2+ kursus setahun</option></select></td><td id="st-pn10"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>11</td><td>Mekanisme Penerimaan Aduan / Cadangan</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Manual</option><option value="2">Ada – Digital / Sistematik</option></select></td><td id="st-pn11"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>12</td><td>Pengurusan Pengendalian Aduan / Cadangan</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Tersusun</option><option value="2">Ada – Tersusun</option></select></td><td id="st-pn12"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>13</td><td>Jumlah Aduan Diselesaikan (%)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">0%</option><option value="1">1–49%</option><option value="2">50–79%</option><option value="3">80–100%</option></select></td><td id="st-pn13"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>14</td><td>Pengiktirafan Berbentuk Pertandingan (5 tahun)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">1–2 Anugerah</option><option value="2">3+ Anugerah</option></select></td><td id="st-pn14"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>15</td><td>Pengiktirafan Bukan Pertandingan (5 tahun)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 Jenis</option><option value="2">Ada – 2+ Jenis</option></select></td><td id="st-pn15"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>16</td><td>Mesyuarat AJK – Kekerapan</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada / Jarang</option><option value="1">1–2 kali setahun</option><option value="2">3–4 kali setahun</option><option value="3">5+ kali setahun</option></select></td><td id="st-pn16"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>17</td><td>Mesyuarat AJK – Kehadiran (%)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Kurang 50%</option><option value="1">50–79%</option><option value="2">80–100%</option></select></td><td id="st-pn17"><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="teras-header"><div class="teras-num">2</div>Pengurusan Kewangan (Ind. 18–27)</div>
+        <div class="tbl-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>18</td><td>Penyediaan Laporan Kewangan (% penyerahan ke MAIK)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">0%</option><option value="1">25% (1/4 kali)</option><option value="2">50% (2/4 kali)</option><option value="3">75% (3/4 kali)</option><option value="4">100% (4/4 kali)</option></select></td><td id="st-pn18"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>19</td><td>Penyerahan Minit Mesyuarat kepada Pihak Berkuasa Agama</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Lengkap</option><option value="2">Ada – Lengkap</option></select></td><td id="st-pn19"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>20</td><td>Merekod Kewangan (sistem rekod)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Manual sahaja</option><option value="2">Manual + Digital</option><option value="3">Sistem ICT sepenuhnya</option></select></td><td id="st-pn20"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>21</td><td>Semakan Audit</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Berkala</option><option value="2">Ada – Berkala Setiap Tahun</option></select></td><td id="st-pn21"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>22</td><td>Pembentangan Laporan Kewangan dalam Mesyuarat</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Sekali-sekala</option><option value="2">Ada – Setiap Mesyuarat</option></select></td><td id="st-pn22"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>23</td><td>Pengurusan Tabung Masjid (akaun terpisah)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 Akaun</option><option value="2">Ada – Pelbagai Tabung</option></select></td><td id="st-pn23"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>24</td><td>Sumber Kewangan (kepelbagaian)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">1 Sumber sahaja</option><option value="1">2–3 Sumber</option><option value="2">4+ Sumber</option></select></td><td id="st-pn24"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>25</td><td>Perbelanjaan Kewangan (ada anggaran belanjawan)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Sistematik</option><option value="2">Ada – Sistematik</option></select></td><td id="st-pn25"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>26</td><td>Prestasi Perbelanjaan (% realisasi vs anggaran)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Kurang 50%</option><option value="1">50–79%</option><option value="2">80–100%</option></select></td><td id="st-pn26"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>27</td><td>Pengurusan Aset (ada inventori)</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Kemaskini</option><option value="2">Ada – Kemaskini</option></select></td><td id="st-pn27"><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="teras-header"><div class="teras-num">3–7</div>Program Strategik & Inovasi (Ind. 28–32)</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>28</td><td>Perancangan Program Bersama Rakan Strategik</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">1–2 Rakan</option><option value="2">3+ Rakan</option></select></td><td id="st-pn28"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>29</td><td>Perancangan Program Dakwah di Luar Kariah</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Berkala</option><option value="2">Ada – Berkala</option></select></td><td id="st-pn29"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>30</td><td>Mengoptimum Sumber dalam Kalangan Kariah</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Terhad</option><option value="2">Ada – Aktif & Pelbagai</option></select></td><td id="st-pn30"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>31</td><td>Inovasi dalam Pengurusan</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 Inovasi</option><option value="2">Ada – 2+ Inovasi</option></select></td><td id="st-pn31"><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>32</td><td>Perancangan Pengurusan Tanah Wakaf</td><td><select class="pn-sel" data-comp="pengurusan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Aktif</option><option value="2">Ada – Diuruskan Aktif</option></select></td><td id="st-pn32"><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── KOMPONEN PENGIMARAHAN ── -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><span>🕌</span><h2>Komponen 2: Pengimarahan</h2><span class="badge">4 Sub-komponen | 32 Indikator</span></div>
+      <div class="card-body">
+
+        <div class="teras-header"><div class="teras-num">1</div>Ibadat Solat (Ind. 1–3)</div>
+        <div class="tbl-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Ibadat Solat – Solat Lima Waktu (kekerapan berjemaah)</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Kurang 3 waktu</option><option value="1">3–4 waktu</option><option value="2">5 waktu penuh</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>2</td><td>Ibadat Solat – Solat Jumaat (pengurusan & jemaah)</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Kurang Terurus</option><option value="1">Terurus – Jemaah Sederhana</option><option value="2">Terurus Baik – Jemaah Ramai</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>3</td><td>Ibadat Solat – Solat Sunat (Terawih, Witir dll.)</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Berkala</option><option value="2">Ada – Berkala</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="teras-header"><div class="teras-num">2</div>Aktiviti Tahunan (Ind. 4–10)</div>
+        <div class="tbl-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>4</td><td>Maal Hijrah</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Kecil</option><option value="2">Ada – Besar & Bermakna</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>5</td><td>Maulidur Rasul</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Kecil</option><option value="2">Ada – Besar & Bermakna</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>6</td><td>Israk Mikraj</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Kecil</option><option value="2">Ada – Besar & Bermakna</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>7</td><td>Ihya Ramadhan (Qiyamullail, Terawih, Iftar)</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Sebahagian</option><option value="2">Ada – Lengkap</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>8</td><td>Aidilfitri (program khas)</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Kecil</option><option value="2">Ada – Besar & Aktif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>9</td><td>Aidiladha (solat, korban, program)</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Sebahagian</option><option value="2">Ada – Lengkap</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>10</td><td>Sambutan Hari Kebesaran lain (Sukan, Pertandingan dll.)</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 aktiviti</option><option value="2">Ada – 2+ aktiviti</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="teras-header"><div class="teras-num">3</div>Aktiviti Keilmuan (Ind. 11–22)</div>
+        <div class="tbl-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>11</td><td>Program Keilmuan Umum – Kuliah Maghrib</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Berkala</option><option value="2">Ada – Berkala Mingguan</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>12</td><td>Program Keilmuan Umum – Kuliah Subuh</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Berkala</option><option value="2">Ada – Berkala</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>13</td><td>Program Keilmuan Umum – Kuliah Bulanan / Berkala</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Sekali-sekala</option><option value="2">Ada – Bulanan</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>14</td><td>Program Keilmuan Wanita – Umum</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 program</option><option value="2">Ada – 2+ program</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>15</td><td>Program Keilmuan Wanita – Kursus Kemahiran</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 program</option><option value="2">Ada – 2+ program</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>16</td><td>Program Keilmuan Belia / Remaja – Keilmuan</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 program</option><option value="2">Ada – 2+ program</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>17</td><td>Program Keilmuan Belia / Remaja – Akademi & Latihan</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 program</option><option value="2">Ada – 2+ program</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>18</td><td>Program Keilmuan Kanak-kanak – Keagamaan</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 program</option><option value="2">Ada – 2+ program</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>19</td><td>Program Keilmuan Kanak-kanak – Akademik & Kemahiran</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 program</option><option value="2">Ada – 2+ program</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>20</td><td>Program Keilmuan Saudara Baru – Keagamaan</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada</option><option value="2">Ada – Aktif & Berkala</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>21</td><td>Program Keilmuan Saudara Baru – Akademik & Kemahiran</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada</option><option value="2">Ada – Aktif & Berkala</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>22</td><td>Program Keilmuan Bukan Muslim</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Berkala</option><option value="2">Ada – Aktif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="teras-header"><div class="teras-num">4</div>Khidmat Komuniti (Ind. 23–32)</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>23</td><td>Khidmat Komuniti – Pengurusan Jenazah</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Lengkap</option><option value="2">Ada – Lengkap & Aktif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>24</td><td>Khidmat Komuniti – Khairat Kematian</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Aktif</option><option value="2">Ada – Aktif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>25</td><td>Khidmat Komuniti – Kemudahan Riadah & Kesukanan Dewasa</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Terhad</option><option value="2">Ada – Pelbagai</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>26</td><td>Khidmat Komuniti – Kesenian & Kebudayaan Islam</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Sekali-sekala</option><option value="2">Ada – Aktif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>27</td><td>Khidmat Komuniti – Aktiviti Rekreasi Tahunan</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 aktiviti</option><option value="2">Ada – 2+ aktiviti</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>28</td><td>Khidmat Komuniti – Gotong Royong Tahunan</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – 1 kali</option><option value="2">Ada – 2+ kali</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>29</td><td>Khidmat Komuniti – Pusat Pengetahuan Agama</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Aktif</option><option value="2">Ada – Aktif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>30</td><td>Khidmat Komuniti – Program Ziarah Kebajikan</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Berkala</option><option value="2">Ada – Berkala</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>31</td><td>Khidmat Komuniti – Bantuan / Amal Jariah</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Sekali-sekala</option><option value="2">Ada – Aktif & Berkala</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>32</td><td>Khidmat Komuniti – Khidmat Nasihat / Kaunseling</td><td><select class="pi-sel" data-comp="pengimarahan" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Formal</option><option value="2">Ada – Terancang</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── KOMPONEN KEMUDAHAN PRASARANA ── -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><span>🔧</span><h2>Komponen 3: Kemudahan Prasarana</h2><span class="badge">6 Sub-komponen | 11 Indikator</span></div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Kemudahan Tempat Ibadat (ruang solat, karpet, penghawa dingin)</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tidak Mencukupi</option><option value="1">Sederhana</option><option value="2">Baik</option><option value="3">Sangat Baik & Kondusif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>2</td><td>Peralatan Ibadat (mic, sistem audio, mimbar, kolah)</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tidak Mencukupi</option><option value="1">Sederhana</option><option value="2">Lengkap & Berfungsi</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>3</td><td>Kemudahan Pentadbiran (pejabat, bilik mesyuarat, peralatan)</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tiada / Tidak Mencukupi</option><option value="1">Ada – Sederhana</option><option value="2">Ada – Lengkap</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>4</td><td>Kemudahan Keilmuan (bilik kelas, perpustakaan, ICT)</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Terhad</option><option value="2">Ada – Lengkap</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>5</td><td>Khidmat Sosial (papan notis, maklumat komuniti)</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Kemaskini</option><option value="2">Ada – Kemaskini</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>6</td><td>Pangkalan Data Anak Kariah</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Lengkap</option><option value="2">Ada – Lengkap & Kemaskini</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>7</td><td>Kemudahan Kebajikan (tempat simpan barangan, sukan)</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Terhad</option><option value="2">Ada – Mencukupi</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>8</td><td>Kemudahan Pengurusan Jenazah (peralatan lengkap)</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tiada / Tidak Lengkap</option><option value="1">Sederhana</option><option value="2">Lengkap (Van, Peralatan)</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>9</td><td>Kemudahan Am – Tandas, Bilik Air & Tempat Wuduk</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tidak Mencukupi / Kotor</option><option value="1">Sederhana</option><option value="2">Baik & Bersih</option><option value="3">Sangat Baik</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>10</td><td>Kemudahan Am – Tempat Letak Kenderaan</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tiada / Tidak Mencukupi</option><option value="1">Ada – Sederhana</option><option value="2">Ada – Mencukupi & Tersusun</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>11</td><td>Kemudahan untuk OKU / Uzur (laluan, ruang khas)</td><td><select class="pr-sel" data-comp="prasarana" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Sebahagian</option><option value="2">Ada – Lengkap</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── KOMPONEN PERSEKITARAN ── -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><span>🌿</span><h2>Komponen 4: Persekitaran</h2><span class="badge">3 Sub-komponen | 8 Indikator</span></div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Indikator</th><th style="width:200px;">Penilaian Semasa</th><th style="width:120px;">Status</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Kebersihan – Dalaman Masjid (ruang solat, koridor)</td><td><select class="ps-sel" data-comp="persekitaran" onchange="kiraMarkah()"><option value="0">Kotor / Tidak Terjaga</option><option value="1">Sederhana</option><option value="2">Bersih</option><option value="3">Sangat Bersih & Kondusif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>2</td><td>Kebersihan – Luaran Masjid (halaman, parkir, pagar)</td><td><select class="ps-sel" data-comp="persekitaran" onchange="kiraMarkah()"><option value="0">Kotor / Tidak Terjaga</option><option value="1">Sederhana</option><option value="2">Bersih & Kemas</option><option value="3">Sangat Bersih & Menarik</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>3</td><td>Kebersihan – Bilik Air & Tempat Wuduk</td><td><select class="ps-sel" data-comp="persekitaran" onchange="kiraMarkah()"><option value="0">Kotor</option><option value="1">Sederhana</option><option value="2">Bersih</option><option value="3">Sangat Bersih</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>4</td><td>Keceriaan – Dalaman Masjid (hiasan, kaligrafi, suasana)</td><td><select class="ps-sel" data-comp="persekitaran" onchange="kiraMarkah()"><option value="0">Tiada / Tidak Menarik</option><option value="1">Sederhana</option><option value="2">Menarik</option><option value="3">Sangat Menarik & Kondusif</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>5</td><td>Keceriaan – Luaran Masjid (landskap, tanaman, lampu)</td><td><select class="ps-sel" data-comp="persekitaran" onchange="kiraMarkah()"><option value="0">Tiada / Tidak Menarik</option><option value="1">Sederhana</option><option value="2">Menarik</option><option value="3">Sangat Menarik</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>6</td><td>Keceriaan – Bilik Air (bersih, wangi, ada kemudahan)</td><td><select class="ps-sel" data-comp="persekitaran" onchange="kiraMarkah()"><option value="0">Tidak Menarik</option><option value="1">Sederhana</option><option value="2">Baik</option><option value="3">Sangat Baik</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>7</td><td>Keselamatan – Dalaman Masjid (alat pemadam, CCTV, laluan kecemasan)</td><td><select class="ps-sel" data-comp="persekitaran" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Mencukupi</option><option value="2">Ada – Mencukupi</option><option value="3">Lengkap & Berfungsi</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+              <tr><td>8</td><td>Keselamatan – Luaran Masjid (pagar, lampu, jalan masuk)</td><td><select class="ps-sel" data-comp="persekitaran" onchange="kiraMarkah()"><option value="0">Tiada</option><option value="1">Ada – Tidak Mencukupi</option><option value="2">Ada – Mencukupi</option><option value="3">Lengkap & Selamat</option></select></td><td><span class="badge-grey">Belum Nilai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cadangan Peningkatan -->
+    <div class="card">
+      <div class="card-header"><span>💡</span><h2>Cadangan Peningkatan ke 5 Bintang</h2></div>
+      <div class="card-body" id="cadangan-box">
+        <p style="color:var(--muted);font-size:13px;text-align:center;padding:14px 0;">Lengkapkan penilaian di atas untuk melihat cadangan peningkatan automatik.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  // ── TAB NAVIGATION
+  function showPanel(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    const idx = ['dashboard','kpi','kertaskerja','kewangan','aset','takwim','penarafan'].indexOf(id);
+    document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ── KERTAS KERJA
+  var kkData = [];
+  function daftarKK() {
+    var nama = document.getElementById('kk-nama').value.trim();
+    var teras = document.getElementById('kk-teras').value;
+    var tarikh = document.getElementById('kk-tarikh').value;
+    var pic = document.getElementById('kk-pic').value.trim();
+    var belanja = document.getElementById('kk-belanja').value;
+    var peserta = document.getElementById('kk-peserta').value;
+    var obj = document.getElementById('kk-obj').value.trim();
+    var status = document.getElementById('kk-status').value;
+    if (!nama) { alert('Sila masukkan nama program.'); return; }
+    kkData.push({ id: kkData.length+1, nama, teras, tarikh, pic, belanja, peserta, obj, status });
+    renderKK();
+    clearKK();
+  }
+  function renderKK() {
+    var list = document.getElementById('kk-list');
+    document.getElementById('kk-count').textContent = kkData.length + ' rekod';
+    if (!kkData.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada kertas kerja didaftarkan.</p>'; return; }
+    list.innerHTML = kkData.map(function(k) {
+      var badgeClass = k.status === 'Selesai' ? 'badge-green' : k.status === 'Dalam Proses' ? 'badge-blue' : k.status === 'Ditangguh' ? 'badge-red' : 'badge-grey';
+      return '<div class="kk-row"><span class="kk-num">#' + k.id + '</span><div style="flex:1"><div class="kk-title">' + k.nama + '</div><div class="kk-meta">' + (k.teras||'–') + ' &nbsp;|&nbsp; ' + (k.tarikh||'–') + ' &nbsp;|&nbsp; PIC: ' + (k.pic||'–') + '</div></div><span class="' + badgeClass + '">' + k.status + '</span></div>';
+    }).join('');
+  }
+  function clearKK() {
+    ['kk-nama','kk-pic','kk-belanja','kk-peserta','kk-obj'].forEach(function(id){ document.getElementById(id).value = ''; });
+    document.getElementById('kk-teras').selectedIndex = 0;
+    document.getElementById('kk-status').selectedIndex = 0;
+    document.getElementById('kk-tarikh').value = '';
+  }
+
+  // ── KEWANGAN
+  var finData = [];
+  function daftarFin() {
+    var tarikh = document.getElementById('fin-tarikh').value;
+    var jenis = document.getElementById('fin-jenis').value;
+    var perkara = document.getElementById('fin-perkara').value.trim();
+    var amaun = parseFloat(document.getElementById('fin-amaun').value) || 0;
+    var kategori = document.getElementById('fin-kategori').value;
+    var catatan = document.getElementById('fin-catatan').value.trim();
+    if (!perkara || !amaun) { alert('Sila lengkapkan butiran perkara dan amaun.'); return; }
+    finData.push({ id: finData.length+1, tarikh, jenis, perkara, amaun, kategori, catatan });
+    renderFin();
+    clearFin();
+  }
+  function renderFin() {
+    var list = document.getElementById('fin-list');
+    document.getElementById('fin-count').textContent = finData.length + ' rekod';
+    var masuk = finData.filter(function(f){return f.jenis==='masuk';}).reduce(function(a,b){return a+b.amaun;},0);
+    var keluar = finData.filter(function(f){return f.jenis==='keluar';}).reduce(function(a,b){return a+b.amaun;},0);
+    var baki = masuk - keluar;
+    document.querySelectorAll('.finance-box .amount')[0].textContent = 'RM ' + masuk.toFixed(2);
+    document.querySelectorAll('.finance-box .amount')[1].textContent = 'RM ' + keluar.toFixed(2);
+    document.querySelectorAll('.finance-box .amount')[2].textContent = 'RM ' + baki.toFixed(2);
+    if (!finData.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada transaksi didaftarkan.</p>'; return; }
+    list.innerHTML = '<div class="tbl-wrap"><table><thead><tr><th>#</th><th>Tarikh</th><th>Perkara</th><th>Kategori</th><th>Amaun</th></tr></thead><tbody>' +
+      finData.map(function(f) {
+        return '<tr><td>' + f.id + '</td><td>' + (f.tarikh||'–') + '</td><td>' + f.perkara + '</td><td>' + f.kategori + '</td><td style="font-weight:600;color:'+(f.jenis==='masuk'?'#155724':'#721c24')+'">' + (f.jenis==='masuk'?'+':'–') + ' RM ' + f.amaun.toFixed(2) + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+  }
+  function clearFin() {
+    ['fin-perkara','fin-amaun','fin-catatan'].forEach(function(id){ document.getElementById(id).value = ''; });
+    document.getElementById('fin-tarikh').value = '';
+    document.getElementById('fin-jenis').selectedIndex = 0;
+    document.getElementById('fin-kategori').selectedIndex = 0;
+  }
+
+  // ── ASET
+  var asetData = [];
+  function daftarAset() {
+    var nama = document.getElementById('aset-nama').value.trim();
+    var kategori = document.getElementById('aset-kategori').value;
+    var siri = document.getElementById('aset-siri').value.trim();
+    var tarikh = document.getElementById('aset-tarikh').value;
+    var nilai = parseFloat(document.getElementById('aset-nilai').value) || 0;
+    var status = document.getElementById('aset-status').value;
+    var lokasi = document.getElementById('aset-lokasi').value.trim();
+    if (!nama) { alert('Sila masukkan nama aset.'); return; }
+    asetData.push({ id: asetData.length+1, nama, kategori, siri, tarikh, nilai, status, lokasi });
+    renderAset();
+    clearAset();
+  }
+  function renderAset() {
+    var list = document.getElementById('aset-list');
+    document.getElementById('aset-count').textContent = asetData.length + ' rekod';
+    if (!asetData.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada aset didaftarkan.</p>'; return; }
+    var icons = {'Audio Visual & Multimedia':'🔊','Perabot & Peralatan Pejabat':'🪑','Kemudahan Kebersihan':'🧹','Kenderaan':'🚗','Peralatan Dapur':'🍳','Kelengkapan Masjid':'🕌','ICT & Teknologi':'💻','Lain-lain':'📦'};
+    var statusBadge = {'baik':'badge-green','sederhana':'badge-gold','perlu-selenggara':'badge-orange','rosak':'badge-red'};
+    var statusLabel = {'baik':'Baik','sederhana':'Sederhana','perlu-selenggara':'Perlu Selenggara','rosak':'Rosak'};
+    list.innerHTML = asetData.map(function(a) {
+      return '<div class="asset-item"><div class="asset-icon">' + (icons[a.kategori]||'📦') + '</div><div class="asset-info"><div class="name">' + a.nama + '</div><div class="meta">' + a.kategori + ' &nbsp;|&nbsp; ' + (a.siri||'–') + ' &nbsp;|&nbsp; ' + (a.lokasi||'–') + '</div></div><div class="asset-status"><span class="' + statusBadge[a.status] + '">' + statusLabel[a.status] + '</span></div></div>';
+    }).join('');
+  }
+  function clearAset() {
+    ['aset-nama','aset-siri','aset-nilai','aset-lokasi'].forEach(function(id){ document.getElementById(id).value = ''; });
+    document.getElementById('aset-tarikh').value = '';
+    document.getElementById('aset-kategori').selectedIndex = 0;
+    document.getElementById('aset-status').selectedIndex = 0;
+  }
+  // ── TAKWIM ENGINE
+  var BULAN_NAMA = ['','Januari','Februari','Mac','April','Mei','Jun','Julai','Ogos','September','Oktober','November','Disember'];
+  var BULAN_SHORT = ['','JAN','FEB','MAC','APR','MEI','JUN','JUL','OGS','SEP','OKT','NOV','DIS'];
+  var TERAS_COLOR = { T1:'var(--green)', T2:'var(--blue)', T3:'var(--gold)', T4:'#27ae60', CUTI:'var(--red)' };
+  var TERAS_LABEL = { T1:'T1 – Pengurusan', T2:'T2 – Pengimarahan', T3:'T3 – Prasarana', T4:'T4 – Persekitaran', CUTI:'Cuti / Kebesaran' };
+  var STATUS_BADGE = { dirancang:'badge-grey', dilaksana:'badge-green', tangguh:'badge-orange', batal:'badge-red' };
+  var STATUS_LABEL = { dirancang:'Dirancang', dilaksana:'Dilaksanakan', tangguh:'Ditangguh', batal:'Dibatalkan' };
+
+  // Data awal takwim 2026 (hari kebesaran Islam + program tetap masjid)
+  var twData = {
+    '2026': [
+      // ════ JANUARI 2026 ════
+      {bulan:1,hari:'SABTU',tarikh:3,aktiviti:'🌙 Maal Hijrah / Awal Muharram 1447H',pic:'Ketua Biro Dakwah & Multimedia',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:1,hari:'AHAD',tarikh:4,aktiviti:'📿 10 Muharram – Hari Asyura 1447H (Puasa Sunat)',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:1,hari:'SABTU',tarikh:10,aktiviti:'🧹 Gotong-royong Perdana 2026',pic:'Ketua Biro Kebersihan & Keceriaan',teras:'T4',lokasi:'Kawasan Masjid',status:'dilaksana'},
+      // ════ FEBRUARI 2026 ════
+      {bulan:2,hari:'AHAD',tarikh:1,aktiviti:'🌙 1 Rejab 1447H – Mula Bulan Rejab',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:2,hari:'AHAD',tarikh:1,aktiviti:'🤲 Doa Awal Rejab – Sunat Berdoa Malam 1 Rejab',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:2,hari:'KHAMIS',tarikh:19,aktiviti:'🌙 1 Ramadhan 1447H – Mula Berpuasa',pic:'',teras:'CUTI',lokasi:'',status:'dilaksana'},
+      {bulan:2,hari:'JUMAAT',tarikh:20,aktiviti:'🕌 Kuliah Ramadhan / Tarawih Malam Pertama',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:2,hari:'SABTU',tarikh:21,aktiviti:'📿 Ceramah Perdana Ramadhan 1447H',pic:'Ketua Biro Dakwah & Multimedia',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      // ════ MAC 2026 ════
+      {bulan:3,hari:'SABTU',tarikh:7,aktiviti:'🌙 17 Ramadhan – Nuzul Al-Quran 1447H',pic:'Imam Tua',teras:'CUTI',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:3,hari:'SABTU',tarikh:7,aktiviti:'📖 Majlis Tilawah & Ceramah Nuzul Al-Quran',pic:'Imam Tua / Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:3,hari:'ISNIN',tarikh:9,aktiviti:'🌙 Malam 10 Akhir Ramadhan – Iktikaf Bermula',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:3,hari:'RABU',tarikh:11,aktiviti:'📿 Majlis Khatam Al-Quran Ramadhan 1447H',pic:'Imam Tua / Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:3,hari:'JUMAAT',tarikh:20,aktiviti:'🌙 Malam Lailatul Qadar (27 Ramadhan) – Qiyamullail',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:3,hari:'SABTU',tarikh:21,aktiviti:'🎉 1 Syawal – Hari Raya Aidilfitri 1447H',pic:'',teras:'CUTI',lokasi:'',status:'dilaksana'},
+      {bulan:3,hari:'AHAD',tarikh:22,aktiviti:'🎉 2 Syawal – Hari Raya Aidilfitri (Cuti)',pic:'',teras:'CUTI',lokasi:'',status:'dilaksana'},
+      {bulan:3,hari:'ISNIN',tarikh:23,aktiviti:'🎉 3 Syawal – Hari Raya Aidilfitri (Cuti)',pic:'',teras:'CUTI',lokasi:'',status:'dilaksana'},
+      {bulan:3,hari:'SELASA',tarikh:31,aktiviti:'📋 Laporan Kewangan Suku 1 → MAIK',pic:'Bendahari',teras:'T1',lokasi:'MAIK Kelantan',status:'dirancang'},
+      // ════ APRIL 2026 ════
+      {bulan:4,hari:'SABTU',tarikh:11,aktiviti:'🎪 Karnival Madani Raya 2026',pic:'Dr. Hj. Mohd Azian (Pengarah Program)',teras:'T2',lokasi:'Kawasan Masjid Ismailiah',status:'dilaksana'},
+      {bulan:4,hari:'AHAD',tarikh:19,aktiviti:'🌙 1 Zulkaedah 1447H – Mula Bulan Zulkaedah',pic:'',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ MEI 2026 ════
+      {bulan:5,hari:'ISNIN',tarikh:18,aktiviti:'🌙 1 Zulhijjah 1447H – Mula 10 Hari Terafdal',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:5,hari:'ISNIN',tarikh:18,aktiviti:'🤲 Ceramah Keutamaan 10 Zulhijjah',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:5,hari:'RABU',tarikh:27,aktiviti:'🌙 Hari Arafah – 9 Zulhijjah 1447H (Puasa Sunat)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:5,hari:'RABU',tarikh:27,aktiviti:'🐑 Solat Sunat Hari Raya Aidiladha',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:5,hari:'KHAMIS',tarikh:28,aktiviti:'🎉 1 Zulhijjah – Hari Raya Aidiladha 1447H',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:5,hari:'JUMAAT',tarikh:29,aktiviti:'🎉 Hari Raya Aidiladha (Cuti)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      // ════ JUN 2026 ════
+      {bulan:6,hari:'RABU',tarikh:17,aktiviti:'🌙 Awal Muharram 1448H – Maal Hijrah',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:6,hari:'KHAMIS',tarikh:18,aktiviti:'📿 10 Muharram – Hari Asyura 1448H',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:6,hari:'SABTU',tarikh:20,aktiviti:'🧹 Gotong-royong Pertengahan Tahun',pic:'Ketua Biro Kebersihan & Keceriaan',teras:'T4',lokasi:'Kawasan Masjid',status:'dirancang'},
+      {bulan:6,hari:'SELASA',tarikh:30,aktiviti:'📋 Laporan Kewangan Suku 2 → MAIK',pic:'Bendahari',teras:'T1',lokasi:'MAIK Kelantan',status:'dirancang'},
+      // ════ JULAI 2026 ════
+      {bulan:7,hari:'RABU',tarikh:1,aktiviti:'🌙 1 Safar 1448H – Mula Bulan Safar',pic:'',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:7,hari:'SABTU',tarikh:4,aktiviti:'🇲🇾 Hari Keputeraan Yang DiPertuan Agong',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:7,hari:'JUMAAT',tarikh:17,aktiviti:'📿 Ceramah Bulanan Julai',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ OGOS 2026 ════
+      {bulan:8,hari:'AHAD',tarikh:1,aktiviti:'🌙 1 Rabiulawal 1448H – Mula Bulan Maulidur Rasul',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:8,hari:'AHAD',tarikh:1,aktiviti:'🤲 Majlis Selawat & Doa Awal Rabiulawal',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:8,hari:'ISNIN',tarikh:31,aktiviti:'🇲🇾 Hari Merdeka Malaysia (ke-69)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      // ════ SEPTEMBER 2026 ════
+      {bulan:9,hari:'JUMAAT',tarikh:4,aktiviti:'🇲🇾 Hari Malaysia (ke-63)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:9,hari:'AHAD',tarikh:6,aktiviti:'🌙 1 Rabiulakhir 1448H',pic:'',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:9,hari:'RABU',tarikh:30,aktiviti:'📋 Laporan Kewangan Suku 3 → MAIK',pic:'Bendahari',teras:'T1',lokasi:'MAIK Kelantan',status:'dirancang'},
+      // ════ OKTOBER 2026 ════
+      {bulan:10,hari:'ISNIN',tarikh:5,aktiviti:'🌙 12 Rabiulawal – Maulidur Rasul SAW 1448H',pic:'Ketua Biro Dakwah & Multimedia',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:10,hari:'ISNIN',tarikh:5,aktiviti:'🤲 Majlis Perarakan & Ceramah Maulidur Rasul',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Kawasan Masjid',status:'dirancang'},
+      {bulan:10,hari:'SELASA',tarikh:6,aktiviti:'📿 Majlis Selawat Nabi (Malam Maulidur Rasul)',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ NOVEMBER 2026 ════
+      {bulan:11,hari:'AHAD',tarikh:1,aktiviti:'🌙 1 Jamadilawwal 1448H',pic:'',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:11,hari:'SABTU',tarikh:14,aktiviti:'💚 Kempen Sayangi Masjid Kita & Anugerah Komuniti',pic:'Semua Ketua Biro',teras:'T4',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ DISEMBER 2026 ════
+      {bulan:12,hari:'ISNIN',tarikh:7,aktiviti:'🌙 1 Jamadilakhir 1448H',pic:'',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:12,hari:'KHAMIS',tarikh:31,aktiviti:'📋 Laporan Kewangan Suku 4 → MAIK',pic:'Bendahari',teras:'T1',lokasi:'MAIK Kelantan',status:'dirancang'},
+      {bulan:12,hari:'SABTU',tarikh:19,aktiviti:'🏆 Majlis Tutup Tahun & Semakan KPI 2026',pic:'AJK Tertinggi',teras:'T1',lokasi:'Masjid Ismailiah',status:'dirancang'}
+    ],
+    '2027': [
+      // ════ JANUARI 2027 ════
+      {bulan:1,hari:'AHAD',tarikh:4,aktiviti:'🌙 1 Rejab 1448H – Mula Bulan Rejab',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:1,hari:'AHAD',tarikh:4,aktiviti:'🤲 Doa Awal Rejab – Maal Hijrah 1449H',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:1,hari:'SABTU',tarikh:17,aktiviti:'👩 Program Keilmuan Wanita (1)',pic:'Ketua Biro Belia, Wanita & Keluarga Solehah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ FEBRUARI 2027 ════
+      {bulan:2,hari:'AHAD',tarikh:7,aktiviti:'🌙 27 Rejab 1448H – Israk Mikraj',pic:'Ketua Biro Dakwah',teras:'CUTI',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:2,hari:'AHAD',tarikh:7,aktiviti:'🌟 Ceramah & Majlis Ilmu Israk Mikraj 1448H',pic:'Ketua Biro Dakwah & Multimedia',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:2,hari:'AHAD',tarikh:14,aktiviti:'👨‍🎓 Program Keilmuan Remaja / Kem Motivasi',pic:'Ketua Biro Pelajaran, Dakwah & Multimedia',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ MAC 2027 ════
+      {bulan:3,hari:'ISNIN',tarikh:8,aktiviti:'🌙 1 Ramadhan 1448H – Mula Berpuasa',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:3,hari:'SELASA',tarikh:9,aktiviti:'🕌 Tarawih Malam Pertama Ramadhan 1448H',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:3,hari:'SABTU',tarikh:20,aktiviti:'🌙 13 Ramadhan – Malam Nuzul Al-Quran 1448H',pic:'Imam Tua',teras:'CUTI',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:3,hari:'SABTU',tarikh:20,aktiviti:'📖 Majlis Tilawah & Ceramah Nuzul Al-Quran 1448H',pic:'Imam Tua / Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:3,hari:'ISNIN',tarikh:22,aktiviti:'🌙 Malam 10 Akhir Ramadhan – Iktikaf Bermula',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:3,hari:'SABTU',tarikh:28,aktiviti:'📿 Majlis Khatam Al-Quran Ramadhan 1448H',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:3,hari:'SABTU',tarikh:28,aktiviti:'🏗️ Bengkel Kepimpinan AJK & Lawatan Penanda Aras',pic:'AJK Tertinggi',teras:'T1',lokasi:'Masjid Cemerlang',status:'dirancang'},
+      {bulan:3,hari:'SELASA',tarikh:31,aktiviti:'📋 Laporan Kewangan Suku 1 → MAIK',pic:'Bendahari',teras:'T1',lokasi:'MAIK Kelantan',status:'dirancang'},
+      // ════ APRIL 2027 ════
+      {bulan:4,hari:'AHAD',tarikh:5,aktiviti:'🌙 28 Ramadhan – Malam Lailatul Qadar (27 Ramadhan)',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:4,hari:'ISNIN',tarikh:6,aktiviti:'🎉 1 Syawal – Hari Raya Aidilfitri 1448H',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:4,hari:'SELASA',tarikh:7,aktiviti:'🎉 2 Syawal – Hari Raya Aidilfitri (Cuti)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:4,hari:'RABU',tarikh:8,aktiviti:'🎉 3 Syawal – Hari Raya Aidilfitri (Cuti)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:4,hari:'AHAD',tarikh:5,aktiviti:'👶 Program Kanak-kanak (1) – Keagamaan',pic:'Ketua Biro Pelajaran, Dakwah & Multimedia',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:4,hari:'SABTU',tarikh:11,aktiviti:'🏥 Kolaborasi Klinik Kesihatan Percuma',pic:'Ketua Biro Ekonomi, Kebajikan & Hal Ehwal Mukim',teras:'T2',lokasi:'Kawasan Masjid',status:'dirancang'},
+      // ════ MEI 2027 ════
+      {bulan:5,hari:'ISNIN',tarikh:5,aktiviti:'🌙 1 Zulkaedah 1448H',pic:'',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:5,hari:'SABTU',tarikh:9,aktiviti:'📿 Majlis Khatam Al-Quran Ramadhan (Susulan)',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:5,hari:'ISNIN',tarikh:26,aktiviti:'🌙 Hari Arafah – Wukuf 9 Zulhijjah 1448H',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:5,hari:'SELASA',tarikh:27,aktiviti:'🐑 Solat Raya & Korban Aidiladha 1448H',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:5,hari:'SELASA',tarikh:27,aktiviti:'🎉 1 Zulhijjah – Hari Raya Aidiladha 1448H',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:5,hari:'RABU',tarikh:28,aktiviti:'🎉 Hari Raya Aidiladha (Cuti)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      // ════ JUN 2027 ════
+      {bulan:6,hari:'ISNIN',tarikh:7,aktiviti:'🌙 Awal Muharram 1449H – Maal Hijrah',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:6,hari:'SELASA',tarikh:8,aktiviti:'📿 10 Muharram – Hari Asyura 1449H',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:6,hari:'SABTU',tarikh:21,aktiviti:'🧹 Gotong-royong Pertengahan Tahun 2027',pic:'Ketua Biro Kebersihan & Keceriaan',teras:'T4',lokasi:'Kawasan Masjid',status:'dirancang'},
+      {bulan:6,hari:'SELASA',tarikh:30,aktiviti:'📋 Laporan Kewangan Suku 2 → MAIK',pic:'Bendahari',teras:'T1',lokasi:'MAIK Kelantan',status:'dirancang'},
+      // ════ JULAI 2027 ════
+      {bulan:7,hari:'SABTU',tarikh:5,aktiviti:'🌿 Program Hijau – Tanam Pokok & Landskap',pic:'Ketua Biro Pembangunan, Kebersihan & Keceriaan',teras:'T4',lokasi:'Kawasan Masjid',status:'dirancang'},
+      {bulan:7,hari:'SABTU',tarikh:5,aktiviti:'🌙 1 Safar 1449H – Mula Bulan Safar',pic:'',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:7,hari:'SABTU',tarikh:19,aktiviti:'🍽️ Majlis Iftar Jemaah (Muharam) 1449H',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ OGOS 2027 ════
+      {bulan:8,hari:'AHAD',tarikh:1,aktiviti:'🌙 1 Rabiulawal 1449H – Mula Bulan Maulidur Rasul',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:8,hari:'AHAD',tarikh:9,aktiviti:'👩 Program Keilmuan Wanita (2) – Kursus Kemahiran',pic:'Ketua Biro Belia, Wanita & Keluarga Solehah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:8,hari:'SABTU',tarikh:16,aktiviti:'🩸 Kolaborasi Derma Darah',pic:'Ketua Biro Ekonomi, Kebajikan & Hal Ehwal Mukim',teras:'T2',lokasi:'Kawasan Masjid',status:'dirancang'},
+      {bulan:8,hari:'ISNIN',tarikh:31,aktiviti:'🇲🇾 Hari Merdeka Malaysia (ke-70)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      // ════ SEPTEMBER 2027 ════
+      {bulan:9,hari:'AHAD',tarikh:12,aktiviti:'🌙 12 Rabiulawal – Maulidur Rasul SAW 1449H',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:9,hari:'AHAD',tarikh:12,aktiviti:'🤲 Majlis Perarakan & Ceramah Maulidur Rasul 1449H',pic:'Semua Ketua Biro',teras:'T2',lokasi:'Kawasan Masjid',status:'dirancang'},
+      {bulan:9,hari:'JUMAAT',tarikh:17,aktiviti:'🇲🇾 Hari Malaysia (ke-64)',pic:'',teras:'CUTI',lokasi:'',status:'dirancang'},
+      {bulan:9,hari:'RABU',tarikh:30,aktiviti:'📋 Laporan Kewangan Suku 3 → MAIK',pic:'Bendahari',teras:'T1',lokasi:'MAIK Kelantan',status:'dirancang'},
+      // ════ OKTOBER 2027 ════
+      {bulan:10,hari:'ISNIN',tarikh:6,aktiviti:'🌙 1 Jamadilawwal 1449H',pic:'',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:10,hari:'ISNIN',tarikh:6,aktiviti:'📿 Ceramah Bulanan Oktober',pic:'Ketua Biro Dakwah',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:10,hari:'SABTU',tarikh:18,aktiviti:'👶 Program Kanak-kanak (3) – Akademik & Kemahiran',pic:'Ketua Biro Pelajaran, Dakwah & Multimedia',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ NOVEMBER 2027 ════
+      {bulan:11,hari:'AHAD',tarikh:9,aktiviti:'🧹 Gotong-royong Akhir Tahun 2027',pic:'Ketua Biro Kebersihan & Keceriaan',teras:'T4',lokasi:'Kawasan Masjid',status:'dirancang'},
+      {bulan:11,hari:'SABTU',tarikh:15,aktiviti:'💚 Kempen Sayangi Masjid Kita & Anugerah Komuniti 2027',pic:'Semua Ketua Biro',teras:'T4',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      // ════ DISEMBER 2027 ════
+      {bulan:12,hari:'SABTU',tarikh:4,aktiviti:'🌙 1 Rejab 1449H – Mula Bulan Rejab',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:12,hari:'SABTU',tarikh:4,aktiviti:'🤲 Doa Awal Rejab 1449H',pic:'Imam Tua',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:12,hari:'KHAMIS',tarikh:31,aktiviti:'📋 Laporan Kewangan Suku 4 → MAIK',pic:'Bendahari',teras:'T1',lokasi:'MAIK Kelantan',status:'dirancang'},
+      {bulan:12,hari:'SABTU',tarikh:20,aktiviti:'🏆 Majlis Tutup Tahun & Semakan KPI 2027',pic:'AJK Tertinggi',teras:'T1',lokasi:'Masjid Ismailiah',status:'dirancang'}
+    ]
+  };
+
+  var twTahunAktif = '2026';
+
+  function tunjukTakwim(tahun) {
+    twTahunAktif = tahun;
+    document.getElementById('takwim-2026').style.display = tahun === '2026' ? '' : 'none';
+    document.getElementById('takwim-2027').style.display = tahun === '2027' ? '' : 'none';
+    document.getElementById('btn-tw-2026').className = tahun === '2026' ? 'btn btn-primary' : 'btn btn-outline';
+    document.getElementById('btn-tw-2027').className = tahun === '2027' ? 'btn btn-primary' : 'btn btn-outline';
+    renderTakwim(tahun);
+  }
+
+  function renderTakwim(tahun) {
+    var data = twData[tahun] || [];
+    var container = document.getElementById('tw-bulan-container-' + tahun);
+    var statsEl = document.getElementById('tw-stats-' + tahun);
+
+    // Stats
+    var total = data.length;
+    var dilaksana = data.filter(function(d){ return d.status === 'dilaksana'; }).length;
+    var dirancang = data.filter(function(d){ return d.status === 'dirancang'; }).length;
+    statsEl.innerHTML = '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px;">' +
+      '<div class="stat-card" style="flex:1;min-width:120px;padding:12px;border-top-color:var(--green);"><div class="stat-num" style="font-size:22px;">' + total + '</div><div class="stat-label">Jumlah Aktiviti</div></div>' +
+      '<div class="stat-card" style="flex:1;min-width:120px;padding:12px;border-top-color:#27ae60;"><div class="stat-num" style="font-size:22px;color:#155724;">' + dilaksana + '</div><div class="stat-label">Dilaksanakan</div></div>' +
+      '<div class="stat-card" style="flex:1;min-width:120px;padding:12px;border-top-color:var(--blue);"><div class="stat-num" style="font-size:22px;color:var(--blue);">' + dirancang + '</div><div class="stat-label">Dirancang</div></div>' +
+      '</div>';
+
+    // Susun mengikut bulan
+    var byBulan = {};
+    for (var b = 1; b <= 12; b++) byBulan[b] = [];
+    data.forEach(function(d){ if (byBulan[d.bulan]) byBulan[d.bulan].push(d); });
+    for (var b = 1; b <= 12; b++) byBulan[b].sort(function(a,c){ return a.tarikh - c.tarikh; });
+
+    var html = '<div class="card"><div class="card-body" style="padding:0;">';
+    html += '<div class="tbl-wrap"><table>';
+    html += '<thead><tr><th style="width:80px">Bulan</th><th style="width:60px">Hari</th><th style="width:50px">Tarikh</th><th>Aktiviti / Program</th><th>PIC / Penyelaras</th><th style="width:130px">Teras</th><th>Lokasi</th><th style="width:110px">Status</th><th style="width:60px">Tindakan</th></tr></thead>';
+    html += '<tbody>';
+
+    for (var b = 1; b <= 12; b++) {
+      var rowsBulan = byBulan[b];
+      // Header bulan dengan butang tambah
+      html += '<tr><td colspan="8" style="background:linear-gradient(90deg,var(--green-dark),var(--green));color:white;font-weight:700;padding:8px 14px;font-size:12px;letter-spacing:0.5px;">' + BULAN_NAMA[b].toUpperCase() + ' ' + tahun + '</td>';
+      html += '<td style="background:linear-gradient(90deg,var(--green-dark),var(--green));text-align:center;"><button onclick="bukaTambahAktivitiBulan(\'' + tahun + '\',' + b + ')" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:white;border-radius:4px;padding:2px 8px;cursor:pointer;font-size:11px;">➕ Tambah</button></td></tr>';
+      if (rowsBulan.length === 0) {
+        html += '<tr><td colspan="9" style="color:var(--muted);font-size:12px;text-align:center;padding:10px;font-style:italic;cursor:pointer;" onclick="bukaTambahAktivitiBulan(\'' + tahun + '\',' + b + ')">– Tiada aktiviti. Klik untuk tambah –</td></tr>';
+      } else {
+        rowsBulan.forEach(function(d, idx) {
+          var color = TERAS_COLOR[d.teras] || '#888';
+          var badgeCls = STATUS_BADGE[d.status] || 'badge-grey';
+          html += '<tr>';
+          html += '<td style="font-size:11px;color:var(--muted);">' + BULAN_SHORT[b] + ' ' + tahun + '</td>';
+          html += '<td style="font-size:11px;">' + (d.hari || '–') + '</td>';
+          html += '<td style="font-weight:700;text-align:center;">' + (d.tarikh || '–') + '</td>';
+          html += '<td><div style="display:flex;align-items:center;gap:7px;"><div style="width:8px;height:8px;border-radius:50%;background:' + color + ';flex-shrink:0;"></div><span style="font-size:12px;font-weight:500;">' + d.aktiviti + '</span></div></td>';
+          html += '<td style="font-size:11px;color:var(--muted);">' + (d.pic || '–') + '</td>';
+          html += '<td><span style="font-size:10px;padding:2px 7px;border-radius:12px;background:' + color + '22;color:' + color + ';font-weight:600;">' + (TERAS_LABEL[d.teras] || d.teras) + '</span></td>';
+          html += '<td style="font-size:11px;color:var(--muted);">' + (d.lokasi || '–') + '</td>';
+          html += '<td><span class="' + badgeCls + '">' + (STATUS_LABEL[d.status] || d.status) + '</span></td>';
+          html += '<td style="white-space:nowrap;">' +
+            '<button class="btn btn-outline btn-sm" style="font-size:10px;margin-right:3px;" onclick="ubahStatus(\'' + tahun + '\',' + (data.indexOf(d)) + ')" title="Tukar Status">✏️</button>' +
+            '<button class="btn btn-sm" style="font-size:10px;background:#fdf2f2;color:var(--red);border:1px solid #f5c6cb;" onclick="padamAktiviti(\'' + tahun + '\',' + (data.indexOf(d)) + ')" title="Padam">🗑️</button>' +
+            '</td>';
+          html += '</tr>';
+        });
+      }
+    }
+    html += '</tbody></table></div></div>';
+    container.innerHTML = html;
+  }
+
+  function ubahStatus(tahun, idx) {
+    var d = twData[tahun][idx];
+    var statusList = ['dirancang','dilaksana','tangguh','batal'];
+    var cur = statusList.indexOf(d.status);
+    d.status = statusList[(cur + 1) % statusList.length];
+    renderTakwim(tahun);
+  }
+
+  function bukaTambahAktiviti() {
+    document.getElementById('modal-takwim').style.display = 'flex';
+    document.getElementById('tw-tahun').value = twTahunAktif;
+  }
+  function bukaTambahAktivitiBulan(tahun, bulan) {
+    document.getElementById('modal-takwim').style.display = 'flex';
+    document.getElementById('tw-tahun').value = tahun;
+    document.getElementById('tw-bulan').value = String(bulan);
+  }
+  function padamAktiviti(tahun, idx) {
+    var d = twData[tahun][idx];
+    if (confirm('Padam aktiviti "' + d.aktiviti + '"?')) {
+      twData[tahun].splice(idx, 1);
+      renderTakwim(tahun);
+    }
+  }
+  function tutupModal() {
+    document.getElementById('modal-takwim').style.display = 'none';
+  }
+  function simpanAktiviti() {
+    var tahun = document.getElementById('tw-tahun').value;
+    var bulan = parseInt(document.getElementById('tw-bulan').value);
+    var tarikh = parseInt(document.getElementById('tw-tarikh').value) || 1;
+    var hari = document.getElementById('tw-hari').value;
+    var aktiviti = document.getElementById('tw-aktiviti').value.trim();
+    var pic = document.getElementById('tw-pic').value.trim();
+    var teras = document.getElementById('tw-teras').value;
+    var lokasi = document.getElementById('tw-lokasi').value.trim();
+    var status = document.getElementById('tw-status').value;
+    if (!aktiviti) { alert('Sila masukkan nama aktiviti.'); return; }
+    if (!twData[tahun]) twData[tahun] = [];
+    twData[tahun].push({ bulan: bulan, hari: hari, tarikh: tarikh, aktiviti: aktiviti, pic: pic, teras: teras, lokasi: lokasi, status: status });
+    tutupModal();
+    tunjukTakwim(tahun);
+    // Kosongkan borang
+    ['tw-tarikh','tw-aktiviti','tw-pic','tw-lokasi'].forEach(function(id){ document.getElementById(id).value = ''; });
+  }
+  function cetakTakwim() {
+    window.print();
+  }
+
+  // Init takwim on load
+  window.addEventListener('load', function(){ tunjukTakwim('2026'); });
+
+  // ── PENARAFAN BINTANG – SCORING ENGINE ──────────────────────────────────
+  function kiraMarkah() {
+    // Helper: sum values from a NodeList of <select>
+    function sumSels(sels) {
+      var tot = 0, max = 0;
+      sels.forEach(function(s) {
+        var val = parseInt(s.value) || 0;
+        var opts = s.options.length - 1; // max option index = max score
+        tot += val;
+        max += opts;
+      });
+      return { tot: tot, max: max };
+    }
+
+    // Gather each component
+    var pnSels = document.querySelectorAll('.pn-sel');
+    var piSels = document.querySelectorAll('.pi-sel');
+    var prSels = document.querySelectorAll('.pr-sel');
+    var psSels = document.querySelectorAll('.ps-sel');
+
+    var pn = sumSels(pnSels);
+    var pi = sumSels(piSels);
+    var pr = sumSels(prSels);
+    var ps = sumSels(psSels);
+
+    // Percentage per component (0–100)
+    var pnPct = pn.max > 0 ? (pn.tot / pn.max) * 100 : 0;
+    var piPct = pi.max > 0 ? (pi.tot / pi.max) * 100 : 0;
+    var prPct = pr.max > 0 ? (pr.tot / pr.max) * 100 : 0;
+    var psPct = ps.max > 0 ? (ps.tot / ps.max) * 100 : 0;
+
+    // Weighted total: Pengurusan 30%, Pengimarahan 40%, Prasarana 20%, Persekitaran 10%
+    var total = (pnPct * 0.30) + (piPct * 0.40) + (prPct * 0.20) + (psPct * 0.10);
+    total = Math.round(total * 10) / 10;
+
+    // Update component score cards
+    document.getElementById('sc-pengurusan-val').textContent   = Math.round(pnPct) + '%';
+    document.getElementById('sc-pengimarahan-val').textContent = Math.round(piPct) + '%';
+    document.getElementById('sc-prasarana-val').textContent    = Math.round(prPct) + '%';
+    document.getElementById('sc-persekitaran-val').textContent = Math.round(psPct) + '%';
+
+    // Determine star rating
+    var bintang, label;
+    if      (total < 20)  { bintang = 1; label = '1 Bintang'; }
+    else if (total < 40)  { bintang = 2; label = '2 Bintang'; }
+    else if (total < 60)  { bintang = 3; label = '3 Bintang'; }
+    else if (total < 80)  { bintang = 4; label = '4 Bintang'; }
+    else                  { bintang = 5; label = '5 Bintang'; }
+
+    var stars = '';
+    for (var i = 0; i < 5; i++) stars += (i < bintang ? '⭐' : '☆');
+
+    // Update result panel
+    document.getElementById('star-display').textContent      = stars;
+    document.getElementById('star-label').textContent        = label;
+    document.getElementById('star-score-display').textContent = 'Markah: ' + total.toFixed(1) + ' / 100';
+    document.getElementById('star-prog').style.width         = total + '%';
+
+    // ── Cadangan Peningkatan ────────────────────────────────────────────────
+    var tips = [];
+
+    if (pnPct < 80) tips.push({ comp: '🏛️ Pengurusan', msg: 'Tingkatkan perancangan strategik, rekod kewangan, audit, dan inovasi pengurusan.' });
+    if (piPct < 80) tips.push({ comp: '🕌 Pengimarahan', msg: 'Perkukuh program keilmuan, khidmat komuniti, dan sambutan hari kebesaran Islam.' });
+    if (prPct < 80) tips.push({ comp: '🔧 Prasarana', msg: 'Lengkapkan kemudahan ibadat, pejabat, bilik kelas, dan kemudahan untuk OKU.' });
+    if (psPct < 80) tips.push({ comp: '🌿 Persekitaran', msg: 'Mantapkan kebersihan, keceriaan, dan sistem keselamatan dalam & luar masjid.' });
+
+    var cadBox = document.getElementById('cadangan-box');
+    if (tips.length === 0) {
+      cadBox.innerHTML = '<div style="text-align:center;padding:16px;"><span style="font-size:28px;">🏆</span><p style="color:var(--green-dark);font-weight:700;margin-top:8px;">Tahniah! Semua komponen mencapai tahap cemerlang (≥ 80%). Teruskan keunggulan!</p></div>';
+    } else {
+      var html = '<div style="margin-bottom:8px;font-size:13px;color:var(--muted);">Komponen yang perlu ditingkatkan untuk mencapai penarafan 5 bintang:</div>';
+      html += '<ul style="list-style:none;padding:0;margin:0;">';
+      tips.forEach(function(t) {
+        html += '<li style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">' +
+          '<span style="font-size:16px;flex-shrink:0;">' + t.comp.split(' ')[0] + '</span>' +
+          '<div><strong style="font-size:12px;">' + t.comp.substring(t.comp.indexOf(' ')+1) + '</strong>' +
+          '<p style="margin:2px 0 0;font-size:12px;color:var(--muted);">' + t.msg + '</p></div></li>';
+      });
+      html += '</ul>';
+      cadBox.innerHTML = html;
+    }
+  }
+
+</script>
+
+</body>
+</html>
