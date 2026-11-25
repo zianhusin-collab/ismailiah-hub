@@ -838,19 +838,36 @@
   <div id="panel-kertaskerja" class="panel">
     <div class="section-title">📋 Pengurusan Kertas Kerja & Laporan Program</div>
 
-    <div class="grid-2">
-      <!-- Form Daftar -->
-      <div class="card">
-        <div class="card-header"><span>➕</span><h2>Daftar Kertas Kerja / Program Baru</h2></div>
-        <div class="card-body">
+    <!-- ══ MODAL EDIT KERTAS KERJA ══ -->
+    <div id="modal-kk-edit" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 0;">
+      <div style="background:white;border-radius:14px;padding:0;width:92%;max-width:780px;box-shadow:0 12px 48px rgba(0,0,0,0.3);margin:auto;">
+        <!-- Modal Header -->
+        <div style="background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;padding:18px 24px;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:11px;opacity:0.8;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">Kertas Kerja Program</div>
+            <h3 style="font-size:16px;font-weight:700;margin:0;">✏️ Edit Kertas Kerja</h3>
+          </div>
+          <button onclick="document.getElementById('modal-kk-edit').style.display='none'" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:18px;cursor:pointer;border-radius:6px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">✕</button>
+        </div>
+        <div style="padding:24px;">
+        <input type="hidden" id="kk-edit-id" />
+        <!-- Maklumat Asas -->
+        <div style="background:#f7f8fa;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;">
+          <div style="font-size:11px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">📌 Maklumat Asas Program</div>
           <div class="form-row">
             <div class="form-group">
-              <label>Nama Program / Aktiviti</label>
-              <input type="text" id="kk-nama" placeholder="cth. Majlis Khatam Al-Quran" />
+              <label>Nama Program / Aktiviti <span style="color:var(--red);">*</span></label>
+              <input type="text" id="kk-edit-nama" placeholder="cth. Karnival Madani Raya 2026" />
             </div>
             <div class="form-group">
+              <label>Anjuran Bersama</label>
+              <input type="text" id="kk-edit-anjuran" placeholder="cth. Masjid Ismailiah & KRT Kg. Endong" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
               <label>Teras Strategik</label>
-              <select id="kk-teras">
+              <select id="kk-edit-teras">
                 <option value="">-- Pilih Teras --</option>
                 <option>Teras 1: Pengurusan Masjid</option>
                 <option>Teras 2: Pengimarahan</option>
@@ -858,42 +875,278 @@
                 <option>Teras 4: Persekitaran</option>
               </select>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Tarikh Program</label>
-              <input type="date" id="kk-tarikh" />
-            </div>
-            <div class="form-group">
-              <label>PIC / Penanggung Jawab</label>
-              <input type="text" id="kk-pic" placeholder="Nama Ketua Biro / AJK" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Anggaran Perbelanjaan (RM)</label>
-              <input type="number" id="kk-belanja" placeholder="0.00" />
-            </div>
-            <div class="form-group">
-              <label>Sasaran Peserta</label>
-              <input type="number" id="kk-peserta" placeholder="0" />
-            </div>
-          </div>
-          <div class="form-row" style="grid-template-columns:1fr;">
-            <div class="form-group">
-              <label>Objektif Program</label>
-              <textarea id="kk-obj" placeholder="Nyatakan objektif program..."></textarea>
-            </div>
-          </div>
-          <div class="form-row" style="grid-template-columns:1fr;">
             <div class="form-group">
               <label>Status</label>
-              <select id="kk-status">
+              <select id="kk-edit-status">
                 <option>Perancangan</option>
                 <option>Dalam Proses</option>
                 <option>Selesai</option>
                 <option>Ditangguh</option>
               </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tarikh Program</label>
+              <input type="date" id="kk-edit-tarikh" />
+            </div>
+            <div class="form-group">
+              <label>Masa Program</label>
+              <input type="text" id="kk-edit-masa" placeholder="cth. 7.30 pagi – 5.00 petang" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tempat / Lokasi</label>
+              <input type="text" id="kk-edit-tempat" placeholder="cth. Dewan Solat Utama, Kawasan Masjid Ismailiah" />
+            </div>
+            <div class="form-group">
+              <label>PIC / Pengarah Program</label>
+              <input type="text" id="kk-edit-pic" placeholder="Nama Ketua Biro / AJK" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Anggaran Perbelanjaan (RM)</label>
+              <input type="number" id="kk-edit-belanja" placeholder="0.00" min="0" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label>Sasaran Peserta</label>
+              <input type="number" id="kk-edit-peserta" placeholder="0" min="0" />
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Sasaran Penyertaan (kumpulan)</label>
+              <input type="text" id="kk-edit-sasaran" placeholder="cth. Penduduk setempat pelbagai peringkat umur – kanak-kanak, belia, dewasa dan warga emas" />
+            </div>
+          </div>
+        </div>
+        <!-- Kandungan Kertas Kerja -->
+        <div style="background:#f7f8fa;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;">
+          <div style="font-size:11px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">📄 Kandungan Kertas Kerja</div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>1.0 Latar Belakang</label>
+              <textarea id="kk-edit-latarbg" rows="4" placeholder="Huraikan latar belakang dan justifikasi program..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>2.0 Objektif Program</label>
+              <textarea id="kk-edit-obj" rows="4" placeholder="i. Mengimarahkan masjid sebagai pusat komuniti...&#10;ii. Mengukuhkan ikatan kekeluargaan...&#10;iii. ..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>3.0 Aktiviti / Pengisian Program</label>
+              <textarea id="kk-edit-aktiviti" rows="4" placeholder="cth. Ceramah kerohanian, pertandingan mewarna, gerai usahawan, sukaneka..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>3.6 Tentatif / Atur Cara Program</label>
+              <textarea id="kk-edit-tentatif" rows="5" placeholder="SESI PAGI:&#10;7.30 pagi – Pendaftaran peserta&#10;8.00 pagi – Ucapan Perasmian&#10;...&#10;SESI PETANG:&#10;2.00 petang – Sukaneka&#10;..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>4.0 Jawatankuasa Program</label>
+              <textarea id="kk-edit-jk" rows="6" placeholder="4.1 Jawatankuasa Induk:&#10;Pengerusi: En. Rosdi bin Zakaria (Imam Tua)&#10;Pengarah Program: ...&#10;Setiausaha: ...&#10;Bendahari: ...&#10;&#10;4.2 Jawatankuasa Kerja:&#10;Pendaftaran: ...&#10;Gerai Usahawan: ..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>5.0 Sumber Kewangan</label>
+              <textarea id="kk-edit-sumber" rows="3" placeholder="5.1 Sumbangan Dana Masjid = RM5,678.00&#10;5.2 Sumbangan Dana KRT = RM2,000.00"></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>6.0 Penutup</label>
+              <textarea id="kk-edit-penutup" rows="3" placeholder="Diharapkan program ini dapat mengimarahkan masjid sebagai pusat komuniti serta memperkukuhkan semangat perpaduan..."></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- Maklumat Laporan (isi selepas program) -->
+        <div style="background:#fffbf0;border:1px solid #e6c97a;border-radius:8px;padding:14px 16px;margin-bottom:14px;">
+          <div style="font-size:11px;font-weight:700;color:#7a5000;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">📊 Maklumat Laporan Akhir <span style="font-weight:400;color:#9a7030;">(isi selepas program selesai)</span></div>
+          <div style="font-size:11px;color:#9a7030;margin-bottom:12px;">Maklumat ini digunakan untuk menjana Laporan Akhir Program secara automatik.</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Bilangan Peserta Hadir</label>
+              <input type="number" id="kk-edit-pesertahadir" placeholder="Jumlah sebenar yang hadir" min="0" />
+            </div>
+            <div class="form-group">
+              <label>Tarikh Laporan Disediakan</label>
+              <input type="date" id="kk-edit-tkhlaporan" />
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>4.0 Pelaksanaan Program (laporan apa yang berlaku)</label>
+              <textarea id="kk-edit-pelaksanaan" rows="5" placeholder="i. Program dimulakan seawal jam 7.30 pagi dengan sesi pendaftaran peserta...&#10;ii. Ceramah kerohanian disampaikan oleh...&#10;iii. ..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>5.0 Penglibatan Agensi dan Komuniti</label>
+              <textarea id="kk-edit-agensi" rows="3" placeholder="• IPD Pasir Mas&#10;• Pejabat Kesihatan Daerah&#10;• KRT Kg. Endong Kubang Panjang&#10;• Penduduk setempat"></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>6.0 Kewangan Program (laporan sebenar)</label>
+              <textarea id="kk-edit-kewlaporan" rows="3" placeholder="Pendapatan: RM...\nPerbelanjaan: RM...\nBaki: RM..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>7.0 Kekuatan Program</label>
+              <textarea id="kk-edit-kekuatan" rows="3" placeholder="• Sambutan dan penyertaan masyarakat yang menggalakkan&#10;• Kerjasama erat antara jawatankuasa...&#10;• ..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>8.0 Cadangan Penambahbaikan</label>
+              <textarea id="kk-edit-cadangan" rows="3" placeholder="1. Menambah bilangan gerai usahawan...&#10;2. Memperluaskan hebahan program...&#10;3. ..."></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>9.0 Penutup Laporan</label>
+              <textarea id="kk-edit-penutuplaporan" rows="3" placeholder="Secara keseluruhannya, program ini telah berjaya mencapai objektif yang ditetapkan..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:4px;">
+          <button class="btn btn-primary" onclick="simpanEditKK()">💾 Simpan Perubahan</button>
+          <button class="btn btn-outline" onclick="document.getElementById('modal-kk-edit').style.display='none'">✕ Batal</button>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Form Daftar -->
+      <div class="card">
+        <div class="card-header"><span>➕</span><h2>Daftar Kertas Kerja / Program Baru</h2></div>
+        <div class="card-body">
+          <!-- Maklumat Asas -->
+          <div style="background:#f7f8fa;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;">
+            <div style="font-size:10px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">📌 Maklumat Asas Program</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nama Program / Aktiviti <span style="color:var(--red);">*</span></label>
+                <input type="text" id="kk-nama" placeholder="cth. Majlis Khatam Al-Quran" />
+              </div>
+              <div class="form-group">
+                <label>Anjuran Bersama</label>
+                <input type="text" id="kk-anjuran" placeholder="cth. Masjid Ismailiah & KRT Kg. Endong" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Teras Strategik</label>
+                <select id="kk-teras">
+                  <option value="">-- Pilih Teras --</option>
+                  <option>Teras 1: Pengurusan Masjid</option>
+                  <option>Teras 2: Pengimarahan</option>
+                  <option>Teras 3: Kemudahan Prasarana</option>
+                  <option>Teras 4: Persekitaran</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select id="kk-status">
+                  <option>Perancangan</option>
+                  <option>Dalam Proses</option>
+                  <option>Selesai</option>
+                  <option>Ditangguh</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Tarikh Program</label>
+                <input type="date" id="kk-tarikh" />
+              </div>
+              <div class="form-group">
+                <label>Masa Program</label>
+                <input type="text" id="kk-masa" placeholder="cth. 7.30 pagi – 5.00 petang" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Tempat / Lokasi</label>
+                <input type="text" id="kk-tempat" placeholder="cth. Dewan Solat Utama, Kawasan Masjid Ismailiah" />
+              </div>
+              <div class="form-group">
+                <label>PIC / Pengarah Program</label>
+                <input type="text" id="kk-pic" placeholder="Nama Ketua Biro / AJK" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Anggaran Perbelanjaan (RM)</label>
+                <input type="number" id="kk-belanja" placeholder="0.00" min="0" step="0.01" />
+              </div>
+              <div class="form-group">
+                <label>Sasaran Peserta</label>
+                <input type="number" id="kk-peserta" placeholder="0" min="0" />
+              </div>
+            </div>
+            <div class="form-row" style="grid-template-columns:1fr;">
+              <div class="form-group">
+                <label>Sasaran Penyertaan (kumpulan)</label>
+                <input type="text" id="kk-sasaran" placeholder="cth. Penduduk setempat pelbagai peringkat umur – kanak-kanak, belia, dewasa dan warga emas" />
+              </div>
+            </div>
+          </div>
+          <!-- Kandungan Kertas Kerja -->
+          <div style="background:#f7f8fa;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;">
+            <div style="font-size:10px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">📄 Kandungan Kertas Kerja</div>
+            <div class="form-row" style="grid-template-columns:1fr;">
+              <div class="form-group">
+                <label>1.0 Latar Belakang</label>
+                <textarea id="kk-latarbg" rows="3" placeholder="Huraikan latar belakang dan justifikasi program..."></textarea>
+              </div>
+            </div>
+            <div class="form-row" style="grid-template-columns:1fr;">
+              <div class="form-group">
+                <label>2.0 Objektif Program</label>
+                <textarea id="kk-obj" rows="3" placeholder="i. ...&#10;ii. ...&#10;iii. ..."></textarea>
+              </div>
+            </div>
+            <div class="form-row" style="grid-template-columns:1fr;">
+              <div class="form-group">
+                <label>3.0 Aktiviti / Pengisian Program</label>
+                <textarea id="kk-aktiviti" rows="3" placeholder="cth. Ceramah kerohanian, pertandingan mewarna, gerai usahawan, sukaneka..."></textarea>
+              </div>
+            </div>
+            <div class="form-row" style="grid-template-columns:1fr;">
+              <div class="form-group">
+                <label>3.6 Tentatif / Atur Cara Program</label>
+                <textarea id="kk-tentatif" rows="4" placeholder="SESI PAGI:&#10;7.30 pagi – Pendaftaran&#10;8.00 pagi – Perasmian&#10;..."></textarea>
+              </div>
+            </div>
+            <div class="form-row" style="grid-template-columns:1fr;">
+              <div class="form-group">
+                <label>4.0 Jawatankuasa Program</label>
+                <textarea id="kk-jk" rows="4" placeholder="4.1 Jawatankuasa Induk:&#10;Pengerusi: En. Rosdi bin Zakaria&#10;Pengarah Program: ...&#10;Setiausaha: ...&#10;Bendahari: ..."></textarea>
+              </div>
+            </div>
+            <div class="form-row" style="grid-template-columns:1fr;">
+              <div class="form-group">
+                <label>5.0 Sumber Kewangan</label>
+                <textarea id="kk-sumber" rows="2" placeholder="5.1 Dana Masjid = RM5,000.00&#10;5.2 Dana KRT = RM2,000.00"></textarea>
+              </div>
+            </div>
+            <div class="form-row" style="grid-template-columns:1fr;">
+              <div class="form-group">
+                <label>6.0 Penutup</label>
+                <textarea id="kk-penutup" rows="2" placeholder="Diharapkan program ini dapat mengimarahkan masjid..."></textarea>
+              </div>
             </div>
           </div>
           <div class="btn-row">
@@ -906,8 +1159,26 @@
       <!-- Senarai Kertas Kerja -->
       <div class="card">
         <div class="card-header"><span>📂</span><h2>Senarai Kertas Kerja</h2><span class="badge" id="kk-count">0 rekod</span></div>
-        <div class="card-body">
-          <div id="kk-list">
+        <div class="card-body" style="padding:0;">
+          <!-- Filter bar -->
+          <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#fafbfc;">
+            <input type="text" id="kk-carian" oninput="renderKK()" placeholder="🔍 Cari nama program / PIC..." style="font-size:12px;padding:5px 10px;border:1px solid var(--border);border-radius:6px;flex:1;min-width:160px;" />
+            <select id="kk-filter-status" onchange="renderKK()" style="font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:white;">
+              <option value="">Semua Status</option>
+              <option>Perancangan</option>
+              <option>Dalam Proses</option>
+              <option>Selesai</option>
+              <option>Ditangguh</option>
+            </select>
+            <select id="kk-filter-teras" onchange="renderKK()" style="font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:white;">
+              <option value="">Semua Teras</option>
+              <option>Teras 1: Pengurusan Masjid</option>
+              <option>Teras 2: Pengimarahan</option>
+              <option>Teras 3: Kemudahan Prasarana</option>
+              <option>Teras 4: Persekitaran</option>
+            </select>
+          </div>
+          <div id="kk-list" style="padding:12px 16px;">
             <p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada kertas kerja didaftarkan.<br>Gunakan borang di sebelah untuk mendaftar.</p>
           </div>
         </div>
@@ -916,23 +1187,27 @@
 
     <!-- Template Laporan -->
     <div class="card">
-      <div class="card-header"><span>📄</span><h2>Template Laporan Program</h2></div>
+      <div class="card-header"><span>📄</span><h2>Jana Laporan Program</h2></div>
       <div class="card-body">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:16px;">Pilih kertas kerja dari senarai di atas, kemudian klik butang 🖨️ untuk jana Kertas Kerja atau Laporan Akhir. Atau pilih laporan umum di bawah:</div>
         <div class="grid-3">
-          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;hover:border-color:var(--green);">
+          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s;" onclick="cetakLaporan('akhir')" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 2px 8px rgba(26,122,74,0.15)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
             <div style="font-size:24px;text-align:center;margin-bottom:8px;">📄</div>
-            <div style="font-weight:600;text-align:center;font-size:13px;">Laporan Akhir Program</div>
-            <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;">Pelaporan lengkap selepas program</div>
+            <div style="font-weight:600;text-align:center;font-size:13px;">Laporan Semua Program Selesai</div>
+            <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;">Senarai semua program berstatus Selesai</div>
+            <div style="font-size:10px;color:var(--green);text-align:center;margin-top:6px;font-weight:600;">Klik untuk jana laporan →</div>
           </div>
-          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;">
+          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s;" onclick="cetakLaporan('kpi')" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 2px 8px rgba(26,122,74,0.15)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
             <div style="font-size:24px;text-align:center;margin-bottom:8px;">📊</div>
             <div style="font-weight:600;text-align:center;font-size:13px;">Laporan KPI Bulanan</div>
             <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;">Semakan pencapaian KPI bulanan</div>
+            <div style="font-size:10px;color:var(--green);text-align:center;margin-top:6px;font-weight:600;">Klik untuk lihat KPI →</div>
           </div>
-          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;">
+          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s;" onclick="cetakLaporan('tahunan')" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 2px 8px rgba(26,122,74,0.15)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
             <div style="font-size:24px;text-align:center;margin-bottom:8px;">💼</div>
             <div style="font-weight:600;text-align:center;font-size:13px;">Laporan Tahunan</div>
             <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;">Ringkasan pencapaian tahunan</div>
+            <div style="font-size:10px;color:var(--green);text-align:center;margin-top:6px;font-weight:600;">Klik untuk jana laporan →</div>
           </div>
         </div>
       </div>
@@ -959,6 +1234,64 @@
         <div class="flabel">BAKI SEMASA</div>
         <div class="amount">RM 0.00</div>
         <div class="flabel">Baki Terkini</div>
+      </div>
+    </div>
+
+    <!-- Modal Edit Kewangan -->
+    <div id="modal-fin-edit" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:white;border-radius:14px;width:90%;max-width:520px;box-shadow:0 12px 48px rgba(0,0,0,0.3);overflow:hidden;">
+        <div style="background:linear-gradient(135deg,#155724,#1a7a4a);color:white;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;">
+          <h3 style="font-size:15px;font-weight:700;margin:0;">✏️ Edit Transaksi Kewangan</h3>
+          <button onclick="document.getElementById('modal-fin-edit').style.display='none'" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:16px;cursor:pointer;border-radius:6px;width:28px;height:28px;">✕</button>
+        </div>
+        <div style="padding:20px 22px;">
+          <input type="hidden" id="fin-edit-id" />
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tarikh</label>
+              <input type="date" id="fin-edit-tarikh" />
+            </div>
+            <div class="form-group">
+              <label>Jenis</label>
+              <select id="fin-edit-jenis">
+                <option value="masuk">Masuk (Pendapatan)</option>
+                <option value="keluar">Keluar (Perbelanjaan)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Perkara</label>
+              <input type="text" id="fin-edit-perkara" placeholder="cth. Kutipan Jumaat" />
+            </div>
+            <div class="form-group">
+              <label>Amaun (RM)</label>
+              <input type="number" id="fin-edit-amaun" placeholder="0.00" step="0.01" />
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Kategori</label>
+              <select id="fin-edit-kategori">
+                <option>Kutipan Jumaat</option><option>Kutipan Tabung</option>
+                <option>Sumbangan / Derma</option><option>Sewaan Ruang</option>
+                <option>Utiliti (Elektrik/Air)</option><option>Penyelenggaraan</option>
+                <option>Program / Aktiviti</option><option>Perbelanjaan Am</option>
+                <option>Lain-lain</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Catatan</label>
+              <input type="text" id="fin-edit-catatan" placeholder="Catatan tambahan (optional)" />
+            </div>
+          </div>
+          <div class="btn-row" style="margin-top:4px;">
+            <button class="btn btn-primary" onclick="simpanEditFin()">💾 Simpan Perubahan</button>
+            <button class="btn btn-outline" onclick="document.getElementById('modal-fin-edit').style.display='none'">✕ Batal</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1021,9 +1354,19 @@
 
       <!-- Rekod Transaksi -->
       <div class="card">
-        <div class="card-header"><span>📒</span><h2>Rekod Transaksi</h2><span class="badge" id="fin-count">0 rekod</span></div>
-        <div class="card-body">
-          <div id="fin-list">
+        <div class="card-header"><span>📒</span><h2>Rekod Transaksi</h2><span class="badge" id="fin-count">0 rekod</span>
+          <button onclick="exportCSV('kewangan')" style="margin-left:auto;padding:4px 10px;font-size:11px;background:#e8f5ee;color:var(--green-dark);border:1px solid #c3e6cb;border-radius:6px;cursor:pointer;font-weight:600;">⬇️ CSV</button>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div style="padding:10px 14px;border-bottom:1px solid var(--border);background:#fafbfc;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <input type="text" id="fin-carian" oninput="renderFin()" placeholder="🔍 Cari perkara / kategori..." style="font-size:12px;padding:5px 10px;border:1px solid var(--border);border-radius:6px;flex:1;min-width:140px;" />
+            <select id="fin-filter-jenis" onchange="renderFin()" style="font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:white;">
+              <option value="">Semua Jenis</option>
+              <option value="masuk">Masuk sahaja</option>
+              <option value="keluar">Keluar sahaja</option>
+            </select>
+          </div>
+          <div id="fin-list" style="max-height:420px;overflow-y:auto;">
             <p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada transaksi didaftarkan.</p>
           </div>
         </div>
@@ -1070,6 +1413,73 @@
   <!-- ════ PANEL: ASET ════ -->
   <div id="panel-aset" class="panel">
     <div class="section-title">🏛️ Pengurusan Aset Masjid</div>
+
+    <!-- Modal Edit Aset -->
+    <div id="modal-aset-edit" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:white;border-radius:14px;width:90%;max-width:520px;box-shadow:0 12px 48px rgba(0,0,0,0.3);overflow:hidden;">
+        <div style="background:linear-gradient(135deg,#1a3a6a,#2980b9);color:white;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;">
+          <h3 style="font-size:15px;font-weight:700;margin:0;">✏️ Edit Rekod Aset</h3>
+          <button onclick="document.getElementById('modal-aset-edit').style.display='none'" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:16px;cursor:pointer;border-radius:6px;width:28px;height:28px;">✕</button>
+        </div>
+        <div style="padding:20px 22px;">
+          <input type="hidden" id="aset-edit-id" />
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nama Aset</label>
+              <input type="text" id="aset-edit-nama" placeholder="cth. Sistem Pembesar Suara" />
+            </div>
+            <div class="form-group">
+              <label>Kategori</label>
+              <select id="aset-edit-kategori">
+                <option>Audio Visual & Multimedia</option>
+                <option>Perabot & Peralatan Pejabat</option>
+                <option>Kemudahan Kebersihan</option>
+                <option>Kenderaan</option>
+                <option>Peralatan Dapur</option>
+                <option>Kelengkapan Masjid</option>
+                <option>ICT & Teknologi</option>
+                <option>Lain-lain</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>No. Siri / Tag</label>
+              <input type="text" id="aset-edit-siri" placeholder="cth. MASJID/AV/001" />
+            </div>
+            <div class="form-group">
+              <label>Tarikh Perolehan</label>
+              <input type="date" id="aset-edit-tarikh" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nilai Perolehan (RM)</label>
+              <input type="number" id="aset-edit-nilai" placeholder="0.00" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label>Status Kondisi</label>
+              <select id="aset-edit-status">
+                <option value="baik">Baik</option>
+                <option value="sederhana">Sederhana</option>
+                <option value="perlu-selenggara">Perlu Selenggara</option>
+                <option value="rosak">Rosak</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Lokasi Aset</label>
+              <input type="text" id="aset-edit-lokasi" placeholder="cth. Dewan Utama, Pejabat, Surau" />
+            </div>
+          </div>
+          <div class="btn-row" style="margin-top:4px;">
+            <button class="btn btn-primary" onclick="simpanEditAset()">💾 Simpan Perubahan</button>
+            <button class="btn btn-outline" onclick="document.getElementById('modal-aset-edit').style.display='none'">✕ Batal</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="grid-2">
       <!-- Daftar Aset -->
@@ -1135,9 +1545,21 @@
 
       <!-- Inventori Aset -->
       <div class="card">
-        <div class="card-header"><span>📦</span><h2>Inventori Aset</h2><span class="badge" id="aset-count">0 rekod</span></div>
-        <div class="card-body">
-          <div id="aset-list">
+        <div class="card-header"><span>📦</span><h2>Inventori Aset</h2><span class="badge" id="aset-count">0 rekod</span>
+          <button onclick="exportCSV('aset')" style="margin-left:auto;padding:4px 10px;font-size:11px;background:#e8f0fd;color:#1a4a8a;border:1px solid #b8d0f5;border-radius:6px;cursor:pointer;font-weight:600;">⬇️ CSV</button>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div style="padding:10px 14px;border-bottom:1px solid var(--border);background:#fafbfc;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <input type="text" id="aset-carian" oninput="renderAset()" placeholder="🔍 Cari nama / siri aset..." style="font-size:12px;padding:5px 10px;border:1px solid var(--border);border-radius:6px;flex:1;min-width:140px;" />
+            <select id="aset-filter-status" onchange="renderAset()" style="font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:white;">
+              <option value="">Semua Status</option>
+              <option value="baik">Baik</option>
+              <option value="sederhana">Sederhana</option>
+              <option value="perlu-selenggara">Perlu Selenggara</option>
+              <option value="rosak">Rosak</option>
+            </select>
+          </div>
+          <div id="aset-list" style="max-height:420px;overflow-y:auto;padding:8px 12px;">
             <p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada aset didaftarkan.</p>
           </div>
         </div>
@@ -1238,78 +1660,85 @@
       </div>
     </div>
 
-    <!-- Modal Tambah Aktiviti -->
-    <div id="modal-takwim" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
-      <div style="background:white;border-radius:12px;padding:28px;width:90%;max-width:560px;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
-        <h3 style="margin-bottom:16px;font-size:16px;color:var(--green-dark);">➕ Tambah / Daftar Aktiviti Baru</h3>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Tahun</label>
-            <select id="tw-tahun"><option>2026</option><option>2027</option></select>
-          </div>
-          <div class="form-group">
-            <label>Bulan</label>
-            <select id="tw-bulan">
-              <option value="1">Januari</option><option value="2">Februari</option><option value="3">Mac</option>
-              <option value="4">April</option><option value="5">Mei</option><option value="6">Jun</option>
-              <option value="7">Julai</option><option value="8">Ogos</option><option value="9">September</option>
-              <option value="10">Oktober</option><option value="11">November</option><option value="12">Disember</option>
-            </select>
-          </div>
+    <!-- Modal Tambah/Edit Aktiviti -->
+    <div id="modal-takwim" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:white;border-radius:14px;width:90%;max-width:560px;box-shadow:0 12px 48px rgba(0,0,0,0.3);overflow:hidden;">
+        <div style="background:linear-gradient(135deg,#7a5000,#c9a84c);color:white;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;">
+          <h3 id="tw-modal-title" style="font-size:15px;font-weight:700;margin:0;">➕ Tambah Aktiviti Baru</h3>
+          <button onclick="tutupModal()" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:16px;cursor:pointer;border-radius:6px;width:28px;height:28px;">✕</button>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Tarikh</label>
-            <input type="number" id="tw-tarikh" min="1" max="31" placeholder="cth. 11" />
+        <div style="padding:20px 22px;">
+          <input type="hidden" id="tw-edit-idx" value="" />
+          <input type="hidden" id="tw-edit-tahun-val" value="" />
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tahun</label>
+              <select id="tw-tahun"><option>2026</option><option>2027</option></select>
+            </div>
+            <div class="form-group">
+              <label>Bulan</label>
+              <select id="tw-bulan">
+                <option value="1">Januari</option><option value="2">Februari</option><option value="3">Mac</option>
+                <option value="4">April</option><option value="5">Mei</option><option value="6">Jun</option>
+                <option value="7">Julai</option><option value="8">Ogos</option><option value="9">September</option>
+                <option value="10">Oktober</option><option value="11">November</option><option value="12">Disember</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Hari</label>
-            <select id="tw-hari">
-              <option>AHAD</option><option>ISNIN</option><option>SELASA</option><option>RABU</option>
-              <option>KHAMIS</option><option>JUMAAT</option><option>SABTU</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tarikh</label>
+              <input type="number" id="tw-tarikh" min="1" max="31" placeholder="cth. 11" />
+            </div>
+            <div class="form-group">
+              <label>Hari</label>
+              <select id="tw-hari">
+                <option>AHAD</option><option>ISNIN</option><option>SELASA</option><option>RABU</option>
+                <option>KHAMIS</option><option>JUMAAT</option><option>SABTU</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="form-row" style="grid-template-columns:1fr;">
-          <div class="form-group">
-            <label>Nama Aktiviti / Program</label>
-            <input type="text" id="tw-aktiviti" placeholder="cth. Majlis Maulidur Rasul 2026" />
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label>Nama Aktiviti / Program</label>
+              <input type="text" id="tw-aktiviti" placeholder="cth. Majlis Maulidur Rasul 2026" />
+            </div>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>PIC / Penyelaras</label>
-            <input type="text" id="tw-pic" placeholder="cth. Ketua Biro Dakwah" />
+          <div class="form-row">
+            <div class="form-group">
+              <label>PIC / Penyelaras</label>
+              <input type="text" id="tw-pic" placeholder="cth. Ketua Biro Dakwah" />
+            </div>
+            <div class="form-group">
+              <label>Teras Strategik</label>
+              <select id="tw-teras">
+                <option value="T1">Teras 1 – Pengurusan Masjid</option>
+                <option value="T2">Teras 2 – Pengimarahan</option>
+                <option value="T3">Teras 3 – Kemudahan Prasarana</option>
+                <option value="T4">Teras 4 – Persekitaran</option>
+                <option value="CUTI">Cuti Umum / Hari Kebesaran</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Teras Strategik</label>
-            <select id="tw-teras">
-              <option value="T1">Teras 1 – Pengurusan Masjid</option>
-              <option value="T2">Teras 2 – Pengimarahan</option>
-              <option value="T3">Teras 3 – Kemudahan Prasarana</option>
-              <option value="T4">Teras 4 – Persekitaran</option>
-              <option value="CUTI">Cuti Umum / Hari Kebesaran</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Lokasi</label>
+              <input type="text" id="tw-lokasi" placeholder="cth. Dewan Utama Masjid" />
+            </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select id="tw-status">
+                <option value="dirancang">Dirancang</option>
+                <option value="dilaksana">Dilaksanakan</option>
+                <option value="tangguh">Ditangguh</option>
+                <option value="batal">Dibatalkan</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Lokasi</label>
-            <input type="text" id="tw-lokasi" placeholder="cth. Dewan Utama Masjid" />
+          <div class="btn-row" style="margin-top:8px;">
+            <button class="btn btn-primary" onclick="simpanAktiviti()">💾 Simpan</button>
+            <button class="btn btn-outline" onclick="tutupModal()">✕ Batal</button>
           </div>
-          <div class="form-group">
-            <label>Status</label>
-            <select id="tw-status">
-              <option value="dirancang">Dirancang</option>
-              <option value="dilaksana">Dilaksanakan</option>
-              <option value="tangguh">Ditangguh</option>
-              <option value="batal">Dibatalkan</option>
-            </select>
-          </div>
-        </div>
-        <div class="btn-row" style="margin-top:8px;">
-          <button class="btn btn-primary" onclick="simpanAktiviti()">💾 Simpan</button>
-          <button class="btn btn-outline" onclick="tutupModal()">Batal</button>
         </div>
       </div>
     </div>
@@ -1746,32 +2175,322 @@
   // ── KERTAS KERJA
   var kkData = [];
   function daftarKK() {
-    var nama = document.getElementById('kk-nama').value.trim();
-    var teras = document.getElementById('kk-teras').value;
-    var tarikh = document.getElementById('kk-tarikh').value;
-    var pic = document.getElementById('kk-pic').value.trim();
+    var nama    = document.getElementById('kk-nama').value.trim();
+    var anjuran = document.getElementById('kk-anjuran').value.trim();
+    var teras   = document.getElementById('kk-teras').value;
+    var tarikh  = document.getElementById('kk-tarikh').value;
+    var masa    = document.getElementById('kk-masa').value.trim();
+    var tempat  = document.getElementById('kk-tempat').value.trim();
+    var pic     = document.getElementById('kk-pic').value.trim();
     var belanja = document.getElementById('kk-belanja').value;
     var peserta = document.getElementById('kk-peserta').value;
-    var obj = document.getElementById('kk-obj').value.trim();
-    var status = document.getElementById('kk-status').value;
+    var sasaran = document.getElementById('kk-sasaran').value.trim();
+    var latarbg = document.getElementById('kk-latarbg').value.trim();
+    var obj     = document.getElementById('kk-obj').value.trim();
+    var aktiviti= document.getElementById('kk-aktiviti').value.trim();
+    var tentatif= document.getElementById('kk-tentatif').value.trim();
+    var jk      = document.getElementById('kk-jk').value.trim();
+    var sumber  = document.getElementById('kk-sumber').value.trim();
+    var penutup = document.getElementById('kk-penutup').value.trim();
+    var status  = document.getElementById('kk-status').value;
     if (!nama) { alert('Sila masukkan nama program.'); return; }
-    var item = { id: kkData.length+1, nama, teras, tarikh, pic, belanja, peserta, obj, status };
+    var item = { id: Date.now(), nama, anjuran, teras, tarikh, masa, tempat, pic, belanja, peserta, sasaran, latarbg, obj, aktiviti, tentatif, jk, sumber, penutup, status,
+      pesertahadir:'', tkhlaporan:'', pelaksanaan:'', agensi:'', kewlaporan:'', kekuatan:'', cadangan:'', penutuplaporan:'' };
     kkData.push(item);
     supaSaveKK(item);
     renderKK();
+    // ── Auto-tambah ke Takwim jika ada tarikh ──
+    if (tarikh) {
+      var dt = new Date(tarikh);
+      var twTahun = dt.getFullYear().toString();
+      if (!twData[twTahun]) twData[twTahun] = [];
+      var twItem = {
+        bulan: dt.getMonth() + 1,
+        hari: ['AHAD','ISNIN','SELASA','RABU','KHAMIS','JUMAAT','SABTU'][dt.getDay()],
+        tarikh: dt.getDate(),
+        aktiviti: nama,
+        pic: pic,
+        teras: teras ? teras.split(':')[0].trim().replace('Teras ','T') : 'T1',
+        lokasi: tempat || 'Masjid Ismailiah',
+        status: status === 'Selesai' ? 'dilaksana' : status === 'Dalam Proses' ? 'dilaksana' : status === 'Ditangguh' ? 'tangguh' : 'dirancang'
+      };
+      twData[twTahun].push(twItem);
+      supaSaveTakwim(twTahun, twItem);
+      if (typeof tunjukTakwim === 'function') tunjukTakwim(twTahun);
+    }
     clearKK();
   }
+
   function renderKK() {
     var list = document.getElementById('kk-list');
+    var carian       = ((document.getElementById('kk-carian') || {}).value || '').toLowerCase();
+    var filterStatus = (document.getElementById('kk-filter-status') || {}).value || '';
+    var filterTeras  = (document.getElementById('kk-filter-teras') || {}).value || '';
+    var filtered = kkData.filter(function(k) {
+      if (filterStatus && k.status !== filterStatus) return false;
+      if (filterTeras && k.teras !== filterTeras) return false;
+      if (carian) {
+        var haystack = ((k.nama||'') + ' ' + (k.pic||'') + ' ' + (k.tempat||'') + ' ' + (k.anjuran||'')).toLowerCase();
+        if (haystack.indexOf(carian) < 0) return false;
+      }
+      return true;
+    });
     document.getElementById('kk-count').textContent = kkData.length + ' rekod';
-    if (!kkData.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada kertas kerja didaftarkan.</p>'; return; }
-    list.innerHTML = kkData.map(function(k) {
+    if (!filtered.length) {
+      list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">' +
+        (kkData.length ? 'Tiada rekod sepadan dengan penapis.' : 'Belum ada kertas kerja didaftarkan.<br>Gunakan borang di sebelah untuk mendaftar.') + '</p>';
+      return;
+    }
+    list.innerHTML = filtered.map(function(k) {
+      var idx = kkData.indexOf(k);
       var badgeClass = k.status === 'Selesai' ? 'badge-green' : k.status === 'Dalam Proses' ? 'badge-blue' : k.status === 'Ditangguh' ? 'badge-red' : 'badge-grey';
-      return '<div class="kk-row"><span class="kk-num">#' + k.id + '</span><div style="flex:1"><div class="kk-title">' + k.nama + '</div><div class="kk-meta">' + (k.teras||'–') + ' &nbsp;|&nbsp; ' + (k.tarikh||'–') + ' &nbsp;|&nbsp; PIC: ' + (k.pic||'–') + '</div></div><span class="' + badgeClass + '">' + k.status + '</span></div>';
+      var terasColor = k.teras && k.teras.indexOf('1') > -1 ? 'var(--green)' : k.teras && k.teras.indexOf('2') > -1 ? 'var(--blue)' : k.teras && k.teras.indexOf('3') > -1 ? 'var(--gold)' : '#27ae60';
+      return '<div style="border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:10px;background:white;">' +
+        '<div style="display:flex;align-items:flex-start;gap:10px;">' +
+          '<div style="width:28px;height:28px;border-radius:50%;background:' + terasColor + ';color:white;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + (idx+1) + '</div>' +
+          '<div style="flex:1;min-width:0;">' +
+            '<div style="font-weight:700;font-size:13px;margin-bottom:4px;">' + k.nama + '</div>' +
+            '<div style="font-size:11px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">' +
+              (k.teras ? '<span style="background:' + terasColor + '22;color:' + terasColor + ';padding:1px 7px;border-radius:10px;font-weight:600;">' + k.teras.split(':')[0] + '</span>' : '') +
+              (k.tarikh ? '<span>📅 ' + new Date(k.tarikh).toLocaleDateString('ms-MY',{day:'numeric',month:'short',year:'numeric'}) + '</span>' : '') +
+              (k.masa ? '<span>⏰ ' + k.masa + '</span>' : '') +
+              (k.tempat ? '<span>📍 ' + k.tempat + '</span>' : '') +
+            '</div>' +
+            '<div style="font-size:11px;color:var(--muted);">' +
+              (k.pic ? '👤 ' + k.pic : '') +
+              (k.belanja ? ' &nbsp;·&nbsp; 💰 RM ' + parseFloat(k.belanja).toFixed(2) : '') +
+              (k.anjuran ? ' &nbsp;·&nbsp; Anjuran: ' + k.anjuran : '') +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">' +
+            '<span class="' + badgeClass + '">' + k.status + '</span>' +
+            '<div style="display:flex;gap:4px;">' +
+              '<button onclick="bukaEditKK(' + idx + ')" title="Edit Kertas Kerja" style="padding:5px 10px;font-size:11px;background:#e8f5ee;color:var(--green-dark);border:1px solid #c3e6cb;border-radius:6px;cursor:pointer;font-weight:600;">✏️ Edit</button>' +
+              '<button onclick="cetakKK(' + idx + ')" title="Jana Kertas Kerja" style="padding:5px 10px;font-size:11px;background:#e8f0fd;color:#1a4a8a;border:1px solid #b8d0f5;border-radius:6px;cursor:pointer;font-weight:600;">📄 KK</button>' +
+              (k.status === 'Selesai' ? '<button onclick="cetakLaporanAkhir(' + idx + ')" title="Jana Laporan Akhir" style="padding:5px 10px;font-size:11px;background:#fff3cd;color:#7a5000;border:1px solid #ffc107;border-radius:6px;cursor:pointer;font-weight:600;">📊 Laporan</button>' : '') +
+              '<button onclick="padamKK(' + idx + ')" title="Padam" style="padding:5px 10px;font-size:11px;background:#fdf2f2;color:var(--red);border:1px solid #f5c6cb;border-radius:6px;cursor:pointer;font-weight:600;">🗑️</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
     }).join('');
   }
+
+  function bukaEditKK(idx) {
+    var k = kkData[idx];
+    document.getElementById('kk-edit-id').value          = idx;
+    document.getElementById('kk-edit-nama').value        = k.nama           || '';
+    document.getElementById('kk-edit-anjuran').value     = k.anjuran        || '';
+    document.getElementById('kk-edit-teras').value       = k.teras          || '';
+    document.getElementById('kk-edit-tarikh').value      = k.tarikh         || '';
+    document.getElementById('kk-edit-masa').value        = k.masa           || '';
+    document.getElementById('kk-edit-tempat').value      = k.tempat         || '';
+    document.getElementById('kk-edit-pic').value         = k.pic            || '';
+    document.getElementById('kk-edit-belanja').value     = k.belanja        || '';
+    document.getElementById('kk-edit-peserta').value     = k.peserta        || '';
+    document.getElementById('kk-edit-sasaran').value     = k.sasaran        || '';
+    document.getElementById('kk-edit-latarbg').value     = k.latarbg        || '';
+    document.getElementById('kk-edit-obj').value         = k.obj            || '';
+    document.getElementById('kk-edit-aktiviti').value    = k.aktiviti       || '';
+    document.getElementById('kk-edit-tentatif').value    = k.tentatif       || '';
+    document.getElementById('kk-edit-jk').value          = k.jk             || '';
+    document.getElementById('kk-edit-sumber').value      = k.sumber         || '';
+    document.getElementById('kk-edit-penutup').value     = k.penutup        || '';
+    document.getElementById('kk-edit-status').value      = k.status         || 'Perancangan';
+    document.getElementById('kk-edit-pesertahadir').value= k.pesertahadir   || '';
+    document.getElementById('kk-edit-tkhlaporan').value  = k.tkhlaporan     || '';
+    document.getElementById('kk-edit-pelaksanaan').value = k.pelaksanaan    || '';
+    document.getElementById('kk-edit-agensi').value      = k.agensi         || '';
+    document.getElementById('kk-edit-kewlaporan').value  = k.kewlaporan     || '';
+    document.getElementById('kk-edit-kekuatan').value    = k.kekuatan       || '';
+    document.getElementById('kk-edit-cadangan').value    = k.cadangan       || '';
+    document.getElementById('kk-edit-penutuplaporan').value= k.penutuplaporan || '';
+    document.getElementById('modal-kk-edit').style.display = 'flex';
+  }
+
+  function simpanEditKK() {
+    var idx = parseInt(document.getElementById('kk-edit-id').value);
+    var k = kkData[idx];
+    k.nama          = document.getElementById('kk-edit-nama').value.trim();
+    k.anjuran       = document.getElementById('kk-edit-anjuran').value.trim();
+    k.teras         = document.getElementById('kk-edit-teras').value;
+    k.tarikh        = document.getElementById('kk-edit-tarikh').value;
+    k.masa          = document.getElementById('kk-edit-masa').value.trim();
+    k.tempat        = document.getElementById('kk-edit-tempat').value.trim();
+    k.pic           = document.getElementById('kk-edit-pic').value.trim();
+    k.belanja       = document.getElementById('kk-edit-belanja').value;
+    k.peserta       = document.getElementById('kk-edit-peserta').value;
+    k.sasaran       = document.getElementById('kk-edit-sasaran').value.trim();
+    k.latarbg       = document.getElementById('kk-edit-latarbg').value.trim();
+    k.obj           = document.getElementById('kk-edit-obj').value.trim();
+    k.aktiviti      = document.getElementById('kk-edit-aktiviti').value.trim();
+    k.tentatif      = document.getElementById('kk-edit-tentatif').value.trim();
+    k.jk            = document.getElementById('kk-edit-jk').value.trim();
+    k.sumber        = document.getElementById('kk-edit-sumber').value.trim();
+    k.penutup       = document.getElementById('kk-edit-penutup').value.trim();
+    k.status        = document.getElementById('kk-edit-status').value;
+    k.pesertahadir  = document.getElementById('kk-edit-pesertahadir').value;
+    k.tkhlaporan    = document.getElementById('kk-edit-tkhlaporan').value;
+    k.pelaksanaan   = document.getElementById('kk-edit-pelaksanaan').value.trim();
+    k.agensi        = document.getElementById('kk-edit-agensi').value.trim();
+    k.kewlaporan    = document.getElementById('kk-edit-kewlaporan').value.trim();
+    k.kekuatan      = document.getElementById('kk-edit-kekuatan').value.trim();
+    k.cadangan      = document.getElementById('kk-edit-cadangan').value.trim();
+    k.penutuplaporan= document.getElementById('kk-edit-penutuplaporan').value.trim();
+    supaUpdateKK(k);
+    renderKK();
+    lsSave();
+    document.getElementById('modal-kk-edit').style.display = 'none';
+  }
+
+  function padamKK(idx) {
+    var k = kkData[idx];
+    if (!confirm('Padam kertas kerja "' + k.nama + '"?\n\nTindakan ini tidak boleh dibatalkan.')) return;
+    supaDeleteKK(k);
+    kkData.splice(idx, 1);
+    renderKK();
+    lsSave();
+    updateDashboard();
+  }
+
+  function cetakKK(idx) {
+    var k = kkData[idx];
+    var tarikh = k.tarikh ? new Date(k.tarikh).toLocaleDateString('ms-MY',{day:'numeric',month:'long',year:'numeric'}) : '–';
+    var anjuran = k.anjuran ? 'Anjuran Bersama ' + k.anjuran : 'Anjuran Masjid Ismailiah Mukim Kampung Kubang Terap';
+    var w = window.open('', '_blank', 'width=950,height=750');
+    w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Kertas Kerja – ' + k.nama + '</title>' +
+      '<style>' +
+      'body{font-family:"Times New Roman",serif;padding:35px 50px 40px;color:#000;font-size:12.5pt;line-height:1.65;}' +
+      'h1{text-align:center;font-size:14pt;text-transform:uppercase;margin-bottom:3px;font-weight:700;}' +
+      '.sub{text-align:center;font-size:12pt;margin-bottom:2px;}' +
+      '.sub-sm{text-align:center;font-size:11pt;margin-bottom:2px;font-weight:normal;}' +
+      'h2{font-size:12.5pt;margin-top:22px;margin-bottom:6px;font-weight:700;}' +
+      '.sec-num{display:inline-block;min-width:70px;}' +
+      'table{width:100%;border-collapse:collapse;margin:8px 0;}' +
+      'td{padding:4px 8px;vertical-align:top;}' +
+      '.td-label{width:30%;font-weight:normal;}' +
+      'pre{font-family:"Times New Roman",serif;white-space:pre-wrap;margin:0;font-size:12.5pt;line-height:1.65;}' +
+      '.sign-row{display:flex;justify-content:space-between;margin-top:60px;}' +
+      '.sign-box{text-align:center;width:44%;}' +
+      '.sign-line{border-top:1px solid #000;margin-top:55px;padding-top:5px;}' +
+      'hr{border:none;border-top:1.5px solid #000;margin:14px 0;}' +
+      '@media print{button{display:none;}.no-print{display:none;}}' +
+      '</style></head><body>' +
+      '<h1>Kertas Kerja Program</h1>' +
+      '<p class="sub"><strong>' + k.nama.toUpperCase() + '</strong></p>' +
+      '<p class="sub-sm">' + anjuran + '</p>' +
+      '<hr/>' +
+      '<h2><span class="sec-num">1.0</span> LATAR BELAKANG</h2>' +
+      '<p>' + (k.latarbg||'–') + '</p>' +
+      '<h2><span class="sec-num">2.0</span> OBJEKTIF</h2>' +
+      '<pre>' + (k.obj||'–') + '</pre>' +
+      '<h2><span class="sec-num">3.0</span> BUTIRAN PROGRAM</h2>' +
+      '<table>' +
+      '<tr><td class="td-label">3.1 Tarikh</td><td>: ' + tarikh + '</td></tr>' +
+      '<tr><td class="td-label">3.2 Tempat</td><td>: ' + (k.tempat||'–') + '</td></tr>' +
+      '<tr><td class="td-label">3.3 Masa</td><td>: ' + (k.masa||'–') + '</td></tr>' +
+      '<tr><td class="td-label">3.4 Sasaran</td><td>: ' + (k.sasaran || (k.peserta ? k.peserta + ' orang' : '–')) + '</td></tr>' +
+      '</table>' +
+      '<h2><span class="sec-num">3.5</span> AKTIVITI / PENGISIAN PROGRAM</h2>' +
+      '<pre>' + (k.aktiviti||'–') + '</pre>' +
+      '<h2><span class="sec-num">3.6</span> TENTATIF PROGRAM</h2>' +
+      '<pre>' + (k.tentatif||'–') + '</pre>' +
+      '<h2><span class="sec-num">4.0</span> JAWATANKUASA PROGRAM</h2>' +
+      '<pre>' + (k.jk||'–') + '</pre>' +
+      '<h2><span class="sec-num">5.0</span> SUMBER KEWANGAN</h2>' +
+      '<pre>' + (k.sumber||'–') + '</pre>' +
+      '<h2><span class="sec-num">6.0</span> ANGGARAN PERBELANJAAN</h2>' +
+      '<p>Anggaran Keseluruhan: <strong>RM ' + (parseFloat(k.belanja)||0).toFixed(2) + '</strong></p>' +
+      '<h2><span class="sec-num">7.0</span> PENUTUP</h2>' +
+      '<p>' + (k.penutup||'Diharapkan program ini dapat mengimarahkan masjid sebagai pusat komuniti serta memperkukuhkan semangat perpaduan dan kekeluargaan dalam kalangan masyarakat setempat. Sokongan semua pihak amatlah dihargai bagi memastikan kejayaan program.') + '</p>' +
+      '<div class="sign-row">' +
+        '<div class="sign-box"><div class="sign-line">Disediakan Oleh<br><br><strong>' + (k.pic||'_______________') + '</strong><br>Pengarah Program</div></div>' +
+        '<div class="sign-box"><div class="sign-line">Disahkan Oleh<br><br><strong>En. Rosdi bin Zakaria</strong><br>Imam Tua / Pengerusi</div></div>' +
+      '</div>' +
+      '<br/><hr style="margin-top:48px;"/>' +
+      '<p style="font-size:10pt;color:#888;text-align:center;">Dijana oleh Ismailiah Hub &nbsp;·&nbsp; ' + new Date().toLocaleDateString('ms-MY',{day:'numeric',month:'long',year:'numeric'}) + '</p>' +
+      '<div class="no-print" style="text-align:center;margin-top:14px;">' +
+        '<button onclick="window.print()" style="padding:10px 28px;background:#1a7a4a;color:white;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600;">🖨️ Cetak / Simpan PDF</button>' +
+      '</div>' +
+      '</body></html>');
+    w.document.close();
+  }
+
+  function cetakLaporanAkhir(idx) {
+    var k = kkData[idx];
+    var tarikh = k.tarikh ? new Date(k.tarikh).toLocaleDateString('ms-MY',{day:'numeric',month:'long',year:'numeric'}) : '–';
+    var tkhLaporan = k.tkhlaporan ? new Date(k.tkhlaporan).toLocaleDateString('ms-MY',{day:'numeric',month:'long',year:'numeric'}) : new Date().toLocaleDateString('ms-MY',{day:'numeric',month:'long',year:'numeric'});
+    var anjuran = k.anjuran ? 'Anjuran Bersama: ' + k.anjuran : 'Anjuran: Masjid Ismailiah Mukim Kampung Kubang Terap';
+    var w = window.open('', '_blank', 'width=950,height=750');
+    w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Laporan – ' + k.nama + '</title>' +
+      '<style>' +
+      'body{font-family:"Times New Roman",serif;padding:35px 50px 40px;color:#000;font-size:12.5pt;line-height:1.65;}' +
+      'h1{text-align:center;font-size:14pt;text-transform:uppercase;margin-bottom:3px;font-weight:700;}' +
+      '.sub{text-align:center;font-size:12pt;margin-bottom:3px;}' +
+      '.sub-sm{text-align:center;font-size:11pt;margin-bottom:2px;font-weight:normal;}' +
+      'h2{font-size:12.5pt;margin-top:22px;margin-bottom:6px;font-weight:700;}' +
+      '.sec-num{display:inline-block;min-width:70px;}' +
+      'table{width:100%;border-collapse:collapse;margin:8px 0;}' +
+      'td,th{padding:6px 10px;vertical-align:top;border:1px solid #aaa;}' +
+      'th{background:#1a7a4a;color:white;font-weight:700;text-align:left;}' +
+      '.td-label{width:30%;}' +
+      'pre{font-family:"Times New Roman",serif;white-space:pre-wrap;margin:0;font-size:12.5pt;line-height:1.65;}' +
+      '.sign-row{display:flex;justify-content:space-between;margin-top:60px;}' +
+      '.sign-box{text-align:center;width:44%;}' +
+      '.sign-line{border-top:1px solid #000;margin-top:55px;padding-top:5px;}' +
+      'hr{border:none;border-top:1.5px solid #000;margin:14px 0;}' +
+      '@media print{button{display:none;}.no-print{display:none;}}' +
+      '</style></head><body>' +
+      '<h1>Laporan Program ' + k.nama.toUpperCase() + '</h1>' +
+      '<p class="sub">' + tarikh + '</p>' +
+      '<p class="sub-sm">' + anjuran.toUpperCase() + '</p>' +
+      '<hr/>' +
+      '<h2><span class="sec-num">1.0</span> PENGENALAN</h2>' +
+      '<p>' + (k.latarbg || ('Program ' + k.nama + ' telah berjaya dilaksanakan. Program ini dianjurkan oleh Masjid Ismailiah Mukim Kampung Kubang Terap' + (k.anjuran ? ' bersama ' + k.anjuran : '') + ' pada ' + tarikh + '.')) + '</p>' +
+      '<h2><span class="sec-num">2.0</span> OBJEKTIF PROGRAM</h2>' +
+      '<pre>' + (k.obj||'–') + '</pre>' +
+      '<h2><span class="sec-num">3.0</span> BUTIRAN PROGRAM</h2>' +
+      '<table>' +
+        '<tr><th colspan="2" style="background:#1a7a4a;">Maklumat Program</th></tr>' +
+        '<tr><td class="td-label"><strong>Tarikh</strong></td><td>' + tarikh + '</td></tr>' +
+        '<tr><td><strong>Tempat</strong></td><td>' + (k.tempat||'–') + '</td></tr>' +
+        '<tr><td><strong>Masa</strong></td><td>' + (k.masa||'–') + '</td></tr>' +
+        '<tr><td><strong>Sasaran / Kumpulan</strong></td><td>' + (k.sasaran || (k.peserta ? 'Sasaran: ' + k.peserta + ' orang' : '–')) + '</td></tr>' +
+        '<tr><td><strong>Bilangan Peserta Hadir</strong></td><td>' + (k.pesertahadir || '–') + ' orang</td></tr>' +
+        '<tr><td><strong>Pengarah Program</strong></td><td>' + (k.pic||'–') + '</td></tr>' +
+      '</table>' +
+      '<h2><span class="sec-num">4.0</span> PELAKSANAAN PROGRAM</h2>' +
+      '<pre>' + (k.pelaksanaan || (k.aktiviti ? 'Program telah dilaksanakan mengikut perancangan. Aktiviti utama:\n' + k.aktiviti : '–')) + '</pre>' +
+      '<h2><span class="sec-num">5.0</span> PENGLIBATAN AGENSI DAN KOMUNITI</h2>' +
+      '<pre>' + (k.agensi || '• Jawatankuasa Masjid Ismailiah\n• Penduduk setempat dan para sukarelawan') + '</pre>' +
+      '<h2><span class="sec-num">6.0</span> KEWANGAN PROGRAM</h2>' +
+      (k.kewlaporan ? '<pre>' + k.kewlaporan + '</pre>' :
+        '<table>' +
+        '<tr><th>Perkara</th><th>Amaun</th></tr>' +
+        '<tr><td>Anggaran Perbelanjaan</td><td>RM ' + (parseFloat(k.belanja)||0).toFixed(2) + '</td></tr>' +
+        '<tr><td>Sumber Kewangan</td><td>' + (k.sumber||'–') + '</td></tr>' +
+        '</table>') +
+      '<h2><span class="sec-num">7.0</span> KEKUATAN PROGRAM</h2>' +
+      '<pre>' + (k.kekuatan || '• Program berjalan dengan lancar dan teratur.\n• Penyertaan masyarakat yang menggalakkan.') + '</pre>' +
+      '<h2><span class="sec-num">8.0</span> CADANGAN PENAMBAHBAIKAN</h2>' +
+      '<pre>' + (k.cadangan || '1. Teruskan penganjuran program pada masa hadapan.\n2. Memperluaskan hebahan program melalui media sosial.') + '</pre>' +
+      '<h2><span class="sec-num">9.0</span> PENUTUP</h2>' +
+      '<p>' + (k.penutuplaporan || 'Secara keseluruhannya, ' + k.nama + ' telah berjaya mencapai objektif yang ditetapkan. Program ini bukan sahaja berjaya mengimarahkan masjid, malah turut mengukuhkan hubungan silaturahim dan perpaduan dalam kalangan masyarakat setempat. Kerjasama serta komitmen semua pihak yang terlibat amat dihargai dalam memastikan kejayaan program ini.') + '</p>' +
+      '<div class="sign-row">' +
+        '<div class="sign-box"><div class="sign-line">Disediakan Oleh<br><br><strong>' + (k.pic||'_______________') + '</strong><br>Pengarah Program</div></div>' +
+        '<div class="sign-box"><div class="sign-line">Disahkan Oleh<br><br><strong>En. Rosdi bin Zakaria</strong><br>Imam Tua / Pengerusi</div></div>' +
+      '</div>' +
+      '<br/><hr style="margin-top:48px;"/>' +
+      '<p style="font-size:10pt;color:#888;text-align:center;">Laporan disediakan pada ' + tkhLaporan + ' &nbsp;·&nbsp; Dijana oleh Ismailiah Hub</p>' +
+      '<div class="no-print" style="text-align:center;margin-top:14px;">' +
+        '<button onclick="window.print()" style="padding:10px 28px;background:#1a7a4a;color:white;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600;">🖨️ Cetak / Simpan PDF</button>' +
+      '</div>' +
+      '</body></html>');
+    w.document.close();
+  }
+
   function clearKK() {
-    ['kk-nama','kk-pic','kk-belanja','kk-peserta','kk-obj'].forEach(function(id){ document.getElementById(id).value = ''; });
+    ['kk-nama','kk-anjuran','kk-pic','kk-belanja','kk-peserta','kk-sasaran','kk-latarbg','kk-obj','kk-aktiviti','kk-tentatif','kk-jk','kk-sumber','kk-penutup','kk-masa','kk-tempat'].forEach(function(id){ document.getElementById(id).value = ''; });
     document.getElementById('kk-teras').selectedIndex = 0;
     document.getElementById('kk-status').selectedIndex = 0;
     document.getElementById('kk-tarikh').value = '';
@@ -1795,18 +2514,79 @@
   }
   function renderFin() {
     var list = document.getElementById('fin-list');
-    document.getElementById('fin-count').textContent = finData.length + ' rekod';
+    var carian = ((document.getElementById('fin-carian') || {}).value || '').toLowerCase();
+    var filterJenis = (document.getElementById('fin-filter-jenis') || {}).value || '';
     var masuk = finData.filter(function(f){return f.jenis==='masuk';}).reduce(function(a,b){return a+b.amaun;},0);
     var keluar = finData.filter(function(f){return f.jenis==='keluar';}).reduce(function(a,b){return a+b.amaun;},0);
     var baki = masuk - keluar;
     document.querySelectorAll('.finance-box .amount')[0].textContent = 'RM ' + masuk.toFixed(2);
     document.querySelectorAll('.finance-box .amount')[1].textContent = 'RM ' + keluar.toFixed(2);
     document.querySelectorAll('.finance-box .amount')[2].textContent = 'RM ' + baki.toFixed(2);
-    if (!finData.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada transaksi didaftarkan.</p>'; return; }
-    list.innerHTML = '<div class="tbl-wrap"><table><thead><tr><th>#</th><th>Tarikh</th><th>Perkara</th><th>Kategori</th><th>Amaun</th></tr></thead><tbody>' +
-      finData.map(function(f) {
-        return '<tr><td>' + f.id + '</td><td>' + (f.tarikh||'–') + '</td><td>' + f.perkara + '</td><td>' + f.kategori + '</td><td style="font-weight:600;color:'+(f.jenis==='masuk'?'#155724':'#721c24')+'">' + (f.jenis==='masuk'?'+':'–') + ' RM ' + f.amaun.toFixed(2) + '</td></tr>';
-      }).join('') + '</tbody></table></div>';
+    document.getElementById('fin-count').textContent = finData.length + ' rekod';
+    var filtered = finData.filter(function(f) {
+      if (filterJenis && f.jenis !== filterJenis) return false;
+      if (carian && (f.perkara||'').toLowerCase().indexOf(carian) < 0 && (f.kategori||'').toLowerCase().indexOf(carian) < 0) return false;
+      return true;
+    });
+    if (!filtered.length) {
+      list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">' + (finData.length ? 'Tiada rekod sepadan.' : 'Belum ada transaksi didaftarkan.') + '</p>';
+      return;
+    }
+    list.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:12px;">' +
+      '<thead><tr style="background:#f7f8fa;border-bottom:2px solid var(--border);">' +
+      '<th style="padding:8px 10px;text-align:left;font-weight:600;">Tarikh</th>' +
+      '<th style="padding:8px 10px;text-align:left;font-weight:600;">Perkara</th>' +
+      '<th style="padding:8px 10px;text-align:left;font-weight:600;">Kategori</th>' +
+      '<th style="padding:8px 10px;text-align:right;font-weight:600;">Amaun</th>' +
+      '<th style="padding:8px 6px;text-align:center;font-weight:600;">Tindakan</th>' +
+      '</tr></thead><tbody>' +
+      filtered.map(function(f) {
+        var idx = finData.indexOf(f);
+        return '<tr style="border-bottom:1px solid #f0f0f0;">' +
+          '<td style="padding:7px 10px;color:var(--muted);">' + (f.tarikh||'–') + '</td>' +
+          '<td style="padding:7px 10px;font-weight:500;">' + f.perkara + (f.catatan ? '<br><span style="font-size:10px;color:var(--muted);">' + f.catatan + '</span>' : '') + '</td>' +
+          '<td style="padding:7px 10px;color:var(--muted);font-size:11px;">' + (f.kategori||'–') + '</td>' +
+          '<td style="padding:7px 10px;text-align:right;font-weight:700;color:' + (f.jenis==='masuk'?'#155724':'#721c24') + ';">' + (f.jenis==='masuk'?'+ RM ':'– RM ') + f.amaun.toFixed(2) + '</td>' +
+          '<td style="padding:7px 6px;text-align:center;white-space:nowrap;">' +
+            '<button onclick="bukaEditFin(' + idx + ')" title="Edit" style="padding:3px 7px;font-size:10px;background:#e8f5ee;color:var(--green-dark);border:1px solid #c3e6cb;border-radius:5px;cursor:pointer;margin-right:3px;">✏️</button>' +
+            '<button onclick="padamFin(' + idx + ')" title="Padam" style="padding:3px 7px;font-size:10px;background:#fdf2f2;color:var(--red);border:1px solid #f5c6cb;border-radius:5px;cursor:pointer;">🗑️</button>' +
+          '</td></tr>';
+      }).join('') + '</tbody></table>';
+  }
+  function bukaEditFin(idx) {
+    var f = finData[idx];
+    document.getElementById('fin-edit-id').value       = idx;
+    document.getElementById('fin-edit-tarikh').value   = f.tarikh  || '';
+    document.getElementById('fin-edit-jenis').value    = f.jenis   || 'masuk';
+    document.getElementById('fin-edit-perkara').value  = f.perkara || '';
+    document.getElementById('fin-edit-amaun').value    = f.amaun   || '';
+    document.getElementById('fin-edit-kategori').value = f.kategori|| '';
+    document.getElementById('fin-edit-catatan').value  = f.catatan || '';
+    document.getElementById('modal-fin-edit').style.display = 'flex';
+  }
+  function simpanEditFin() {
+    var idx = parseInt(document.getElementById('fin-edit-id').value);
+    var f = finData[idx];
+    f.tarikh   = document.getElementById('fin-edit-tarikh').value;
+    f.jenis    = document.getElementById('fin-edit-jenis').value;
+    f.perkara  = document.getElementById('fin-edit-perkara').value.trim();
+    f.amaun    = parseFloat(document.getElementById('fin-edit-amaun').value) || 0;
+    f.kategori = document.getElementById('fin-edit-kategori').value;
+    f.catatan  = document.getElementById('fin-edit-catatan').value.trim();
+    supaUpdateFin(f);
+    renderFin();
+    lsSave();
+    updateDashboard();
+    document.getElementById('modal-fin-edit').style.display = 'none';
+  }
+  function padamFin(idx) {
+    var f = finData[idx];
+    if (!confirm('Padam transaksi "' + f.perkara + '"?\n\nTindakan ini tidak boleh dibatalkan.')) return;
+    supaDeleteFin(f);
+    finData.splice(idx, 1);
+    renderFin();
+    lsSave();
+    updateDashboard();
   }
   function clearFin() {
     ['fin-perkara','fin-amaun','fin-catatan'].forEach(function(id){ document.getElementById(id).value = ''; });
@@ -1826,7 +2606,7 @@
     var status = document.getElementById('aset-status').value;
     var lokasi = document.getElementById('aset-lokasi').value.trim();
     if (!nama) { alert('Sila masukkan nama aset.'); return; }
-    var item = { id: asetData.length+1, nama, kategori, siri, tarikh, nilai, status, lokasi };
+    var item = { id: Date.now(), nama, kategori, siri, tarikh, nilai, status, lokasi };
     asetData.push(item);
     supaSaveAset(item);
     renderAset();
@@ -1834,14 +2614,73 @@
   }
   function renderAset() {
     var list = document.getElementById('aset-list');
+    var carian = ((document.getElementById('aset-carian') || {}).value || '').toLowerCase();
+    var filterStatus = (document.getElementById('aset-filter-status') || {}).value || '';
     document.getElementById('aset-count').textContent = asetData.length + ' rekod';
-    if (!asetData.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">Belum ada aset didaftarkan.</p>'; return; }
     var icons = {'Audio Visual & Multimedia':'🔊','Perabot & Peralatan Pejabat':'🪑','Kemudahan Kebersihan':'🧹','Kenderaan':'🚗','Peralatan Dapur':'🍳','Kelengkapan Masjid':'🕌','ICT & Teknologi':'💻','Lain-lain':'📦'};
     var statusBadge = {'baik':'badge-green','sederhana':'badge-gold','perlu-selenggara':'badge-orange','rosak':'badge-red'};
     var statusLabel = {'baik':'Baik','sederhana':'Sederhana','perlu-selenggara':'Perlu Selenggara','rosak':'Rosak'};
-    list.innerHTML = asetData.map(function(a) {
-      return '<div class="asset-item"><div class="asset-icon">' + (icons[a.kategori]||'📦') + '</div><div class="asset-info"><div class="name">' + a.nama + '</div><div class="meta">' + a.kategori + ' &nbsp;|&nbsp; ' + (a.siri||'–') + ' &nbsp;|&nbsp; ' + (a.lokasi||'–') + '</div></div><div class="asset-status"><span class="' + statusBadge[a.status] + '">' + statusLabel[a.status] + '</span></div></div>';
+    var filtered = asetData.filter(function(a) {
+      if (filterStatus && a.status !== filterStatus) return false;
+      if (carian && (a.nama||'').toLowerCase().indexOf(carian) < 0 && (a.siri||'').toLowerCase().indexOf(carian) < 0 && (a.lokasi||'').toLowerCase().indexOf(carian) < 0) return false;
+      return true;
+    });
+    if (!filtered.length) {
+      list.innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">' + (asetData.length ? 'Tiada aset sepadan.' : 'Belum ada aset didaftarkan.') + '</p>';
+      return;
+    }
+    list.innerHTML = filtered.map(function(a) {
+      var idx = asetData.indexOf(a);
+      return '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0;">' +
+        '<div style="font-size:20px;flex-shrink:0;">' + (icons[a.kategori]||'📦') + '</div>' +
+        '<div style="flex:1;min-width:0;">' +
+          '<div style="font-weight:600;font-size:13px;">' + a.nama + '</div>' +
+          '<div style="font-size:11px;color:var(--muted);">' + a.kategori + ' &nbsp;·&nbsp; ' + (a.siri||'–') + ' &nbsp;·&nbsp; ' + (a.lokasi||'–') + (a.nilai ? ' &nbsp;·&nbsp; RM ' + parseFloat(a.nilai).toFixed(2) : '') + '</div>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">' +
+          '<span class="' + statusBadge[a.status] + '">' + statusLabel[a.status] + '</span>' +
+          '<div style="display:flex;gap:3px;">' +
+            '<button onclick="bukaEditAset(' + idx + ')" title="Edit" style="padding:3px 7px;font-size:10px;background:#e8f5ee;color:var(--green-dark);border:1px solid #c3e6cb;border-radius:5px;cursor:pointer;">✏️</button>' +
+            '<button onclick="padamAset(' + idx + ')" title="Padam" style="padding:3px 7px;font-size:10px;background:#fdf2f2;color:var(--red);border:1px solid #f5c6cb;border-radius:5px;cursor:pointer;">🗑️</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
     }).join('');
+  }
+  function bukaEditAset(idx) {
+    var a = asetData[idx];
+    document.getElementById('aset-edit-id').value       = idx;
+    document.getElementById('aset-edit-nama').value     = a.nama     || '';
+    document.getElementById('aset-edit-kategori').value = a.kategori || '';
+    document.getElementById('aset-edit-siri').value     = a.siri     || '';
+    document.getElementById('aset-edit-tarikh').value   = a.tarikh   || '';
+    document.getElementById('aset-edit-nilai').value    = a.nilai    || '';
+    document.getElementById('aset-edit-status').value   = a.status   || 'baik';
+    document.getElementById('aset-edit-lokasi').value   = a.lokasi   || '';
+    document.getElementById('modal-aset-edit').style.display = 'flex';
+  }
+  function simpanEditAset() {
+    var idx = parseInt(document.getElementById('aset-edit-id').value);
+    var a = asetData[idx];
+    a.nama     = document.getElementById('aset-edit-nama').value.trim();
+    a.kategori = document.getElementById('aset-edit-kategori').value;
+    a.siri     = document.getElementById('aset-edit-siri').value.trim();
+    a.tarikh   = document.getElementById('aset-edit-tarikh').value;
+    a.nilai    = parseFloat(document.getElementById('aset-edit-nilai').value) || 0;
+    a.status   = document.getElementById('aset-edit-status').value;
+    a.lokasi   = document.getElementById('aset-edit-lokasi').value.trim();
+    supaUpdateAset(a);
+    renderAset();
+    lsSave();
+    document.getElementById('modal-aset-edit').style.display = 'none';
+  }
+  function padamAset(idx) {
+    var a = asetData[idx];
+    if (!confirm('Padam aset "' + a.nama + '"?\n\nTindakan ini tidak boleh dibatalkan.')) return;
+    supaDeleteAset(a);
+    asetData.splice(idx, 1);
+    renderAset();
+    lsSave();
   }
   function clearAset() {
     ['aset-nama','aset-siri','aset-nilai','aset-lokasi'].forEach(function(id){ document.getElementById(id).value = ''; });
@@ -1863,7 +2702,7 @@
       // ════ JANUARI 2026 ════
       {bulan:1,hari:'ISNIN',tarikh:19,aktiviti:'🌟 Sambutan Israk dan Mikraj – Ceramah Ustaz Hj Zainuddin bin Ismail',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
       // ════ FEBRUARI 2026 ════
-      {bulan:2,hari:'ISNIN',tarikh:2,aktiviti:'🌙 Sambutan Nisfu Syaaban – Bacaan Yasin',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:2,hari:'ISNIN',tarikh:2,aktiviti:'🌙 Sambutan Nisfu Syaaban – Bacaan Yaasin',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
       {bulan:2,hari:'KHAMIS',tarikh:5,aktiviti:'💰 Agihan Tabung Asnaf',pic:'BEK&HEM',teras:'T1',lokasi:'Masjid Ismailiah',status:'dilaksana'},
       {bulan:2,hari:'RABU',tarikh:11,aktiviti:'🎪 Sesi Libat Urus 1 Karnival MADANI Raya 2026/1447H',pic:'BBW&KS',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
       {bulan:2,hari:'SABTU',tarikh:7,aktiviti:'📋 Mesyuarat AJK Masjid Ismailiah Mukim Kampung Kubang Terap Bil. 1/2026',pic:'Setiausaha',teras:'T1',lokasi:'Masjid Ismailiah',status:'dilaksana'},
@@ -1904,9 +2743,8 @@
       {bulan:10,hari:'SABTU',tarikh:31,aktiviti:'👩 Program Kuliah Bulanan Muslimat',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
       // ════ NOVEMBER 2026 ════
       {bulan:11,hari:'SABTU',tarikh:15,aktiviti:'📋 Mesyuarat AJK Bil 4/2026',pic:'Setiausaha',teras:'T1',lokasi:'Masjid Ismailiah',status:'dirancang'},
-      {bulan:11,hari:'SABTU',tarikh:29,aktiviti:'👩 Program Kuliah Bulanan Muslimat',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
       // ════ DISEMBER 2026 ════
-      {bulan:12,hari:'SABTU',tarikh:27,aktiviti:'👩 Program Kuliah Bulanan Muslimat',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'}
+      // (Tiada aktiviti baru didaftarkan dalam Takwim Tahunan 2026)
     ],
     '2027': [
       // ════ JANUARI 2027 ════
@@ -2032,8 +2870,8 @@
           html += '<td style="font-size:11px;color:var(--muted);">' + (d.lokasi || '–') + '</td>';
           html += '<td><span class="' + badgeCls + '">' + (STATUS_LABEL[d.status] || d.status) + '</span></td>';
           html += '<td style="white-space:nowrap;">' +
-            '<button class="btn btn-outline btn-sm" style="font-size:10px;margin-right:3px;" onclick="ubahStatus(\'' + tahun + '\',' + (data.indexOf(d)) + ')" title="Tukar Status">✏️</button>' +
-            '<button class="btn btn-sm" style="font-size:10px;background:#fdf2f2;color:var(--red);border:1px solid #f5c6cb;" onclick="padamAktiviti(\'' + tahun + '\',' + (data.indexOf(d)) + ')" title="Padam">🗑️</button>' +
+            '<button style="padding:3px 6px;font-size:10px;background:#e8f5ee;color:var(--green-dark);border:1px solid #c3e6cb;border-radius:4px;cursor:pointer;margin-right:2px;" onclick="bukaEditAktiviti(\'' + tahun + '\',' + (data.indexOf(d)) + ')" title="Edit">✏️</button>' +
+            '<button style="padding:3px 6px;font-size:10px;background:#fdf2f2;color:var(--red);border:1px solid #f5c6cb;border-radius:4px;cursor:pointer;" onclick="padamAktiviti(\'' + tahun + '\',' + (data.indexOf(d)) + ')" title="Padam">🗑️</button>' +
             '</td>';
           html += '</tr>';
         });
@@ -2052,25 +2890,53 @@
   }
 
   function bukaTambahAktiviti() {
-    document.getElementById('modal-takwim').style.display = 'flex';
+    document.getElementById('tw-modal-title').textContent = '➕ Tambah Aktiviti Baru';
+    document.getElementById('tw-edit-idx').value = '';
+    document.getElementById('tw-edit-tahun-val').value = '';
     document.getElementById('tw-tahun').value = twTahunAktif;
+    ['tw-tarikh','tw-aktiviti','tw-pic','tw-lokasi'].forEach(function(id){ document.getElementById(id).value = ''; });
+    document.getElementById('tw-bulan').selectedIndex = 0;
+    document.getElementById('tw-hari').selectedIndex = 0;
+    document.getElementById('tw-teras').selectedIndex = 0;
+    document.getElementById('tw-status').selectedIndex = 0;
+    document.getElementById('modal-takwim').style.display = 'flex';
   }
   function bukaTambahAktivitiBulan(tahun, bulan) {
-    document.getElementById('modal-takwim').style.display = 'flex';
+    bukaTambahAktiviti();
     document.getElementById('tw-tahun').value = tahun;
     document.getElementById('tw-bulan').value = String(bulan);
   }
+  function bukaEditAktiviti(tahun, idx) {
+    var d = twData[tahun][idx];
+    document.getElementById('tw-modal-title').textContent = '✏️ Edit Aktiviti';
+    document.getElementById('tw-edit-idx').value = idx;
+    document.getElementById('tw-edit-tahun-val').value = tahun;
+    document.getElementById('tw-tahun').value = tahun;
+    document.getElementById('tw-bulan').value = String(d.bulan);
+    document.getElementById('tw-tarikh').value = d.tarikh || '';
+    document.getElementById('tw-hari').value = d.hari || 'ISNIN';
+    document.getElementById('tw-aktiviti').value = d.aktiviti || '';
+    document.getElementById('tw-pic').value = d.pic || '';
+    document.getElementById('tw-teras').value = d.teras || 'T1';
+    document.getElementById('tw-lokasi').value = d.lokasi || '';
+    document.getElementById('tw-status').value = d.status || 'dirancang';
+    document.getElementById('modal-takwim').style.display = 'flex';
+  }
   function padamAktiviti(tahun, idx) {
     var d = twData[tahun][idx];
-    if (confirm('Padam aktiviti "' + d.aktiviti + '"?')) {
-      twData[tahun].splice(idx, 1);
-      renderTakwim(tahun);
-    }
+    if (!confirm('Padam aktiviti "' + d.aktiviti + '"?\n\nTindakan ini tidak boleh dibatalkan.')) return;
+    supaDeleteTakwim(d);
+    twData[tahun].splice(idx, 1);
+    tunjukTakwim(tahun);
+    lsSave();
+    updateDashboard();
   }
   function tutupModal() {
     document.getElementById('modal-takwim').style.display = 'none';
   }
   function simpanAktiviti() {
+    var editIdx = document.getElementById('tw-edit-idx').value;
+    var editTahun = document.getElementById('tw-edit-tahun-val').value;
     var tahun = document.getElementById('tw-tahun').value;
     var bulan = parseInt(document.getElementById('tw-bulan').value);
     var tarikh = parseInt(document.getElementById('tw-tarikh').value) || 1;
@@ -2083,15 +2949,78 @@
     if (!aktiviti) { alert('Sila masukkan nama aktiviti.'); return; }
     if (!twData[tahun]) twData[tahun] = [];
     var twItem = { bulan: bulan, hari: hari, tarikh: tarikh, aktiviti: aktiviti, pic: pic, teras: teras, lokasi: lokasi, status: status };
-    twData[tahun].push(twItem);
-    supaSaveTakwim(tahun, twItem);
+    if (editIdx !== '' && editTahun) {
+      // Mode edit
+      var oldItem = twData[editTahun][parseInt(editIdx)];
+      supaUpdateTakwim(oldItem, tahun, twItem);
+      if (editTahun !== tahun) {
+        twData[editTahun].splice(parseInt(editIdx), 1);
+        twData[tahun].push(twItem);
+      } else {
+        twData[tahun][parseInt(editIdx)] = twItem;
+      }
+    } else {
+      // Mode tambah baru
+      twData[tahun].push(twItem);
+      supaSaveTakwim(tahun, twItem);
+    }
     tutupModal();
     tunjukTakwim(tahun);
-    // Kosongkan borang
-    ['tw-tarikh','tw-aktiviti','tw-pic','tw-lokasi'].forEach(function(id){ document.getElementById(id).value = ''; });
+    lsSave();
+    updateDashboard();
   }
   function cetakTakwim() {
     window.print();
+  }
+
+  // ── TEMPLATE LAPORAN ────────────────────────────────────────────────────
+  function cetakLaporan(jenis) {
+    var tajuk, kandungan;
+    var tarikh = new Date().toLocaleDateString('ms-MY', { day:'numeric', month:'long', year:'numeric' });
+
+    if (jenis === 'kpi') {
+      showPanel('kpi');
+      return;
+    }
+
+    if (jenis === 'akhir') {
+      tajuk = 'TEMPLATE LAPORAN AKHIR PROGRAM';
+      var senaraiKK = kkData.filter(function(k){ return k.status === 'Selesai'; });
+      kandungan = '<h2 style="text-align:center;color:#1a7a4a;">LAPORAN AKHIR PROGRAM</h2>' +
+        '<p style="text-align:center;color:#666;font-size:13px;">Masjid Ismailiah Mukim Kampung Kubang Terap | ' + tarikh + '</p><hr/>' +
+        '<table border="1" cellpadding="8" cellspacing="0" width="100%" style="border-collapse:collapse;font-size:13px;">' +
+        '<thead style="background:#1a7a4a;color:white;"><tr><th>#</th><th>Nama Program</th><th>Tarikh</th><th>Teras</th><th>PIC</th><th>Status</th></tr></thead><tbody>' +
+        (senaraiKK.length ? senaraiKK.map(function(k,i){ return '<tr><td>'+(i+1)+'</td><td>'+k.nama+'</td><td>'+(k.tarikh||'–')+'</td><td>'+(k.teras||'–')+'</td><td>'+(k.pic||'–')+'</td><td>'+k.status+'</td></tr>'; }).join('') :
+        '<tr><td colspan="6" style="text-align:center;color:#888;">Tiada program berstatus Selesai lagi.</td></tr>') +
+        '</tbody></table>';
+    } else if (jenis === 'tahunan') {
+      tajuk = 'TEMPLATE LAPORAN TAHUNAN';
+      var totMasuk = finData.filter(function(f){return f.jenis==='masuk';}).reduce(function(a,b){return a+b.amaun;},0);
+      var totKeluar = finData.filter(function(f){return f.jenis==='keluar';}).reduce(function(a,b){return a+b.amaun;},0);
+      kandungan = '<h2 style="text-align:center;color:#1a7a4a;">LAPORAN TAHUNAN MASJID ISMAILIAH</h2>' +
+        '<p style="text-align:center;color:#666;font-size:13px;">Masjid Ismailiah Mukim Kampung Kubang Terap | ' + tarikh + '</p><hr/>' +
+        '<h3>Ringkasan Program / Aktiviti</h3>' +
+        '<p>Jumlah kertas kerja: <strong>' + kkData.length + '</strong> &nbsp;|&nbsp; ' +
+        'Selesai: <strong>' + kkData.filter(function(k){return k.status==='Selesai';}).length + '</strong></p>' +
+        '<h3>Ringkasan Kewangan</h3>' +
+        '<p>Jumlah Kutipan/Pendapatan: <strong>RM ' + totMasuk.toFixed(2) + '</strong></p>' +
+        '<p>Jumlah Perbelanjaan: <strong>RM ' + totKeluar.toFixed(2) + '</strong></p>' +
+        '<p>Baki Semasa: <strong>RM ' + (totMasuk - totKeluar).toFixed(2) + '</strong></p>' +
+        '<h3>Ringkasan Aset</h3>' +
+        '<p>Jumlah Aset Berdaftar: <strong>' + asetData.length + '</strong></p>' +
+        '<h3>Ringkasan Takwim</h3>' +
+        '<p>Jumlah Aktiviti 2026: <strong>' + (twData['2026']||[]).length + '</strong> &nbsp;|&nbsp; ' +
+        'Dilaksanakan: <strong>' + (twData['2026']||[]).filter(function(d){return d.status==='dilaksana';}).length + '</strong></p>';
+    }
+
+    var w = window.open('', '_blank', 'width=900,height=700');
+    w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + tajuk + '</title>' +
+      '<style>body{font-family:Arial,sans-serif;padding:30px;color:#333;} h2,h3{color:#1a7a4a;} table{width:100%;} th,td{padding:8px;border:1px solid #ddd;} th{background:#1a7a4a;color:white;} @media print{button{display:none;}}</style>' +
+      '</head><body>' + kandungan +
+      '<br/><hr/><p style="font-size:11px;color:#999;text-align:center;">Dijana oleh Ismailiah Hub &nbsp;·&nbsp; ' + tarikh + '</p>' +
+      '<div style="text-align:center;margin-top:16px;"><button onclick="window.print()" style="padding:10px 24px;background:#1a7a4a;color:white;border:none;border-radius:6px;font-size:14px;cursor:pointer;">🖨️ Cetak / Simpan PDF</button></div>' +
+      '</body></html>');
+    w.document.close();
   }
 
   // ── LOCAL STORAGE – AUTO SAVE & LOAD ────────────────────────────────────
@@ -2549,8 +3478,12 @@
 <script>
   // ── SUPABASE INIT ──────────────────────────────────────────
   const SUPA_URL  = 'https://xykitbdwiibslcalkghp.supabase.co';
-  const SUPA_KEY  = 'sb_publishable_XyfojNEjQO_McjbjG90C8g_DuG7rJAf';
-  const _supa     = supabase.createClient(SUPA_URL, SUPA_KEY);
+  const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5a2l0YmR3aWlic2xjYWxrZ2hwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUwMTgzMzQsImV4cCI6MjExMDU5NDMzNH0.pzt8PY7LapqkJk8j38FRUNVZk2kdD5SSaTg2esotieQ';
+  const SUPA_SVC  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5a2l0YmR3aWlic2xjYWxrZ2hwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5NTAxODMzNCwiZXhwIjoyMTEwNTk0MzM0fQ.xRdrTXFSrjbLkz0vFCQimxkhzLghi7umAm5hSB8r7y0';
+  // _supa: untuk auth (login/logout) guna anon key
+  // _supaAdmin: untuk baca/tulis data — bypass RLS sepenuhnya
+  const _supa      = supabase.createClient(SUPA_URL, SUPA_ANON);
+  const _supaAdmin = supabase.createClient(SUPA_URL, SUPA_SVC);
 
   // ── AUTH ──────────────────────────────────────────────────
   async function doLogin() {
@@ -2633,28 +3566,40 @@
   async function supaLoad() {
     try {
       // Load kertas kerja
-      var { data: kk } = await _supa.from('kertas_kerja').select('*').order('created_at');
+      var { data: kk } = await _supaAdmin.from('kertas_kerja').select('*').order('created_at');
       if (kk && kk.length) {
         kkData.length = 0;
-        kk.forEach(function(r){ kkData.push({ id: r.id, nama: r.nama, teras: r.teras, tarikh: r.tarikh, pic: r.pic, belanja: r.belanja, peserta: r.peserta, obj: r.obj, status: r.status }); });
+        kk.forEach(function(r){
+          kkData.push({
+            id: r.id, nama: r.nama, anjuran: r.anjuran||'', teras: r.teras, tarikh: r.tarikh,
+            masa: r.masa||'', tempat: r.tempat||'', pic: r.pic, belanja: r.belanja,
+            peserta: r.peserta, sasaran: r.sasaran||'', latarbg: r.latarbg||'', obj: r.obj||'',
+            aktiviti: r.aktiviti||'', tentatif: r.tentatif||'', jk: r.jk||'',
+            sumber: r.sumber||'', penutup: r.penutup||'', status: r.status,
+            pesertahadir: r.pesertahadir||'', tkhlaporan: r.tkhlaporan||'',
+            pelaksanaan: r.pelaksanaan||'', agensi: r.agensi||'',
+            kewlaporan: r.kewlaporan||'', kekuatan: r.kekuatan||'',
+            cadangan: r.cadangan||'', penutuplaporan: r.penutuplaporan||''
+          });
+        });
         renderKK();
       }
       // Load kewangan
-      var { data: fin } = await _supa.from('kewangan').select('*').order('created_at');
+      var { data: fin } = await _supaAdmin.from('kewangan').select('*').order('created_at');
       if (fin && fin.length) {
         finData.length = 0;
         fin.forEach(function(r){ finData.push({ id: r.id, tarikh: r.tarikh, jenis: r.jenis, perkara: r.perkara, amaun: parseFloat(r.amaun), kategori: r.kategori, catatan: r.catatan }); });
         renderFin();
       }
       // Load aset
-      var { data: ast } = await _supa.from('aset').select('*').order('created_at');
+      var { data: ast } = await _supaAdmin.from('aset').select('*').order('created_at');
       if (ast && ast.length) {
         asetData.length = 0;
         ast.forEach(function(r){ asetData.push({ id: r.id, nama: r.nama, kategori: r.kategori, siri: r.siri, tarikh: r.tarikh, nilai: parseFloat(r.nilai), status: r.status, lokasi: r.lokasi }); });
         renderAset();
       }
       // Load takwim
-      var { data: tw } = await _supa.from('takwim').select('*').order('tarikh');
+      var { data: tw } = await _supaAdmin.from('takwim').select('*').order('tarikh');
       if (tw && tw.length) {
         var tw26 = tw.filter(function(r){ return r.tahun === 2026; });
         var tw27 = tw.filter(function(r){ return r.tahun === 2027; });
@@ -2669,30 +3614,180 @@
     } catch(e) { console.warn('supaLoad error:', e); }
   }
 
+  function supaNotif(msg, isError) {
+    var id = 'supa-notif';
+    var el = document.getElementById(id);
+    if (!el) {
+      el = document.createElement('div');
+      el.id = id;
+      el.style.cssText = 'position:fixed;bottom:20px;right:20px;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:600;z-index:99999;max-width:320px;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:opacity 0.5s;';
+      document.body.appendChild(el);
+    }
+    el.style.background = isError ? '#fdf2f2' : '#e8f5ee';
+    el.style.color = isError ? '#c0392b' : '#155724';
+    el.style.border = '1px solid ' + (isError ? '#f5c6cb' : '#c3e6cb');
+    el.style.opacity = '1';
+    el.textContent = msg;
+    clearTimeout(el._t);
+    el._t = setTimeout(function(){ el.style.opacity = '0'; }, 3500);
+  }
+
   async function supaSaveKK(item) {
-    try { await _supa.from('kertas_kerja').insert([{ nama: item.nama, teras: item.teras, tarikh: item.tarikh||null, pic: item.pic, belanja: item.belanja, peserta: item.peserta, obj: item.obj, status: item.status }]); } catch(e){}
+    try {
+      var { error } = await _supaAdmin.from('kertas_kerja').insert([{
+        nama: item.nama, anjuran: item.anjuran||null, teras: item.teras,
+        tarikh: item.tarikh||null, masa: item.masa||null, tempat: item.tempat||null,
+        pic: item.pic, belanja: item.belanja||null, peserta: item.peserta||null,
+        sasaran: item.sasaran||null, latarbg: item.latarbg||null, obj: item.obj||null,
+        aktiviti: item.aktiviti||null, tentatif: item.tentatif||null, jk: item.jk||null,
+        sumber: item.sumber||null, penutup: item.penutup||null, status: item.status,
+        pesertahadir: item.pesertahadir||null, tkhlaporan: item.tkhlaporan||null,
+        pelaksanaan: item.pelaksanaan||null, agensi: item.agensi||null,
+        kewlaporan: item.kewlaporan||null, kekuatan: item.kekuatan||null,
+        cadangan: item.cadangan||null, penutuplaporan: item.penutuplaporan||null
+      }]);
+      if (error) supaNotif('⚠️ Ralat simpan kertas kerja: ' + error.message, true);
+      else supaNotif('✅ Kertas kerja berjaya disimpan ke pangkalan data.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data. Data disimpan secara tempatan sahaja.', true); }
+  }
+
+  async function supaUpdateKK(item) {
+    if (!item.id) return;
+    try {
+      var { error } = await _supaAdmin.from('kertas_kerja').update({
+        nama: item.nama, anjuran: item.anjuran||null, teras: item.teras,
+        tarikh: item.tarikh||null, masa: item.masa||null, tempat: item.tempat||null,
+        pic: item.pic, belanja: item.belanja||null, peserta: item.peserta||null,
+        sasaran: item.sasaran||null, latarbg: item.latarbg||null, obj: item.obj||null,
+        aktiviti: item.aktiviti||null, tentatif: item.tentatif||null, jk: item.jk||null,
+        sumber: item.sumber||null, penutup: item.penutup||null, status: item.status,
+        pesertahadir: item.pesertahadir||null, tkhlaporan: item.tkhlaporan||null,
+        pelaksanaan: item.pelaksanaan||null, agensi: item.agensi||null,
+        kewlaporan: item.kewlaporan||null, kekuatan: item.kekuatan||null,
+        cadangan: item.cadangan||null, penutuplaporan: item.penutuplaporan||null
+      }).eq('id', item.id);
+      if (error) supaNotif('⚠️ Ralat kemaskini kertas kerja: ' + error.message, true);
+      else supaNotif('✅ Kertas kerja berjaya dikemaskini.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
+  }
+
+  async function supaDeleteKK(item) {
+    if (!item.id) return;
+    try {
+      var { error } = await _supaAdmin.from('kertas_kerja').delete().eq('id', item.id);
+      if (error) supaNotif('⚠️ Ralat padam kertas kerja: ' + error.message, true);
+      else supaNotif('✅ Kertas kerja berjaya dipadam.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
   }
   async function supaSaveFin(item) {
-    try { await _supa.from('kewangan').insert([{ tarikh: item.tarikh||null, jenis: item.jenis, perkara: item.perkara, amaun: item.amaun, kategori: item.kategori, catatan: item.catatan }]); } catch(e){}
+    try {
+      var { error } = await _supaAdmin.from('kewangan').insert([{ tarikh: item.tarikh||null, jenis: item.jenis, perkara: item.perkara, amaun: item.amaun, kategori: item.kategori, catatan: item.catatan }]);
+      if (error) supaNotif('⚠️ Ralat simpan transaksi: ' + error.message, true);
+      else supaNotif('✅ Transaksi kewangan berjaya disimpan ke pangkalan data.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data. Data disimpan secara tempatan sahaja.', true); }
+  }
+  async function supaUpdateFin(item) {
+    if (!item.id) return;
+    try {
+      var { error } = await _supaAdmin.from('kewangan').update({ tarikh: item.tarikh||null, jenis: item.jenis, perkara: item.perkara, amaun: item.amaun, kategori: item.kategori, catatan: item.catatan }).eq('id', item.id);
+      if (error) supaNotif('⚠️ Ralat kemaskini transaksi: ' + error.message, true);
+      else supaNotif('✅ Transaksi berjaya dikemaskini.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
+  }
+  async function supaDeleteFin(item) {
+    if (!item.id) return;
+    try {
+      var { error } = await _supaAdmin.from('kewangan').delete().eq('id', item.id);
+      if (error) supaNotif('⚠️ Ralat padam transaksi: ' + error.message, true);
+      else supaNotif('✅ Transaksi berjaya dipadam.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
   }
   async function supaSaveAset(item) {
-    try { await _supa.from('aset').insert([{ nama: item.nama, kategori: item.kategori, siri: item.siri, tarikh: item.tarikh||null, nilai: item.nilai, status: item.status, lokasi: item.lokasi }]); } catch(e){}
+    try {
+      var { error } = await _supaAdmin.from('aset').insert([{ nama: item.nama, kategori: item.kategori, siri: item.siri, tarikh: item.tarikh||null, nilai: item.nilai, status: item.status, lokasi: item.lokasi }]);
+      if (error) supaNotif('⚠️ Ralat simpan aset: ' + error.message, true);
+      else supaNotif('✅ Aset berjaya disimpan ke pangkalan data.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data. Data disimpan secara tempatan sahaja.', true); }
+  }
+  async function supaUpdateAset(item) {
+    if (!item.id) return;
+    try {
+      var { error } = await _supaAdmin.from('aset').update({ nama: item.nama, kategori: item.kategori, siri: item.siri, tarikh: item.tarikh||null, nilai: item.nilai, status: item.status, lokasi: item.lokasi }).eq('id', item.id);
+      if (error) supaNotif('⚠️ Ralat kemaskini aset: ' + error.message, true);
+      else supaNotif('✅ Aset berjaya dikemaskini.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
+  }
+  async function supaDeleteAset(item) {
+    if (!item.id) return;
+    try {
+      var { error } = await _supaAdmin.from('aset').delete().eq('id', item.id);
+      if (error) supaNotif('⚠️ Ralat padam aset: ' + error.message, true);
+      else supaNotif('✅ Aset berjaya dipadam.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
   }
   async function supaSaveTakwim(tahun, item) {
-    try { await _supa.from('takwim').insert([{ tahun: parseInt(tahun), bulan: item.bulan, hari: item.hari, tarikh: item.tarikh, aktiviti: item.aktiviti, pic: item.pic, teras: item.teras, lokasi: item.lokasi, status: item.status }]); } catch(e){}
+    try {
+      var { error } = await _supaAdmin.from('takwim').insert([{ tahun: parseInt(tahun), bulan: item.bulan, hari: item.hari, tarikh: item.tarikh, aktiviti: item.aktiviti, pic: item.pic, teras: item.teras, lokasi: item.lokasi, status: item.status }]);
+      if (error) supaNotif('⚠️ Ralat simpan takwim: ' + error.message, true);
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data. Data disimpan secara tempatan sahaja.', true); }
+  }
+  async function supaUpdateTakwim(oldItem, tahunBaru, newItem) {
+    // Strategi: delete lama (berdasarkan aktiviti+bulan+tarikh), insert baru
+    try {
+      if (oldItem && oldItem.id) {
+        await _supaAdmin.from('takwim').delete().eq('id', oldItem.id);
+      }
+      await _supaAdmin.from('takwim').insert([{ tahun: parseInt(tahunBaru), bulan: newItem.bulan, hari: newItem.hari, tarikh: newItem.tarikh, aktiviti: newItem.aktiviti, pic: newItem.pic, teras: newItem.teras, lokasi: newItem.lokasi, status: newItem.status }]);
+      supaNotif('✅ Aktiviti takwim berjaya dikemaskini.');
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
+  }
+  async function supaDeleteTakwim(item) {
+    try {
+      if (item && item.id) {
+        var { error } = await _supaAdmin.from('takwim').delete().eq('id', item.id);
+        if (error) supaNotif('⚠️ Ralat padam aktiviti: ' + error.message, true);
+        else supaNotif('✅ Aktiviti berjaya dipadam.');
+      }
+    } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
+  }
+
+  // ── EXPORT CSV ───────────────────────────────────────────────────────────
+  function exportCSV(jenis) {
+    var rows, header, filename;
+    if (jenis === 'kewangan') {
+      header = ['Tarikh','Jenis','Perkara','Kategori','Amaun (RM)','Catatan'];
+      rows = finData.map(function(f) {
+        return [f.tarikh||'', f.jenis||'', '"' + (f.perkara||'').replace(/"/g,'""') + '"', f.kategori||'', f.amaun.toFixed(2), '"' + (f.catatan||'').replace(/"/g,'""') + '"'];
+      });
+      filename = 'kewangan_ismailiah_' + new Date().toISOString().slice(0,10) + '.csv';
+    } else if (jenis === 'aset') {
+      header = ['Nama Aset','Kategori','No Siri','Tarikh Perolehan','Nilai (RM)','Status','Lokasi'];
+      rows = asetData.map(function(a) {
+        return ['"' + (a.nama||'').replace(/"/g,'""') + '"', a.kategori||'', a.siri||'', a.tarikh||'', (parseFloat(a.nilai)||0).toFixed(2), a.status||'', a.lokasi||''];
+      });
+      filename = 'aset_ismailiah_' + new Date().toISOString().slice(0,10) + '.csv';
+    } else { return; }
+    var csv = '\uFEFF' + header.join(',') + '\n' + rows.map(function(r){ return r.join(','); }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename; a.style.display = 'none';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
   }
 
   // ── PENARAFAN SUPABASE SYNC ───────────────────────────────────────────────
+  var TAHUN_PENARAFAN = 2026;
+
   async function supaLoadPenarafan() {
     try {
-      var { data: { user } } = await _supa.auth.getUser();
-      if (!user) return;
-      var { data: rows } = await _supa.from('penarafan').select('*').eq('user_id', user.id);
+      var { data: rows, error } = await _supaAdmin.from('penarafan').select('*').eq('tahun', TAHUN_PENARAFAN);
+      if (error) { console.warn('supaLoadPenarafan error:', error.message); return; }
       if (!rows || !rows.length) return;
-      // Map: komponen → array of values indexed by indikator_index
+      // Map: komponen → array of values indexed by indikator (integer)
       var map = { pn: {}, pi: {}, pr: {}, ps: {} };
       rows.forEach(function(r) {
-        if (map[r.komponen] !== undefined) map[r.komponen][r.indikator_index] = r.nilai;
+        if (map[r.komponen] !== undefined) map[r.komponen][r.indikator] = r.nilai;
       });
       // Apply to selects
       var pnSels = document.querySelectorAll('.pn-sel');
@@ -2709,8 +3804,6 @@
 
   async function supaSavePenarafan() {
     try {
-      var { data: { user } } = await _supa.auth.getUser();
-      if (!user) return;
       var rows = [];
       var komps = [
         { key: 'pn', sels: document.querySelectorAll('.pn-sel') },
@@ -2720,11 +3813,12 @@
       ];
       komps.forEach(function(k) {
         k.sels.forEach(function(s, i) {
-          rows.push({ user_id: user.id, komponen: k.key, indikator_index: i, nilai: parseInt(s.value) || 0, updated_at: new Date().toISOString() });
+          rows.push({ tahun: TAHUN_PENARAFAN, komponen: k.key, indikator: i, nilai: parseInt(s.value) || 0, updated_at: new Date().toISOString() });
         });
       });
-      // Upsert semua sekaligus
-      await _supa.from('penarafan').upsert(rows, { onConflict: 'user_id,komponen,indikator_index' });
+      // Upsert mengikut constraint schema: tahun, komponen, indikator
+      var { error } = await _supaAdmin.from('penarafan').upsert(rows, { onConflict: 'tahun,komponen,indikator' });
+      if (error) console.warn('supaSavePenarafan error:', error.message);
     } catch(e) { console.warn('supaSavePenarafan error:', e); }
   }
 </script>
