@@ -470,8 +470,9 @@
   <button class="tab-btn" onclick="showPanel('ajk')">
     <span class="tab-icon">👥</span> AJK & Organisasi
   </button>
-  <div style="margin-left:auto;display:flex;align-items:center;padding:0 8px;">
-    <span id="hdr-user" style="color:rgba(255,255,255,0.7);font-size:12px;margin-right:10px;"></span>
+  <div style="margin-left:auto;display:flex;align-items:center;padding:0 8px;gap:6px;">
+    <span id="hdr-user" style="color:rgba(255,255,255,0.7);font-size:12px;margin-right:4px;"></span>
+    <button onclick="bukaModalPanduan()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:white;border-radius:5px;padding:5px 12px;font-size:11px;cursor:pointer;" title="Panduan Penggunaan">📖 Panduan</button>
     <button onclick="doLogout()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:white;border-radius:5px;padding:5px 12px;font-size:11px;cursor:pointer;" title="Log Keluar">🚪 Log Keluar</button>
   </div>
 </nav>
@@ -1647,6 +1648,7 @@
           <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;">
             <button class="btn btn-gold btn-sm" onclick="bukaTambahAktiviti()">➕ Tambah Aktiviti</button>
             <button class="btn btn-outline btn-sm" onclick="cetakTakwim()">🖨️ Cetak Takwim</button>
+            <button class="btn btn-outline btn-sm" onclick="forceSyncTakwim()" style="color:#8B0000;border-color:#8B0000;" title="Padam data lama Supabase dan upload semula data terkini">🔄 Sync Semula</button>
           </div>
         </div>
         <!-- Legenda -->
@@ -2719,7 +2721,7 @@
       {bulan:4,hari:'SABTU',tarikh:11,aktiviti:'🎪 Karnival MADANI Raya dan Sambutan Hari Raya Aidil Fitri 2026',pic:'BBW&KS',teras:'T2',lokasi:'Kawasan Masjid Ismailiah',status:'dilaksana'},
       // ════ MEI 2026 ════
       {bulan:5,hari:'AHAD',tarikh:10,aktiviti:'📋 Mesyuarat AJK Masjid Ismailiah Mukim Kampung Kubang Terap Bil. 2/2026',pic:'Setiausaha',teras:'T1',lokasi:'Masjid Ismailiah',status:'dilaksana'},
-      {bulan:5,hari:'JUMAAT',tarikh:15,aktiviti:'🍜 Jamuan Kesyukuran Karnival MADANI Raya 2026 & Kenal Mesra AJK MJSMIII',pic:'Jamuan Laksa',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
+      {bulan:5,hari:'JUMAAT',tarikh:15,aktiviti:'🍜 Jamuan Kesyukuran Karnival MADANI Raya 2026 & Kenal Mesra AJK MJSMIII',pic:'BBW&KS',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
       // ════ JUN 2026 ════
       {bulan:6,hari:'SABTU',tarikh:6,aktiviti:'📋 Taklimat Tugas Bilal dan Siak Masjid',pic:'',teras:'T1',lokasi:'Masjid Ismailiah',status:'dilaksana'},
       {bulan:6,hari:'AHAD',tarikh:7,aktiviti:'💰 Mesyuarat Tabung Khairat Kematian Bil. 1/2026',pic:'',teras:'T1',lokasi:'Masjid Ismailiah',status:'dilaksana'},
@@ -2743,8 +2745,9 @@
       {bulan:10,hari:'SABTU',tarikh:31,aktiviti:'👩 Program Kuliah Bulanan Muslimat',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dilaksana'},
       // ════ NOVEMBER 2026 ════
       {bulan:11,hari:'SABTU',tarikh:15,aktiviti:'📋 Mesyuarat AJK Bil 4/2026',pic:'Setiausaha',teras:'T1',lokasi:'Masjid Ismailiah',status:'dirancang'},
+      {bulan:11,hari:'SABTU',tarikh:29,aktiviti:'👩 Program Kuliah Bulanan Muslimat',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
       // ════ DISEMBER 2026 ════
-      // (Tiada aktiviti baru didaftarkan dalam Takwim Tahunan 2026)
+      {bulan:12,hari:'SABTU',tarikh:27,aktiviti:'👩 Program Kuliah Bulanan Muslimat',pic:'BPD&MM',teras:'T2',lokasi:'Masjid Ismailiah',status:'dirancang'},
     ],
     '2027': [
       // ════ JANUARI 2027 ════
@@ -3600,11 +3603,28 @@
       }
       // Load takwim
       var { data: tw } = await _supaAdmin.from('takwim').select('*').order('tarikh');
-      if (tw && tw.length) {
+      if (tw) {
         var tw26 = tw.filter(function(r){ return r.tahun === 2026; });
         var tw27 = tw.filter(function(r){ return r.tahun === 2027; });
-        if (tw26.length) { twData['2026'] = tw26.map(function(r){ return { bulan: r.bulan, hari: r.hari, tarikh: r.tarikh, aktiviti: r.aktiviti, pic: r.pic, teras: r.teras, lokasi: r.lokasi, status: r.status }; }); }
-        if (tw27.length) { twData['2027'] = tw27.map(function(r){ return { bulan: r.bulan, hari: r.hari, tarikh: r.tarikh, aktiviti: r.aktiviti, pic: r.pic, teras: r.teras, lokasi: r.lokasi, status: r.status }; }); }
+        // Merge: guna data Supabase sebagai asas, kemaskini status aktiviti yang sepadan
+        // Data default dalam kod sentiasa lebih lengkap — sync ke Supabase jika perlu
+        if (tw26.length > twData['2026'].length) {
+          // Supabase ada lebih banyak (pengguna dah tambah aktiviti baru) — guna Supabase
+          twData['2026'] = tw26.map(function(r){ return { id: r.id, bulan: r.bulan, hari: r.hari, tarikh: r.tarikh, aktiviti: r.aktiviti, pic: r.pic, teras: r.teras, lokasi: r.lokasi, status: r.status }; });
+        } else if (tw26.length === twData['2026'].length) {
+          // Sama bilangan — guna Supabase (mungkin status dikemaskini oleh pengguna)
+          twData['2026'] = tw26.map(function(r){ return { id: r.id, bulan: r.bulan, hari: r.hari, tarikh: r.tarikh, aktiviti: r.aktiviti, pic: r.pic, teras: r.teras, lokasi: r.lokasi, status: r.status }; });
+        } else {
+          // Default ada lebih banyak — sync data terbaru ke Supabase
+          supaSyncTakwimDefault('2026');
+        }
+        if (tw27.length > twData['2027'].length) {
+          twData['2027'] = tw27.map(function(r){ return { id: r.id, bulan: r.bulan, hari: r.hari, tarikh: r.tarikh, aktiviti: r.aktiviti, pic: r.pic, teras: r.teras, lokasi: r.lokasi, status: r.status }; });
+        } else if (tw27.length === twData['2027'].length) {
+          twData['2027'] = tw27.map(function(r){ return { id: r.id, bulan: r.bulan, hari: r.hari, tarikh: r.tarikh, aktiviti: r.aktiviti, pic: r.pic, teras: r.teras, lokasi: r.lokasi, status: r.status }; });
+        } else {
+          supaSyncTakwimDefault('2027');
+        }
         tunjukTakwim(twTahunAktif);
       }
       // Load penarafan dari Supabase
@@ -3751,6 +3771,47 @@
     } catch(e) { supaNotif('⚠️ Tiada sambungan ke pangkalan data.', true); }
   }
 
+  // ── SYNC TAKWIM DEFAULT KE SUPABASE ──────────────────────────────────────
+  async function supaSyncTakwimDefault(tahun) {
+    try {
+      // Padam semua rekod lama untuk tahun ini
+      await _supaAdmin.from('takwim').delete().eq('tahun', parseInt(tahun));
+      // Insert semua data default
+      var items = (twData[tahun] || []).map(function(item) {
+        return { tahun: parseInt(tahun), bulan: item.bulan, hari: item.hari, tarikh: item.tarikh,
+          aktiviti: item.aktiviti, pic: item.pic||null, teras: item.teras, lokasi: item.lokasi||null, status: item.status };
+      });
+      if (items.length) {
+        var { error } = await _supaAdmin.from('takwim').insert(items);
+        if (error) console.warn('supaSyncTakwimDefault error:', error.message);
+        else supaNotif('✅ Takwim ' + tahun + ' telah disegerakkan ke pangkalan data (' + items.length + ' aktiviti).');
+      }
+    } catch(e) { console.warn('supaSyncTakwimDefault error:', e); }
+  }
+
+  // ── FORCE SYNC TAKWIM ────────────────────────────────────────────────────
+  async function forceSyncTakwim() {
+    var tahun = twTahunAktif || '2026';
+    if (!confirm('Reset dan sync semula takwim ' + tahun + ' ke Supabase?\n\nSemua ' + (twData[tahun]||[]).length + ' aktiviti dalam kod akan diupload. Tindakan ini tidak boleh dibatalkan.')) return;
+    supaNotif('⏳ Sedang sync takwim ' + tahun + '...');
+    try {
+      var { error: delErr } = await _supaAdmin.from('takwim').delete().eq('tahun', parseInt(tahun));
+      if (delErr) { supaNotif('⚠️ Ralat padam: ' + delErr.message, true); return; }
+      var items = (twData[tahun] || []).map(function(item) {
+        return { tahun: parseInt(tahun), bulan: item.bulan, hari: item.hari, tarikh: item.tarikh,
+          aktiviti: item.aktiviti, pic: item.pic||null, teras: item.teras, lokasi: item.lokasi||null, status: item.status };
+      });
+      var { data: inserted, error: insErr } = await _supaAdmin.from('takwim').insert(items).select();
+      if (insErr) { supaNotif('⚠️ Ralat insert: ' + insErr.message, true); return; }
+      // Kemaskini twData dengan id dari Supabase
+      if (inserted && inserted.length) {
+        twData[tahun] = inserted.map(function(r){ return { id: r.id, bulan: r.bulan, hari: r.hari, tarikh: r.tarikh, aktiviti: r.aktiviti, pic: r.pic, teras: r.teras, lokasi: r.lokasi, status: r.status }; });
+      }
+      tunjukTakwim(tahun);
+      supaNotif('✅ Takwim ' + tahun + ' berjaya disync (' + items.length + ' aktiviti).');
+    } catch(e) { supaNotif('⚠️ Ralat sync: ' + e.message, true); }
+  }
+
   // ── EXPORT CSV ───────────────────────────────────────────────────────────
   function exportCSV(jenis) {
     var rows, header, filename;
@@ -3821,6 +3882,266 @@
       if (error) console.warn('supaSavePenarafan error:', error.message);
     } catch(e) { console.warn('supaSavePenarafan error:', e); }
   }
+</script>
+
+<!-- ════ MODAL PANDUAN PENGGUNAAN ════ -->
+<div id="modal-panduan" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:99999;align-items:center;justify-content:center;">
+  <div style="background:white;border-radius:16px;width:94%;max-width:780px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.4);overflow:hidden;">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#1a7a4a 0%,#27ae60 100%);color:white;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div>
+        <div style="font-size:17px;font-weight:700;">📖 Panduan Penggunaan Ismailiah Hub</div>
+        <div style="font-size:11px;opacity:0.85;margin-top:3px;">Sistem Pengurusan Masjid Ismailiah Mukim Kampung Kubang Terap</div>
+      </div>
+      <button onclick="document.getElementById('modal-panduan').style.display='none'" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:18px;cursor:pointer;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <!-- Tab navigasi -->
+    <div id="panduan-tabs" style="display:flex;gap:0;border-bottom:2px solid #eee;flex-shrink:0;overflow-x:auto;">
+      <button class="panduan-tab-btn" onclick="tukaPanduanTab('dashboard')" style="padding:10px 16px;font-size:12px;border:none;background:#f0faf4;color:#1a7a4a;font-weight:700;cursor:pointer;border-bottom:3px solid #1a7a4a;white-space:nowrap;">🏠 Dashboard</button>
+      <button class="panduan-tab-btn" onclick="tukaPanduanTab('kk')" style="padding:10px 16px;font-size:12px;border:none;background:white;color:#555;cursor:pointer;white-space:nowrap;">📄 Kertas Kerja</button>
+      <button class="panduan-tab-btn" onclick="tukaPanduanTab('kewangan')" style="padding:10px 16px;font-size:12px;border:none;background:white;color:#555;cursor:pointer;white-space:nowrap;">💰 Kewangan</button>
+      <button class="panduan-tab-btn" onclick="tukaPanduanTab('aset')" style="padding:10px 16px;font-size:12px;border:none;background:white;color:#555;cursor:pointer;white-space:nowrap;">🏛️ Aset</button>
+      <button class="panduan-tab-btn" onclick="tukaPanduanTab('takwim')" style="padding:10px 16px;font-size:12px;border:none;background:white;color:#555;cursor:pointer;white-space:nowrap;">📅 Takwim</button>
+      <button class="panduan-tab-btn" onclick="tukaPanduanTab('penarafan')" style="padding:10px 16px;font-size:12px;border:none;background:white;color:#555;cursor:pointer;white-space:nowrap;">⭐ Penarafan</button>
+      <button class="panduan-tab-btn" onclick="tukaPanduanTab('login')" style="padding:10px 16px;font-size:12px;border:none;background:white;color:#555;cursor:pointer;white-space:nowrap;">🔐 Log Masuk</button>
+    </div>
+    <!-- Kandungan -->
+    <div style="overflow-y:auto;padding:24px;flex:1;">
+
+      <!-- DASHBOARD -->
+      <div id="panduan-dashboard" class="panduan-seksyen">
+        <h3 style="color:#1a7a4a;font-size:15px;margin:0 0 12px;">🏠 Dashboard – Papan Pemuka Utama</h3>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0 0 12px;">Dashboard adalah skrin utama yang dipaparkan selepas log masuk. Ia menunjukkan ringkasan keseluruhan sistem secara sekilas pandang.</p>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">📊 Kandungan Dashboard:</div>
+          <ul style="margin:0;padding-left:18px;font-size:12px;color:#444;line-height:2;">
+            <li><strong>Visi &amp; Misi</strong> — Hala tuju masjid</li>
+            <li><strong>Kad Statistik</strong> — Jumlah kertas kerja aktif, kewangan, aset, dan aktiviti takwim</li>
+            <li><strong>KPI Teras 1–4</strong> — Progress bar setiap teras (Pengurusan, Pengimarahan, Prasarana, Persekitaran)</li>
+            <li><strong>Carta Kewangan</strong> — Graf masuk/keluar mengikut bulan</li>
+            <li><strong>Notifikasi Aktiviti</strong> — Senarai aktiviti dalam 30 hari akan datang dengan tahap kecemasan</li>
+          </ul>
+        </div>
+        <div style="background:#e8f5ee;border-radius:8px;padding:12px 16px;font-size:12px;color:#155724;">
+          💡 <strong>Tip:</strong> Dashboard dikemaskini secara automatik setiap kali data baru ditambah dalam mana-mana modul.
+        </div>
+      </div>
+
+      <!-- KERTAS KERJA -->
+      <div id="panduan-kk" class="panduan-seksyen" style="display:none;">
+        <h3 style="color:#1a7a4a;font-size:15px;margin:0 0 12px;">📄 Kertas Kerja – Pengurusan Program</h3>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0 0 12px;">Modul ini digunakan untuk mendaftarkan, mengurus, dan menjana kertas kerja bagi setiap program atau aktiviti masjid.</p>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">📝 Cara Guna:</div>
+          <ol style="margin:0;padding-left:18px;font-size:12px;color:#444;line-height:2.2;">
+            <li>Klik tab <strong>📄 Kertas Kerja</strong> pada menu atas</li>
+            <li>Isi borang di bahagian <strong>"Daftar Program Baru"</strong> — nama program, teras, tarikh, PIC, anggaran belanja</li>
+            <li>Klik <strong>"✅ Daftar Program"</strong> untuk simpan</li>
+            <li>Program akan muncul dalam senarai di bawah</li>
+            <li>Klik <strong>✏️</strong> untuk edit atau <strong>🗑️</strong> untuk padam</li>
+            <li>Klik <strong>📄 Jana KK</strong> untuk cetak kertas kerja rasmi dalam tetingkap baru</li>
+            <li>Klik <strong>📊 Jana Laporan</strong> untuk cetak laporan program selepas dilaksanakan</li>
+          </ol>
+        </div>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">🏷️ Status Program:</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;">
+            <div style="display:flex;align-items:center;gap:6px;"><span style="background:#d4edda;color:#155724;padding:2px 8px;border-radius:10px;font-size:10px;">Perancangan</span> Program baru didaftarkan</div>
+            <div style="display:flex;align-items:center;gap:6px;"><span style="background:#cce5ff;color:#004085;padding:2px 8px;border-radius:10px;font-size:10px;">Dalam Proses</span> Sedang dilaksanakan</div>
+            <div style="display:flex;align-items:center;gap:6px;"><span style="background:#d4edda;color:#155724;padding:2px 8px;border-radius:10px;font-size:10px;">Selesai</span> Program tamat</div>
+            <div style="display:flex;align-items:center;gap:6px;"><span style="background:#f8d7da;color:#721c24;padding:2px 8px;border-radius:10px;font-size:10px;">Dibatalkan</span> Program dibatalkan</div>
+          </div>
+        </div>
+        <div style="background:#e8f5ee;border-radius:8px;padding:12px 16px;font-size:12px;color:#155724;">
+          💡 <strong>Tip:</strong> Gunakan fungsi <strong>🔍 Cari</strong> dan penapis <strong>Teras</strong> / <strong>Status</strong> untuk cari program dengan cepat.
+        </div>
+      </div>
+
+      <!-- KEWANGAN -->
+      <div id="panduan-kewangan" class="panduan-seksyen" style="display:none;">
+        <h3 style="color:#1a7a4a;font-size:15px;margin:0 0 12px;">💰 Kewangan – Rekod Kewangan Masjid</h3>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0 0 12px;">Modul ini untuk merekod semua transaksi kewangan masjid — kutipan, perbelanjaan, dan tabung.</p>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">📝 Cara Tambah Transaksi:</div>
+          <ol style="margin:0;padding-left:18px;font-size:12px;color:#444;line-height:2.2;">
+            <li>Klik tab <strong>💰 Kewangan</strong></li>
+            <li>Pilih <strong>Jenis</strong>: Masuk (kutipan/pendapatan) atau Keluar (perbelanjaan)</li>
+            <li>Isi tarikh, perkara, kategori, dan amaun</li>
+            <li>Klik <strong>"✅ Rekod Transaksi"</strong></li>
+            <li>Baki semasa dikira secara automatik</li>
+          </ol>
+        </div>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">📂 Kategori Kewangan:</div>
+          <ul style="margin:0;padding-left:18px;font-size:12px;color:#444;line-height:2;">
+            <li><strong>Masuk:</strong> Tabung Masjid, Tabung Pembangunan, Tabung Asnaf, Kutipan Jemaah, Derma, Lain-lain</li>
+            <li><strong>Keluar:</strong> Utiliti, Selenggara, Program, Gaji/Elaun, Pembelian Aset, Lain-lain</li>
+          </ul>
+        </div>
+        <div style="background:#fff3cd;border-radius:8px;padding:12px 16px;font-size:12px;color:#856404;margin-bottom:10px;">
+          ⚠️ <strong>Nota:</strong> Modul Kewangan hanya boleh diakses oleh pengguna bertaraf <strong>Admin</strong>. AJK biasa tidak dapat melihat maklumat kewangan.
+        </div>
+        <div style="background:#e8f5ee;border-radius:8px;padding:12px 16px;font-size:12px;color:#155724;">
+          💡 <strong>Tip:</strong> Gunakan butang <strong>📥 Export CSV</strong> untuk muat turun rekod kewangan ke Excel.
+        </div>
+      </div>
+
+      <!-- ASET -->
+      <div id="panduan-aset" class="panduan-seksyen" style="display:none;">
+        <h3 style="color:#1a7a4a;font-size:15px;margin:0 0 12px;">🏛️ Aset Masjid – Inventori Harta Benda</h3>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0 0 12px;">Modul ini untuk merekod dan memantau semua aset yang dimiliki oleh masjid.</p>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">📝 Cara Daftar Aset:</div>
+          <ol style="margin:0;padding-left:18px;font-size:12px;color:#444;line-height:2.2;">
+            <li>Klik tab <strong>🏛️ Aset Masjid</strong></li>
+            <li>Isi nama aset, kategori, nombor siri, tarikh perolehan, nilai, dan lokasi</li>
+            <li>Pilih <strong>Status</strong> terkini aset</li>
+            <li>Klik <strong>"✅ Daftar Aset"</strong></li>
+          </ol>
+        </div>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">🏷️ Kategori &amp; Status Aset:</div>
+          <div style="font-size:12px;color:#444;line-height:2;">
+            <strong>Kategori:</strong> Audio Visual &amp; Multimedia 🔊 · Perabot &amp; Peralatan Pejabat 🪑 · ICT &amp; Teknologi 💻 · Kelengkapan Masjid 🕌 · Kenderaan 🚗 · Peralatan Dapur 🍳 · Kemudahan Kebersihan 🧹 · Lain-lain 📦<br/>
+            <strong>Status:</strong> <span style="color:#155724;">Baik</span> · <span style="color:#856404;">Sederhana</span> · <span style="color:#e67e22;">Perlu Selenggara</span> · <span style="color:#c0392b;">Rosak</span>
+          </div>
+        </div>
+        <div style="background:#e8f5ee;border-radius:8px;padding:12px 16px;font-size:12px;color:#155724;">
+          💡 <strong>Tip:</strong> Gunakan penapis <strong>Status</strong> untuk kenal pasti aset yang perlu selenggara atau rosak dengan cepat.
+        </div>
+      </div>
+
+      <!-- TAKWIM -->
+      <div id="panduan-takwim" class="panduan-seksyen" style="display:none;">
+        <h3 style="color:#1a7a4a;font-size:15px;margin:0 0 12px;">📅 Takwim &amp; Perancangan – Jadual Aktiviti</h3>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0 0 12px;">Modul ini memaparkan takwim program dan aktiviti masjid mengikut tahun dan bulan.</p>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">📝 Cara Guna:</div>
+          <ol style="margin:0;padding-left:18px;font-size:12px;color:#444;line-height:2.2;">
+            <li>Klik tab <strong>📅 Takwim &amp; Perancangan</strong></li>
+            <li>Pilih tahun: <strong>2026</strong> atau <strong>2027</strong></li>
+            <li>Jadual akan dipaparkan mengikut bulan dari Januari hingga Disember</li>
+            <li>Klik <strong>➕ Tambah</strong> pada mana-mana bulan untuk tambah aktiviti baru</li>
+            <li>Klik <strong>✏️</strong> untuk edit atau <strong>🗑️</strong> untuk padam aktiviti</li>
+            <li>Klik <strong>🔄 Sync Semula</strong> jika takwim tidak dikemaskini selepas perubahan</li>
+          </ol>
+        </div>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">🎨 Kod Warna Teras:</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:#444;">
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0;"></div> Teras 1 – Pengurusan</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--blue);flex-shrink:0;"></div> Teras 2 – Pengimarahan</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div> Teras 3 – Prasarana</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:50%;background:#27ae60;flex-shrink:0;"></div> Teras 4 – Persekitaran</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;"></div> Cuti / Hari Kebesaran</div>
+          </div>
+        </div>
+        <div style="background:#e8f5ee;border-radius:8px;padding:12px 16px;font-size:12px;color:#155724;">
+          💡 <strong>Tip:</strong> Gunakan butang <strong>🖨️ Cetak Takwim</strong> untuk cetak atau simpan sebagai PDF.
+        </div>
+      </div>
+
+      <!-- PENARAFAN -->
+      <div id="panduan-penarafan" class="panduan-seksyen" style="display:none;">
+        <h3 style="color:#1a7a4a;font-size:15px;margin:0 0 12px;">⭐ Penarafan Bintang – Pengukuran Prestasi Masjid</h3>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0 0 12px;">Modul penarafan mengukur prestasi masjid berdasarkan 4 teras utama mengikut sistem penarafan MAIK.</p>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">📊 Wajaran Komponen:</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;color:#444;">
+            <div style="background:white;border-radius:6px;padding:8px 10px;border:1px solid #eee;">🏛️ <strong>Pengurusan</strong><br/><span style="font-size:16px;color:#1a7a4a;font-weight:700;">30%</span></div>
+            <div style="background:white;border-radius:6px;padding:8px 10px;border:1px solid #eee;">🕌 <strong>Pengimarahan</strong><br/><span style="font-size:16px;color:var(--blue);font-weight:700;">40%</span></div>
+            <div style="background:white;border-radius:6px;padding:8px 10px;border:1px solid #eee;">🔧 <strong>Prasarana</strong><br/><span style="font-size:16px;color:var(--gold);font-weight:700;">20%</span></div>
+            <div style="background:white;border-radius:6px;padding:8px 10px;border:1px solid #eee;">🌿 <strong>Persekitaran</strong><br/><span style="font-size:16px;color:#27ae60;font-weight:700;">10%</span></div>
+          </div>
+        </div>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">⭐ Skala Penarafan:</div>
+          <div style="font-size:12px;color:#444;line-height:2.2;">
+            <div>⭐☆☆☆☆ — Markah &lt; 20% (Lemah)</div>
+            <div>⭐⭐☆☆☆ — Markah 20–39% (Memuaskan)</div>
+            <div>⭐⭐⭐☆☆ — Markah 40–59% (Baik)</div>
+            <div>⭐⭐⭐⭐☆ — Markah 60–79% (Cemerlang)</div>
+            <div>⭐⭐⭐⭐⭐ — Markah ≥ 80% (Terbaik)</div>
+          </div>
+        </div>
+        <div style="background:#e8f5ee;border-radius:8px;padding:12px 16px;font-size:12px;color:#155724;">
+          💡 <strong>Tip:</strong> Markah dikira dan disimpan <strong>secara automatik</strong> setiap kali nilai diubah. Cadangan peningkatan akan dipaparkan untuk komponen yang mendapat kurang dari 80%.
+        </div>
+      </div>
+
+      <!-- LOG MASUK -->
+      <div id="panduan-login" class="panduan-seksyen" style="display:none;">
+        <h3 style="color:#1a7a4a;font-size:15px;margin:0 0 12px;">🔐 Log Masuk &amp; Kawalan Akses</h3>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0 0 12px;">Sistem menggunakan pengesahan selamat melalui Supabase. Setiap pengguna perlu log masuk untuk mengakses sistem.</p>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">👤 Cara Log Masuk:</div>
+          <ol style="margin:0;padding-left:18px;font-size:12px;color:#444;line-height:2.2;">
+            <li>Masukkan <strong>Nama Pengguna</strong> (contoh: <code>pengerusi</code> atau <code>ajk.azwan</code>)</li>
+            <li>Masukkan <strong>Kata Laluan</strong></li>
+            <li>Tekan <strong>Enter</strong> atau klik <strong>🔐 LOG MASUK</strong></li>
+            <li>Domain <code>@ismailiah.hub</code> ditambah secara automatik — tidak perlu taip</li>
+          </ol>
+        </div>
+        <div style="background:#f7f8fa;border-radius:10px;padding:14px 18px;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:12px;color:#1a7a4a;margin-bottom:8px;">🔑 Tahap Akses Pengguna:</div>
+          <div style="font-size:12px;color:#444;">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #eee;">
+              <span style="background:#155724;color:white;padding:2px 10px;border-radius:10px;font-size:10px;flex-shrink:0;">Admin</span>
+              <span>Akses penuh — semua modul termasuk Kewangan, Aset, dan Penarafan Bintang</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;">
+              <span style="background:#004085;color:white;padding:2px 10px;border-radius:10px;font-size:10px;flex-shrink:0;">AJK</span>
+              <span>Akses terhad — boleh lihat Dashboard, Kertas Kerja, Takwim, dan AJK sahaja</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff3cd;border-radius:8px;padding:12px 16px;font-size:12px;color:#856404;">
+          ⚠️ <strong>Lupa Kata Laluan?</strong> Hubungi Administrator sistem untuk set semula kata laluan melalui Supabase Dashboard.
+        </div>
+      </div>
+
+    </div>
+    <!-- Footer modal -->
+    <div style="padding:12px 24px;border-top:1px solid #eee;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:#fafafa;">
+      <span style="font-size:11px;color:#999;">Ismailiah Hub v1.0 · Masjid Ismailiah Mukim Kampung Kubang Terap</span>
+      <button onclick="document.getElementById('modal-panduan').style.display='none'" style="padding:8px 20px;background:#1a7a4a;color:white;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">✕ Tutup</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function bukaModalPanduan() {
+    document.getElementById('modal-panduan').style.display = 'flex';
+    tukaPanduanTab('dashboard');
+  }
+  function tukaPanduanTab(tab) {
+    // Sembunyikan semua seksyen
+    document.querySelectorAll('.panduan-seksyen').forEach(function(el){ el.style.display = 'none'; });
+    // Tunjuk seksyen yang dipilih
+    var el = document.getElementById('panduan-' + tab);
+    if (el) el.style.display = 'block';
+    // Kemaskini gaya butang tab
+    document.querySelectorAll('.panduan-tab-btn').forEach(function(btn){
+      btn.style.background = 'white';
+      btn.style.color = '#555';
+      btn.style.borderBottom = 'none';
+      btn.style.fontWeight = 'normal';
+    });
+    // Highlight butang aktif
+    var btns = document.querySelectorAll('.panduan-tab-btn');
+    var tabOrder = ['dashboard','kk','kewangan','aset','takwim','penarafan','login'];
+    var idx = tabOrder.indexOf(tab);
+    if (idx > -1 && btns[idx]) {
+      btns[idx].style.background = '#f0faf4';
+      btns[idx].style.color = '#1a7a4a';
+      btns[idx].style.borderBottom = '3px solid #1a7a4a';
+      btns[idx].style.fontWeight = '700';
+    }
+  }
+  // Tutup modal bila klik luar
+  document.getElementById('modal-panduan').addEventListener('click', function(e){
+    if (e.target === this) this.style.display = 'none';
+  });
 </script>
 
 </body>
